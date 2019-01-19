@@ -1,5 +1,21 @@
 Intro text is around POSM.EXE:b880.
 You can replace with ascii text but it gets stretched out to twice its width onscreen.
+	When reading a character, it branches and does stuff with cs:[08a2] and cs:[08a3].
+		If x < 80, mov 1 into 08a2
+		If 08a2 == 01, check if al is 0a
+		If al == 20, mov 1 into 08a3
+		else mov 2 into 08a3
+
+		Are spaces still 01 width? Looks like it...
+		2ec606a30802 mov cs:[08a3], 02
+			-> Change it to mov 01
+			This edits the cursor movement, but the characters are still doublewide. Y'know what i mean
+
+		W is 57, gets flipped to 5700 and put in dx
+		Eventually moved back to al, where it gets sub al, 20
+			Then mult by 20 (6e0)
+	Dialogue and exposition text in the intro seem to behave differently. Dialogue is double wide and double tall, exposition is just double wide
+
 
 First save file's "look inside" text is at POS1.DSD:90.
 Ascii text shows up perfectly here.
@@ -66,3 +82,10 @@ Except for the nametags, they need a text hack. (Nametags are read from the tabl
 
 
 Dump is quite large, it's about 15,173 lines after some garbage removal...
+
+.MSD file format:
+	* Look Room:            f2 01 f4 01 f5 00
+	* Talk Honghua 2: f0 07 f2 01 f4 01 f5 00 (Arisa speaks)
+	*                 f0 05 f2 03 f4 06 f5 00 (Honghua speaks)
+	* When I reinsert something, the first line's color gets messed up in all the lines after the inserted one. The text itself is fine though...
+		* Maybe it's skipping the first 3 bytes of the control code then?? 

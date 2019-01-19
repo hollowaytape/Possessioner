@@ -5,17 +5,16 @@
 
 import os
 
-from rominfo import FILE_BLOCKS, ORIGINAL_ROM_PATH, TARGET_ROM_PATH
+from rominfo import FILE_BLOCKS, ORIGINAL_ROM_PATH, TARGET_ROM_PATH, DUMP_XLS_PATH, POINTER_DUMP_XLS_PATH
 from romtools.disk import Disk, Gamefile, Block
-from romtools.dump import DumpExcel
-
-DUMP_XLS_PATH = 'PSSR_dump.xlsx'
+from romtools.dump import DumpExcel, PointerExcel
 
 Dump = DumpExcel(DUMP_XLS_PATH)
-OriginalPssr = Disk(ORIGINAL_ROM_PATH, dump_excel=Dump)
+PtrDump = PointerExcel(POINTER_DUMP_XLS_PATH)
+OriginalPssr = Disk(ORIGINAL_ROM_PATH, dump_excel=Dump, pointer_excel = PtrDump)
 TargetPssr = Disk(TARGET_ROM_PATH)
 
-FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE']
+FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE', 'POS1.MSD']
 
 for filename in FILES_TO_REINSERT:
     path_in_disk = "PSSR\\"
@@ -39,12 +38,14 @@ for filename in FILES_TO_REINSERT:
             loc_in_block = t.location - block.start + diff
 
             this_diff = len(t.en_bytestring) - len(t.jp_bytestring)
-            if this_diff > 0:
-                print(t.en_bytestring, t.jp_bytestring)
-                raise Exception
-            while this_diff < 0 and t.en_bytestring != b'':
-                t.en_bytestring += b' '
-                this_diff = len(t.en_bytestring) - len(t.jp_bytestring)
+
+            # Taking off training wheels
+            #if this_diff > 0:
+            #    print(t.en_bytestring, t.jp_bytestring)
+            #    raise Exception
+            #while this_diff < 0 and t.en_bytestring != b'':
+            #    t.en_bytestring += b' '
+            #    this_diff = len(t.en_bytestring) - len(t.jp_bytestring)
 
             if t.en_bytestring != b'':
                 print(t.en_bytestring)
@@ -71,8 +72,7 @@ for filename in FILES_TO_REINSERT:
                 this_diff = 0
                 #print("Diff is", diff)
 
-                # No pointers!
-                #gamefile.edit_pointers_in_range((previous_text_offset, t.location), diff)
+                gamefile.edit_pointers_in_range((previous_text_offset, t.location), diff)
                 previous_text_offset = t.location
                 continue
 
@@ -94,12 +94,11 @@ for filename in FILES_TO_REINSERT:
 
             block.blockstring = block.blockstring.replace(t.jp_bytestring, t.en_bytestring, 1)
 
-            # No pointers!
-            #gamefile.edit_pointers_in_range((previous_text_offset, t.location), diff)
+            gamefile.edit_pointers_in_range((previous_text_offset, t.location), diff)
             previous_text_offset = t.location
 
             diff += this_diff
-            #print("Diff is", diff)
+            print("Diff is", diff)
 
         block_diff = len(block.blockstring) - len(block.original_blockstring)
         if block_diff < 0:

@@ -10,6 +10,7 @@ TARGET_ROM_DIR = 'patched'
 ORIGINAL_ROM_PATH = os.path.join(ORIGINAL_ROM_DIR, 'Possessioner.hdi')
 TARGET_ROM_PATH = os.path.join(TARGET_ROM_DIR, 'Possessioner.hdi')
 DUMP_XLS_PATH = 'PSSR_dump.xlsx'
+POINTER_DUMP_XLS_PATH = 'PSSR_pointer_dump.xlsx'
 
 FILES = ['POSM.EXE', 'POS.EXE', 'POS1.MSD', 'P_7.MSD', 'P_71.MSD', 
          'P_BILL.MLL', 'P_BILL.MSD', 'P_BOX.MSD', 'P_BYO.MSD',
@@ -29,9 +30,6 @@ FILES = ['POSM.EXE', 'POS.EXE', 'POS1.MSD', 'P_7.MSD', 'P_71.MSD',
 
 
 FILE_BLOCKS = {
-    #"""
-    #    Text for the editor itself
-    #"""
     "POS.EXE": [
         (0x7fcf, 0x800b),
         (0x8b03, 0x9329),
@@ -56,6 +54,26 @@ FILE_BLOCKS = {
         (0xb238, 0xb450),  # sound test songs
         (0xb88c, 0xbf18),  # intro text
     ]
+}
+
+POINTER_CONSTANT = {
+    'POS.EXE': 0x7b00,
+    'POSM.EXE': 0xafe0,
+}
+
+# b238  = 58 02
+# b244 = 64 02
+# b251 = 71 02
+
+# Plain, continuous pointer tables with no distinguishing prefix/suffix/separator.
+POINTER_TABLES = {
+    'POS.EXE': [
+        (0x88bf, 0x8b03),
+    ]
+}
+
+POINTER_TABLE_SEPARATOR = {
+    'POSM.EXE': '\\\\x1e\\\\x0a'
 }
 
 # default to dumping the whole file
