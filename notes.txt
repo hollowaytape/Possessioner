@@ -110,6 +110,62 @@ Images:
 		* mld -selpsr -f -c  MLD\*.SEL (asterisk key is :)
 			* a f d key: sort
 			* s key: save file...?
+				* I think it just sends data to the MAG saver. Not useful for this
+
+* .Sel:
+	* 00: Width / 8
+	* 01: Height
+
+* FONT2.SEL:
+	* No idea what the final F2 2A 00 is supposed to do, removing it has no effect.
+	* But the prior F1 2A 00 paints a color/repeats the previous plane for the whole height of the image.
+		* (2a is the height. Changing it to 15 paints only half its height as expected)
+
+	* Some bit patterns of the shapes:
+
+	29 cb
+		29: 1 full line
+		2f: 7 full lines
+		30: 8 full lines
+		40: 24 full lines
+
+		ca: Changes the mode, everything is kinda scrambly
+		cc: less scrambly, but still so
+		theory: cb = read 3 binaries
+			cc = read 4 binaries
+
+	1 full line = 29 (3)
+
+	read 3 binary = cb (4)
+		1110 0111 = e7 (5)
+		1111 1001 = f9 (6)
+		1111 1110 = fe (7)
+
+	7 full lines = 2f (8)
+	read 2 binary = ca (9)
+		1111 1110 = fe (a)
+		1111 0001 = f1 (b)
+
+	4 full lines = 2c (c)
+	read 1 binary = c9 (d)
+		1111 1101 = fd (e)
+
+	(repeat the previous one = 79 c9 fb 79 cc???)
+
+	4 binaries = cc (13)
+		1111 0111 = f7
+		1110 1111 = ef
+		1001 1111 = 9f
+		0111 1111 = 7f
+
+	17 full lines = 39 (18)
+
+	Cool, so this is enough for a reinserter. Still need to figure out colors/planes.
+		What does the 00 28 02 do?
+	
+	Wider-than-8 images seem to work as expected - it writes the whole block, then goes to the next one
+
+
 
 
 .MSD file format:

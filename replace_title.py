@@ -23,7 +23,7 @@ if __name__ == '__main__':
     #gem_filename = os.path.join("original", "CD", gem_filename)
 
     # View an edited image
-    gem_filename = os.path.join("patched", gem_filename)
+    gem_filename = gem_filename
 
     #copyfile(gem_filename, "MENU.CGX")
     copyfile(gem_filename, 'FONT2.SEL')
