@@ -83,9 +83,87 @@ Except for the nametags, they need a text hack. (Nametags are read from the tabl
 
 Dump is quite large, it's about 15,173 lines after some garbage removal...
 
+Images:
+	* Intro text images.
+		* PTOKYO1.CGX - "Year 2035 Tokyo"
+		* PTOKYO2.CGX - some more text
+	* I think all of the grey panels in battle are images. So, attack names/categories, nametags, etc
+	* FIGHT.CGX is the fight layout. (All the parts that don't need translating)
+	* MENU.CGX is the title screen
+	* LIST.CGX is a "possessioner list", maybe a cg gallery?
+	* MESF1+F2 are the corner portraits
+
+	* Doesn't look like any are small enough to be the panels.
+
+	* Changing the a:font.sel to laml.sel covers most of the nametags with garbage...
+		* font2.sel is the rest. (the other character on that one name)
+			* How do entire kana fonts fit into these tiny images??
+				* They're just the letters necessary, also numbers.
+	* Still unknown: the action images.
+		* fp.sel is the "action panel"
+		* p5.sel is a bunch of action items
+		* So is p4.sel
+		* Can't load p1-p3 for some reason, maybe I will replace others with that
+			* (Those files don't exist, hm)
+	* Looks like MLD might be able to open CSX and SEL files??
+		* mld -selpsr MLD\FONT2.SEL
+		* mld -selpsr -f -c  MLD\*.SEL (asterisk key is :)
+			* a f d key: sort
+			* s key: save file...?
+
+
 .MSD file format:
-	* Look Room:            f2 01 f4 01 f5 00
+	* Look Room 1:    f0 07 f2 01 f4 01 f5 00
+	* Look Room 2:    f0 07 f2 01 f4 01 f5 00
+		* f0 XX is text color
+			* f0 00: black
+			* f0 01: hard-to-read blue
+			* f0 02: red
+			* f0 03: purple
+			* f0 04: green
+			* f0 05: cyan
+			* f0 06: yellow
+			* (f0 07): white
+			* f0 08: black
+				* (then it repeats)
+		* f2 XX is the speaker
+			* f2 02: nametag is Meryl
+			* f2 0f: Janitor 1
+		* f4 XX is the portrait
+			* f4 01: normal Alisa
+			* f4 02: energetic Alisa
+			* f4 03: upset Alisa
+			* f4 04: surprised Alisa
+			* f4 05: normal Honghua
+			* f4 06: happy Honghua
+			* f4 07: upset Honghua
+			* f4 08: sad Honghua
+			* f4 09: normal Meryl
+		* f5 XX is ?
+
+		
 	* Talk Honghua 2: f0 07 f2 01 f4 01 f5 00 (Arisa speaks)
 	*                 f0 05 f2 03 f4 06 f5 00 (Honghua speaks)
+	* Talk Meryl:     f0 04 f2 02 f4 09 f5 00
+
+
 	* When I reinsert something, the first line's color gets messed up in all the lines after the inserted one. The text itself is fine though...
 		* Maybe it's skipping the first 3 bytes of the control code then?? 
+	* Where does the pointer come from? How does 127 get in ESI?
+		* Looks like the value is in POS.EXE, at 0xeb43.
+			02 ff 02 27 01 01 ff (0xeb43)
+			01 ff 02 8a 00 02 ff (0xeb48)
+			03 ff 02 56 01 02 ff  
+	* How to tell where each MSD file's pointers are in POS.EXE?
+		* YUMI.MSD pointer to ポゼ (0x31a) is not in a clear location. There's no ff 02 prefix version of it
+		* How about 0xa2 (住民はもう)? 
+			* That number is way too hard to find + change.
+			* The location 0x2b333 in memory has the pointer that was used to get to the current text. Useful...
+				* Hey, a2 00 is at 0x2b8d1. That's POS.EXE:efd1.
+					* 02 ff 02 a2 00 02 ff (same format as the others)
+		* P_HON1.MSD 0x3bd:
+			* 00 00 02 bd 03 05 ff
+				* Well, that's a different format entirely...
+		* Are they in different blocks?
+			* POS1.MSD: (0xea40, 0xef20)
+			* YUMI.MSD: (0xef20, ?)

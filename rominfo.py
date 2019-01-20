@@ -59,6 +59,7 @@ FILE_BLOCKS = {
 POINTER_CONSTANT = {
     'POS.EXE': 0x7b00,
     'POSM.EXE': 0xafe0,
+    'POS1.MSD': 0,
 }
 
 # b238  = 58 02

@@ -1,10 +1,10 @@
 import re
 import os
 from collections import OrderedDict
-from romtools.dump import BorlandPointer, PointerExcel
+from romtools.dump import BorlandPointer, DumpExcel, PointerExcel
 from romtools.disk import Gamefile
 
-from rominfo import POINTER_CONSTANT, POINTER_TABLES, POINTER_TABLE_SEPARATOR, FILE_BLOCKS
+from rominfo import POINTER_CONSTANT, POINTER_TABLES, POINTER_TABLE_SEPARATOR, FILE_BLOCKS, DUMP_XLS_PATH
 
 FILES_WITH_POINTERS = POINTER_CONSTANT
 
@@ -23,15 +23,21 @@ FILES_WITH_POINTERS = POINTER_CONSTANT
 # cfcf = cf 54
     # found at c4a6, be cf 54 e8 7f
 
+Dump = DumpExcel(DUMP_XLS_PATH)
+
 # Removing the 9a at the end of this one. Didn't show up in some pointers.
 pointer_regex = r'\\xbe\\x([0-f][0-f])\\x([0-f][0-f])\\xe8'
+msd_pointer_regex = r'\\xff\\x02\\x([0-f][0-f])\\x([0-f][0-f])'
 table_pointer_regex = r'\\x([0-f][0-f])\\x([0-f][0-f])sep'
+
 
 def capture_pointers_from_function(hx, regex): 
     return re.compile(regex).finditer(hx)
 
+
 def location_from_pointer(pointer, constant):
     return '0x' + str(format((unpack(pointer[0], pointer[1]) + constant), '05x'))
+
 
 def unpack(s, t=None):
     if t is None:
@@ -42,6 +48,7 @@ def unpack(s, t=None):
     t = int(t, 16)
     value = (t * 0x100) + s
     return value
+
 
 pointer_count = 0
 
@@ -56,10 +63,28 @@ for gamefile in FILES_WITH_POINTERS:
     print(gamefile)
     pointer_locations = OrderedDict()
     gamefile_path = os.path.join('original', gamefile)
-    GF = Gamefile(gamefile_path, pointer_constant=POINTER_CONSTANT[gamefile])
+
+    # MSD files have their pointers in POS.EXE.
+    if gamefile.endswith('.MSD'):
+        GF = Gamefile('original\\POS.EXE', pointer_constant=POINTER_CONSTANT[gamefile])
+        GF2 = Gamefile(gamefile_path, pointer_constant=POINTER_CONSTANT[gamefile])
+
+        gamefile_path = 'original\\POS.EXE'
+    else:
+        GF = Gamefile(gamefile_path, pointer_constant=POINTER_CONSTANT[gamefile])
+        GF2 = Gamefile(gamefile_path, pointer_constant=POINTER_CONSTANT[gamefile])
+
     with open(gamefile_path, 'rb') as f:
+        print(gamefile_path)
         bs = f.read()
         target_areas = FILE_BLOCKS[gamefile]
+
+        if gamefile.endswith('.MSD'):
+            target_areas = []
+            for t in Dump.get_translations(gamefile, include_blank=True):
+                target_areas.append((t.location - 8, t.location - 7))
+
+
         # target_area = (GF.pointer_constant, len(bs))
         #print(hex(target_area[0]), hex(target_area[1]))
 
@@ -110,18 +135,27 @@ for gamefile in FILES_WITH_POINTERS:
         except KeyError:
             table_regex = None
 
+        if gamefile.endswith('MSD'):
+            msd_regex = msd_pointer_regex
+        else:
+            msd_regex = None
+
 
         #print(pointer_regex)
-        for regex in (pointer_regex, table_regex):
+        for regex in (pointer_regex, msd_regex, table_regex):
             if regex is None:
                 continue
+            print(regex)
             pointers = capture_pointers_from_function(only_hex, regex)
 
             for p in pointers:
+                #print(p)
                 # Different offsets for each regex?
                 if regex == pointer_regex:
                     # TODO: The +2 might be extraneous. Might just be the next one
                     pointer_location = p.start()//4 + 2
+                elif regex == msd_pointer_regex:
+                    pointer_location = p.start()//4 + 4
                 else:
                     pointer_location = p.start()//4
 
@@ -139,26 +173,30 @@ for gamefile in FILES_WITH_POINTERS:
 
                 #print(pointer_locations)
 
-                if (GF, text_location) in pointer_locations.keys():
-                    all_locations = pointer_locations[(GF, text_location)]
+                if (GF2, text_location) in pointer_locations.keys():
+                    all_locations = pointer_locations[(GF2, text_location)]
                     all_locations.append(int(pointer_location, 16))
 
-                pointer_locations[(GF, text_location)] = all_locations
-                print(pointer_locations[(GF, text_location)])
+                pointer_locations[(GF2, text_location)] = all_locations
 
 
     # Setup the worksheet for this file
-    worksheet = PtrXl.add_worksheet(GF.filename)
+    worksheet = PtrXl.add_worksheet(GF2.filename)
 
     row = 1
 
-    for (gamefile, text_location), pointer_locations in sorted((pointer_locations).items()):
+    try:
+        itemlist = sorted((pointer_locations.items()))
+    except:
+        itemlist = pointer_locations.items()
+
+    for (gamefile, text_location), pointer_locations in itemlist:
         if gamefile.filename == 'POSM.EXE':
             separator = b'\x00'
         else:
             separator = b'\x0d'
         obj = BorlandPointer(gamefile, pointer_locations, text_location, separator=separator)
-        #print(text_location)
+        print(text_location)
         #print(pointer_locations)
         for pointer_loc in pointer_locations:
             worksheet.write(row, 0, hex(text_location))

@@ -79,8 +79,8 @@ def dump(files):
                             sjis_buffer += contents[cursor].to_bytes(1, byteorder='little')
 
                         ## Halfwidth katakana
-                        #elif 0xa1 <= contents[cursor] <= 0xdf:
-                        #    sjis_buffer += contents[cursor].to_bytes(1, byteorder='little')
+                        elif 0xa1 <= contents[cursor] <= 0xdf:
+                            sjis_buffer += contents[cursor].to_bytes(1, byteorder='little')
 
                         # ASCII text
                         elif 0x20 <=contents[cursor] <= 0x7e and ASCII_MODE in (1, 2):
