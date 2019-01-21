@@ -162,6 +162,56 @@ Images:
 
 	Cool, so this is enough for a reinserter. Still need to figure out colors/planes.
 		What does the 00 28 02 do?
+
+	font1.sel:
+		00 28 28 28 28 28 28 28 28 28 20 00
+		f1 ff f1 89 00
+		f2 ff ff 89 00
+	font2.sel:
+		00 28 02 00
+		f1 2a 00
+		f2 2a 00
+	* ff + 89 = 188, the height of font1. Something about f1 and f2 needs to be applied to the whole height of the file
+	* f1 and f2 have specific meanings... wonder what they are
+	* The first thing is just a bunch of numbers that sum to the height. (28 is the lowest byte that can't be mistaken for 29, the full-line code)
+	* 
+
+	* Another issue: re-used letters in the names. The "ri" in Alisa/Meryl, the two "ho" in Honghua, and the "a" in Alisa/Honghua.
+		* Need to find out where the tile is being selected in the code so I can repoint it.
+		* a1 = 0xa (8c)
+		* a2 = 0xb  (9a)
+		* ri1 = 0xc (a8)
+		* ri2 = 0xd (b6)
+		* sa1 = 0xe (c4)
+		* sa2 = 0xf (d2)
+		* me1 = 0x10 (e0)
+		* me2 = 0x11 (ee)
+		* ru1 = 0x12 (fc)
+		* ru2 = 0x13
+		* ne1 = 0x14
+		* ne2 = 0x15
+		* do1 = 0x16
+		* do2 = 0x17
+		* ra1 = 0x18
+		* ra2 = 0x19
+		* ho1 = 0x1a
+		* ho2 = 0x1b
+		* n1, n2 = ??
+		* Alisa = 0a 0b 0c 0d 0e 0f
+		* Meryl = 10 11 0c 0d 12 13 (16 17 12 13 18 19)
+		* This isn't the right format. More research is needed
+
+	* Big table in POSINT.COM:
+		* First image is b:op1.sel, at 29a6 or 29a8
+		* First pointer in that table is like 2a something
+		* Most of these values are in the middle of filenames. Maybe they're not related or have a weird constant
+		* Is there anything in the .SEL to define a "sprite"? What relationship does 
+
+		* Looking for values like 8c, 9a, etc
+			* POS.EXE:bf6 has a table of values like bc0e, 9a0e, a90e, b80e (multiples of e, and e)
+			* Lots of instances in code with 8c0e, 9a0e, etc. Try replacing them in debugger and see if I can get a tile to switch
+
+
 	
 	Wider-than-8 images seem to work as expected - it writes the whole block, then goes to the next one
 

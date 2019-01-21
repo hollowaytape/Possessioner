@@ -28,8 +28,7 @@ def encode(filename):
 
     with open(sel_filename, 'wb') as f:
         f.write(blocks.to_bytes(1, 'little'))
-        f.write(height.to_bytes(1, 'little'))
-        f.write(b'\x00')
+        f.write(height.to_bytes(2, 'little'))
 
         pattern_cursor = 0
         while pattern_cursor < len(pattern_sequence):
@@ -39,12 +38,15 @@ def encode(filename):
             if pattern == b'\xff':
                 consecutive_full_lines = 1
                 pattern_cursor += 1
-                while pattern_sequence[pattern_cursor] == b'\xff':
-                    consecutive_full_lines += 1
-                    pattern_cursor += 1
 
-                    if pattern_cursor == len(pattern_sequence):
-                        break
+                if pattern_cursor < len(pattern_sequence):
+
+                    while pattern_sequence[pattern_cursor] == b'\xff':
+                        consecutive_full_lines += 1
+                        pattern_cursor += 1
+
+                        if pattern_cursor == len(pattern_sequence):
+                            break
 
                 print(consecutive_full_lines, "consecutive full lines there")
                 full_line_byte = 0x28 + consecutive_full_lines
@@ -70,13 +72,41 @@ def encode(filename):
                 for b in binaries:
                     f.write(b)
 
-        # I dunno. Make it grey instead of maroon
-        f.write(b'\x00\x28\x02')
-
-        f.write(b'\x00\xf1')
-        # (Same effect as just doing height. Doesn't cover the second half)
-        f.write((height * blocks).to_bytes(1, 'little'))
+        # Divider
         f.write(b'\x00')
+
+        # Thing with the 28's. Dunno what it is
+        height_to_cover = height * blocks
+        while height_to_cover > 0x28:
+            f.write(b'\x28')
+            height_to_cover -= 0x28
+        f.write(height_to_cover.to_bytes(1, 'little'))
+        f.write(b'\x00')
+
+        # 2nd plane thing? with the f1
+        height_to_cover = height * blocks
+        while height_to_cover > 0xff:
+            f.write(b'\xf1')
+            f.write(b'\xff')
+            height_to_cover -= 0xff
+        f.write(b'\xf1')
+        f.write(height_to_cover.to_bytes(1, 'little'))
+        f.write(b'\x00')
+
+        # 3rd plane thing? with the f2
+        height_to_cover = height * blocks
+        while height_to_cover > 0xff:
+            f.write(b'\xf2')
+            f.write(b'\xff')
+            height_to_cover -= 0xff
+        f.write(b'\xf2')
+        f.write(height_to_cover.to_bytes(1, 'little'))
+        f.write(b'\x00')
+
+        #f.write(b'\x00\xf1')
+        ## (Same effect as just doing height. Doesn't cover the second half)
+        #f.write((height * blocks).to_bytes(1, 'little'))
+        #f.write(b'\x00')
 
         # These don't do anything
         #f.write(b'\x00\xf2')
@@ -84,4 +114,4 @@ def encode(filename):
         #f.write(b'\x00')
 
 if __name__ == "__main__":
-    encode('test.png')
+    encode('img/original/font.png')
