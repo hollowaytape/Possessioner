@@ -1,9 +1,12 @@
 """
-    .SEL encoder for Possessioner. 
+    .SEL encoder for Possessioner.
 """
 
-from PIL import Image, ImageDraw
+from shutil import copyfile
+from PIL import Image
 from bitstring import BitArray
+from romtools.disk import Disk
+from rominfo import TARGET_ROM_PATH
 
 def encode(filename):
     sel_filename = filename.replace('png', 'sel')
@@ -103,15 +106,15 @@ def encode(filename):
         f.write(height_to_cover.to_bytes(1, 'little'))
         f.write(b'\x00')
 
-        #f.write(b'\x00\xf1')
-        ## (Same effect as just doing height. Doesn't cover the second half)
-        #f.write((height * blocks).to_bytes(1, 'little'))
-        #f.write(b'\x00')
-
-        # These don't do anything
-        #f.write(b'\x00\xf2')
-        #f.write(height.to_bytes(1, 'little'))
-        #f.write(b'\x00')
-
 if __name__ == "__main__":
-    encode('img/original/font.png')
+    filenames = ["font.png", "font2.png"]
+
+    for filename in filenames:
+        sel_filename = filename.replace('.png', '.sel')
+
+        encode('img/edited/%s' % filename)
+        copyfile('img/edited/%s' % sel_filename, 'patched/%s' % sel_filename)
+
+        disk = Disk(TARGET_ROM_PATH)
+        disk.insert('patched/%s' % sel_filename, path_in_disk='PSSR')
+

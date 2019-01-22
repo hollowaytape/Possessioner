@@ -27,6 +27,20 @@ for filename in FILES_TO_REINSERT:
         gamefile.edit(0xa0ba, b'\x74\x15\x30\xe4\x90\x90\x90\x90\x90\x90\x90\x90')
         gamefile.edit(0xa0cd, b'\x90\x90')
 
+        # Reassign tile numbers for in-battle nametag images
+        # Alisa
+        gamefile.edit(0xd81a, b'abcde\x0d')
+
+        # Meryl
+        gamefile.edit(0xd831, b'fghijk')
+
+        # Honghua?
+        #gamefile.edit(0xdb82a, b'')
+
+        # Nedra?
+        gamefile.edit(0xd831, b'lmnop\x0d')
+
+
 
     for block in FILE_BLOCKS[filename]:
         block = Block(gamefile, block)

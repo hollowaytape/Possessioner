@@ -205,11 +205,14 @@ Images:
 		* First image is b:op1.sel, at 29a6 or 29a8
 		* First pointer in that table is like 2a something
 		* Most of these values are in the middle of filenames. Maybe they're not related or have a weird constant
-		* Is there anything in the .SEL to define a "sprite"? What relationship does 
+		* Is there anything in the .SEL to define a "sprite"? What relationship does 0x28 have to the sprite height? (none)
 
 		* Looking for values like 8c, 9a, etc
 			* POS.EXE:bf6 has a table of values like bc0e, 9a0e, a90e, b80e (multiples of e, and e)
 			* Lots of instances in code with 8c0e, 9a0e, etc. Try replacing them in debugger and see if I can get a tile to switch
+				* It's not these
+
+	* It's at POS.EXE:d82a.
 
 
 	
