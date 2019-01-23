@@ -173,8 +173,26 @@ Images:
 		f2 2a 00
 	* ff + 89 = 188, the height of font1. Something about f1 and f2 needs to be applied to the whole height of the file
 	* f1 and f2 have specific meanings... wonder what they are
-	* The first thing is just a bunch of numbers that sum to the height. (28 is the lowest byte that can't be mistaken for 29, the full-line code)
-	* 
+	* The first thing is just a bunch of numbers that sum to the height. (28 is the lowest byte that can't be mistaken for 29, the full-line code
+
+
+	* Getting rid of the final section in p4: Just removes the cyan sections.
+		* Maybe it's a section per color??
+			* 2a b0 c0 c0 c9 80 01 
+			* 2a b0 c0 c0 c9 80 01 
+			* 2a b0 c0 c0 c9 80 01
+				* 2a = two full lines (yes)
+				* b0 = ?? (read some binary?)
+				* 
+	* Getting rid of the penultimate section in p4: Only black, orange, and different orange remain
+
+	* First pass-through draws in the orange plane
+	* Second pass-through draws in the... pink plane?
+		* 12 c9 7f 29 12 c9 7f 29 03 c9 1f a3 10 00 80 a3 00
+			* 12: Skip 18 lines
+			* c9: read 1 binary
+				* 7f: 0111 1111
+				* 29: 1 full line
 
 	* Another issue: re-used letters in the names. The "ri" in Alisa/Meryl, the two "ho" in Honghua, and the "a" in Alisa/Honghua.
 		* Need to find out where the tile is being selected in the code so I can repoint it.
