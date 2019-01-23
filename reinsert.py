@@ -28,17 +28,18 @@ for filename in FILES_TO_REINSERT:
         gamefile.edit(0xa0cd, b'\x90\x90')
 
         # Reassign tile numbers for in-battle nametag images
+        # a = space
         # Alisa
-        gamefile.edit(0xd81a, b'abcde\x0d')
+        gamefile.edit(0xd81a, b'aabcde')
+
+        # Honghua
+        gamefile.edit(0xd821, b'anopqrst')
 
         # Meryl
-        gamefile.edit(0xd831, b'fghijk')
-
-        # Honghua?
-        #gamefile.edit(0xdb82a, b'')
+        gamefile.edit(0xd82a, b'aafghi')
 
         # Nedra?
-        gamefile.edit(0xd831, b'lmnop\x0d')
+        gamefile.edit(0xd831, b'ajgklm')
 
 
 

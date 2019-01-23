@@ -23,10 +23,10 @@ if __name__ == '__main__':
     #gem_filename = os.path.join("original", "CD", gem_filename)
 
     # View an edited image
-    gem_filename = gem_filename
+    gem_filename = os.path.join('patched', gem_filename)
 
     #copyfile(gem_filename, "MENU.CGX")
-    copyfile(gem_filename, 'FONT2.SEL')
+    #copyfile(gem_filename, 'FONT2.SEL')
 
     #with open("ORTITLE.GEM", 'rb+') as f:
     #    # Red/grey   are between 4000-5000
@@ -37,6 +37,6 @@ if __name__ == '__main__':
 
     d = Disk(TARGET_ROM_PATH)
     # d.insert("MENU.CGX", path_in_disk='PSSR')
-    d.insert('FONT2.SEL', path_in_disk='MLD')
+    d.insert(gem_filename, path_in_disk='MLD')
 
    #d.insert(gem_filename, path_in_disk='TGL/OR')

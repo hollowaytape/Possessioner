@@ -107,7 +107,7 @@ def encode(filename):
         f.write(b'\x00')
 
 if __name__ == "__main__":
-    filenames = ["font.png", "font2.png"]
+    filenames = ["font.png", "font2.png", "p4.png"]
 
     for filename in filenames:
         sel_filename = filename.replace('.png', '.sel')
