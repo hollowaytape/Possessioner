@@ -124,6 +124,7 @@ def encode(filename):
         """
 
         # Thing with the 28's. Dunno what it is
+
         height_to_cover = height * blocks + 0xfff
         while height_to_cover > 0x28:
             f.write(b'\x28')
@@ -154,8 +155,8 @@ def encode(filename):
         """
 
 if __name__ == "__main__":
-    #filenames = ["font.png", "font2.png", "p4.png"]
-    filenames = ['p4.png']
+    filenames = ["font.png", "font2.png", "p4.png", "p5.png"]
+    #filenames = ['p4.png']
 
     for filename in filenames:
         sel_filename = filename.replace('.png', '.sel')
