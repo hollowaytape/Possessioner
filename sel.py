@@ -9,7 +9,11 @@ from romtools.disk import Disk
 from rominfo import TARGET_ROM_PATH
 
 def encode(filename):
+    if 'font' in filename:
+        raise Exception("Use old_sel.py to encode this file")
+
     sel_filename = filename.replace('png', 'sel')
+
 
     img = Image.open(filename)
     width, height = img.size
@@ -121,41 +125,41 @@ def encode(filename):
 
         # TODO: Write the pink pattern
 
-        """
 
         # Thing with the 28's. Dunno what it is
+        """
+        if "font" in filename:
+            height_to_cover = height * blocks
+            while height_to_cover > 0x28:
+                f.write(b'\x28')
+                height_to_cover -= 0x28
+            f.write(height_to_cover.to_bytes(1, 'little'))
+            f.write(b'\x00')
 
-        height_to_cover = height * blocks + 0xfff
-        while height_to_cover > 0x28:
-            f.write(b'\x28')
-            height_to_cover -= 0x28
-        f.write(height_to_cover.to_bytes(1, 'little'))
-        f.write(b'\x00')
-
-        # 2nd plane thing? with the f1
-        height_to_cover = height * blocks + 0xfff
-        while height_to_cover > 0xff:
+            # 2nd plane thing? with the f1
+            height_to_cover = height * blocks
+            while height_to_cover > 0xff:
+                f.write(b'\xf1')
+                f.write(b'\xff')
+                height_to_cover -= 0xff
             f.write(b'\xf1')
-            f.write(b'\xff')
-            height_to_cover -= 0xff
-        f.write(b'\xf1')
-        f.write(height_to_cover.to_bytes(1, 'little'))
-        f.write(b'\x00')
+            f.write(height_to_cover.to_bytes(1, 'little'))
+            f.write(b'\x00')
 
-        # 3rd plane thing? with the f2
-        height_to_cover = height * blocks + 0xfff
-        while height_to_cover > 0xff:
+            # 3rd plane thing? with the f2
+            height_to_cover = height * blocks
+            while height_to_cover > 0xff:
+                f.write(b'\xf2')
+                f.write(b'\xff')
+                height_to_cover -= 0xff
             f.write(b'\xf2')
-            f.write(b'\xff')
-            height_to_cover -= 0xff
-        f.write(b'\xf2')
-        f.write(height_to_cover.to_bytes(1, 'little'))
-        f.write(b'\x00')
-
+            f.write(height_to_cover.to_bytes(1, 'little'))
+            f.write(b'\x00')
         """
 
+
 if __name__ == "__main__":
-    filenames = ["font.png", "font2.png", "p4.png", "p5.png"]
+    filenames = ["p4.png", "p5.png"]
     #filenames = ['p4.png']
 
     for filename in filenames:

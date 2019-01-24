@@ -267,6 +267,7 @@ Images:
 			* f4 08: sad Honghua
 			* f4 09: normal Meryl
 		* f5 XX is ?
+			* always f5 00?
 
 		
 	* Talk Honghua 2: f0 07 f2 01 f4 01 f5 00 (Arisa speaks)

@@ -6,7 +6,7 @@
 import sys
 import os
 import xlsxwriter
-from rominfo import FILE_BLOCKS, FILES, ORIGINAL_ROM_DIR, DUMP_XLS_PATH
+from rominfo import FILE_BLOCKS, FILES, ORIGINAL_ROM_DIR, DUMP_XLS_PATH, CONTROL_CODES
 
 COMPILER_MESSAGES = [b'Turbo', b'Borland', b'C++', b'Library', b'Copyright']
 
@@ -65,7 +65,7 @@ def dump(files):
                     break
 
             for (start, stop) in blocks:
-                print((hex(start), hex(stop)))
+                #print((hex(start), hex(stop)))
                 cursor = start
                 sjis_buffer_start = cursor
 
@@ -85,6 +85,13 @@ def dump(files):
                         # ASCII text
                         elif 0x20 <=contents[cursor] <= 0x7e and ASCII_MODE in (1, 2):
                             sjis_buffer += contents[cursor].to_bytes(1, byteorder='little')
+
+                        elif contents[cursor] in (0xf0, 0xf2, 0xf4, 0xf5):
+                            code = contents[cursor:cursor+2]
+                            print(filename, hex(start + cursor))
+                            print(code)
+                            sjis_buffer += CONTROL_CODES[code]
+                            cursor += 1
 
                         # C string formatting with %
                         #elif contents[cursor] == 0x25:

@@ -82,7 +82,9 @@ for gamefile in FILES_WITH_POINTERS:
         if gamefile.endswith('.MSD'):
             target_areas = []
             for t in Dump.get_translations(gamefile, include_blank=True):
-                target_areas.append((t.location - 8, t.location - 7))
+                if b'[Start]' in t.japanese:
+                    #target_areas.append((t.location - 8, t.location - 7))
+                    target_areas.append((t.location, t.location))
 
 
         # target_area = (GF.pointer_constant, len(bs))
