@@ -58,9 +58,16 @@ for filename in FILES_TO_REINSERT:
             #print(t.english)
             loc_in_block = t.location - block.start + diff
 
+            if t.en_bytestring != b'' and t.en_bytestring != t.prefix:
+                print(t.en_bytestring)
+                print(t.prefix)
+                print("hi", t.en_bytestring)
+
             for cc in inverse_CTRL:
                 t.jp_bytestring = t.jp_bytestring.replace(cc, inverse_CTRL[cc])
                 t.en_bytestring = t.en_bytestring.replace(cc, inverse_CTRL[cc])
+                if t.prefix is not None:
+                    t.prefix = t.prefix.replace(cc, inverse_CTRL[cc])
 
             this_diff = len(t.en_bytestring) - len(t.jp_bytestring)
 
@@ -72,27 +79,8 @@ for filename in FILES_TO_REINSERT:
             #    t.en_bytestring += b' '
             #    this_diff = len(t.en_bytestring) - len(t.jp_bytestring)
 
-            if t.en_bytestring != b'':
-                print(t.en_bytestring)
 
-
-            """
-            if filename.endswith('.DAT'):
-                print(t.en_bytestring)
-                print(t.jp_bytestring)
-                print("Diff is ", this_diff)
-                # Need to pad with 00's
-                while this_diff < 0:
-                    t.en_bytestring += b'\x00'
-                    this_diff += 1
-                while this_diff > 0:
-                    t.jp_bytestring += b'\x00'
-                    this_diff -= 1
-
-                assert len(t.en_bytestring) - len(t.jp_bytestring) == 0
-            """
-
-            if t.english == b'' or t.english == t.japanese:
+            if t.english == b'' or t.en_bytestring == t.prefix or t.english == t.japanese:
                 #print(hex(t.location), t.english, "Blank string")
                 this_diff = 0
                 #print("Diff is", diff)
@@ -125,11 +113,12 @@ for filename in FILES_TO_REINSERT:
             diff += this_diff
             print("Diff is", diff)
 
-        block_diff = len(block.blockstring) - len(block.original_blockstring)
-        if block_diff < 0:
-            block.blockstring += (-1)*block_diff*b'\x00'
-        block_diff = len(block.blockstring) - len(block.original_blockstring)
-        assert block_diff == 0, block_diff
+        if not filename.endswith('.MSD'):
+            block_diff = len(block.blockstring) - len(block.original_blockstring)
+            if block_diff < 0:
+                block.blockstring += (-1)*block_diff*b'\x00'
+            block_diff = len(block.blockstring) - len(block.original_blockstring)
+            assert block_diff == 0, block_diff
 
         block.incorporate()
 

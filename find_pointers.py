@@ -7,8 +7,8 @@ from romtools.disk import Gamefile
 
 from rominfo import POINTER_CONSTANT, POINTER_TABLES, POINTER_TABLE_SEPARATOR, FILE_BLOCKS, DUMP_XLS_PATH
 
-#FILES_WITH_POINTERS = POINTER_CONSTANT
-FILES_WITH_POINTERS = ['POS1.MSD']
+FILES_WITH_POINTERS = POINTER_CONSTANT
+#FILES_WITH_POINTERS = ['POS1.MSD']
 
 # POINTER_CONSTANT is the line where "Borland Compiler" appears, rounded down to the nearest 0x10.
 
@@ -85,7 +85,7 @@ for gamefile in FILES_WITH_POINTERS:
         if gamefile.endswith('.MSD'):
             target_areas = []
             for t in Dump.get_translations(gamefile, include_blank=True):
-                if b'[Start]' in t.japanese:
+                if t.command is not None:
                     #target_areas.append((t.location - 8, t.location - 7))
                     if t.location > 0x00:
                         print("Target: " + hex(t.location))

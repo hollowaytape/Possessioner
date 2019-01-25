@@ -20,23 +20,53 @@ THRESHOLD = 2
 
 def dump(files):
     for filename in FILES:
-        # Keep CEDIT/MAIN.EXE safe
-        clean_filename = filename.replace('/', '-')
+        worksheet = workbook.add_worksheet(filename)
 
-        worksheet = workbook.add_worksheet(clean_filename)
-        worksheet.write(0, 0, 'Offset', header)
-        worksheet.write(0, 1, 'Japanese', header)
-        worksheet.write(0, 2, 'JP_len', header)
-        worksheet.write(0, 3, 'English', header)
-        worksheet.write(0, 4, 'EN_len', header)
-        worksheet.write(0, 5, 'Comments', header)
+        OFFSET_COLUMN = 0
+        if filename.endswith('.MSD'):
+            COMMAND_COLUMN = 1
+            CODES_COLUMN = 2
+            JP_COLUMN = 3
+            JP_LEN_COLUMN = 4
+            EN_COLUMN = 5
+            EN_LEN_COLUMN = 6
+            COMMENT_COLUMN = 7
+        else:
+            JP_COLUMN = 1
+            JP_LEN_COLUMN = 2
+            EN_COLUMN = 3
+            EN_LEN_COLUMN = 4
+            COMMENT_COLUMN = 5
+
+        worksheet.write(0, OFFSET_COLUMN, 'Offset', header)
+        worksheet.write(0, JP_COLUMN, 'Japanese', header)
+        worksheet.write(0, JP_LEN_COLUMN, 'JP_len', header)
+        worksheet.write(0, EN_COLUMN, 'English', header)
+        worksheet.write(0, EN_LEN_COLUMN, 'EN_len', header)
+        worksheet.write(0, COMMENT_COLUMN, 'Comments', header)
 
         worksheet.set_column('A:A', 8)
-        worksheet.set_column('B:B', 60)
-        worksheet.set_column('C:C', 5)
-        worksheet.set_column('D:D', 60)
-        worksheet.set_column('E:E', 5)
-        worksheet.set_column('F:F', 60)
+        if filename.endswith('.MSD'):
+            worksheet.write(0, COMMAND_COLUMN, 'Command', header)
+            worksheet.write(0, CODES_COLUMN, 'Ctrl Codes', header)
+
+            worksheet.set_column('B:B', 20)
+            worksheet.set_column('D:D', 60)
+            worksheet.set_column('E:E', 5)
+            worksheet.set_column('F:F', 60)
+            worksheet.set_column('G:G', 5)
+            worksheet.set_column('H:H', 60)
+            JP_COLUMN_LETTER = 'D'
+            EN_COLUMN_LETTER = 'F'
+        else:
+            worksheet.set_column('B:B', 60)
+            worksheet.set_column('C:C', 5)
+            worksheet.set_column('D:D', 60)
+            worksheet.set_column('E:E', 5)
+            worksheet.set_column('F:F', 60)
+            JP_COLUMN_LETTER = 'B'
+            EN_COLUMN_LETTER = 'D'
+
 
         row = 1
         blocks = FILE_BLOCKS[filename]
@@ -57,7 +87,7 @@ def dump(files):
             sjis_strings = []
 
             for c in COMPILER_MESSAGES:
-                print(c)
+                #print(c)
                 if c in contents:
                     #print(contents)
                     cursor = contents.index(c)
@@ -88,8 +118,8 @@ def dump(files):
 
                         elif contents[cursor] in (0xf0, 0xf2, 0xf4, 0xf5):
                             code = contents[cursor:cursor+2]
-                            print(filename, hex(start + cursor))
-                            print(code)
+                            #print(filename, hex(start + cursor))
+                            #print(code)
                             sjis_buffer += CONTROL_CODES[code]
                             cursor += 1
 
@@ -133,6 +163,15 @@ def dump(files):
                 if len(s[1]) < THRESHOLD:
                     continue
 
+                codes = b""
+                while s[1].startswith(b'['):
+                    codes += s[1].split(b']')[0] + b']'
+                    s = (s[0], b']'.join(s[1].split(b']')[1:]))
+
+                command = b''
+                if b'[Start]' in codes:
+                    command = b'?'
+
                 loc = '0x' + hex(s[0]).lstrip('0x').zfill(5)
                 try:
                     jp = s[1].decode('shift-jis')
@@ -142,24 +181,24 @@ def dump(files):
 
                 if len(jp.strip()) == 0:
                     continue
-                print(loc, jp)
+                #print(loc, jp)
 
                 worksheet.write(row, 0, loc)
-                worksheet.write(row, 1, jp)
+                worksheet.write(row, JP_COLUMN, jp)
+
+                if filename.endswith('.MSD'):
+                    worksheet.write(row, CODES_COLUMN, codes.decode('shift-jis'))
+                    worksheet.write(row, COMMAND_COLUMN, command.decode('shift-jis'))
+
+                worksheet.write(row, JP_LEN_COLUMN, "=LEN(%s%s)*2" % (JP_COLUMN_LETTER, row+1))
+                worksheet.write(row, EN_LEN_COLUMN, "=LEN(%s%s)" % (EN_COLUMN_LETTER, row+1))
                 row += 1
 
     workbook.close()
 
 if __name__ == '__main__':
-    #if len(sys.argv) < 2:
-    #    print("Usage: python dumper.py folderwithgamefilesinit")
-    #    sys.exit(1)
-    #'patched' = sys.argv[1]
     workbook = xlsxwriter.Workbook(DUMP_XLS_PATH)
     header = workbook.add_format({'bold': True, 'align': 'center', 'bottom': True, 'bg_color': 'gray'})
-    #FILES = [f for f in os.listdir('patched') if os.path.isfile(os.path.join('patched', f))]
-    #FILES = ['IDS.decompressed', 'IS2.decompressed']
+
     print(FILES)
     dump(FILES)
-
-    #find_blocks('patched/IDS.decompressed')
