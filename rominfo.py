@@ -117,6 +117,8 @@ CONTROL_CODES = {
     b'\xf5\x03': b'[f503?]',
 }
 
+inverse_CTRL = {v: k for k, v in CONTROL_CODES.items()}
+
 
 FILE_BLOCKS = {
     "POS.EXE": [

@@ -5,7 +5,7 @@
 
 import os
 
-from rominfo import FILE_BLOCKS, ORIGINAL_ROM_PATH, TARGET_ROM_PATH, DUMP_XLS_PATH, POINTER_DUMP_XLS_PATH
+from rominfo import FILE_BLOCKS, ORIGINAL_ROM_PATH, TARGET_ROM_PATH, DUMP_XLS_PATH, POINTER_DUMP_XLS_PATH, inverse_CTRL
 from romtools.disk import Disk, Gamefile, Block
 from romtools.dump import DumpExcel, PointerExcel
 
@@ -21,6 +21,13 @@ for filename in FILES_TO_REINSERT:
     gamefile_path = os.path.join('original', filename)
 
     gamefile = Gamefile(gamefile_path, disk=OriginalPssr, dest_disk=TargetPssr)
+
+    # .MSD files have their pointers in 
+    if filename.endswith('.MSD'):
+        pointer_gamefile = Gamefile('patched\\POS.EXE', disk=OriginalPssr, 
+                                    dest_disk=TargetPssr, pointer_sheet_name=filename)
+    else:
+        pointer_gamefile = gamefile
 
     if filename == 'POS.EXE':
         # Ascii text hack for nametags, see notes.txt
@@ -42,7 +49,6 @@ for filename in FILES_TO_REINSERT:
         gamefile.edit(0xd831, b'ajgklm')
 
 
-
     for block in FILE_BLOCKS[filename]:
         block = Block(gamefile, block)
         print(block)
@@ -51,6 +57,10 @@ for filename in FILES_TO_REINSERT:
         for t in Dump.get_translations(block, include_blank=True):
             #print(t.english)
             loc_in_block = t.location - block.start + diff
+
+            for cc in inverse_CTRL:
+                t.jp_bytestring = t.jp_bytestring.replace(cc, inverse_CTRL[cc])
+                t.en_bytestring = t.en_bytestring.replace(cc, inverse_CTRL[cc])
 
             this_diff = len(t.en_bytestring) - len(t.jp_bytestring)
 
@@ -87,7 +97,7 @@ for filename in FILES_TO_REINSERT:
                 this_diff = 0
                 #print("Diff is", diff)
 
-                gamefile.edit_pointers_in_range((previous_text_offset, t.location), diff)
+                pointer_gamefile.edit_pointers_in_range((previous_text_offset, t.location), diff)
                 previous_text_offset = t.location
                 continue
 
@@ -109,7 +119,7 @@ for filename in FILES_TO_REINSERT:
 
             block.blockstring = block.blockstring.replace(t.jp_bytestring, t.en_bytestring, 1)
 
-            gamefile.edit_pointers_in_range((previous_text_offset, t.location), diff)
+            pointer_gamefile.edit_pointers_in_range((previous_text_offset, t.location), diff)
             previous_text_offset = t.location
 
             diff += this_diff
@@ -124,3 +134,4 @@ for filename in FILES_TO_REINSERT:
         block.incorporate()
 
     gamefile.write(path_in_disk=path_in_disk)
+    pointer_gamefile.write(path_in_disk=path_in_disk)

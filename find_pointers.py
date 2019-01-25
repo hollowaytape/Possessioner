@@ -1,12 +1,14 @@
-import re
 import os
 from collections import OrderedDict
+# Need the third-party regex library, which supports overlapping matches
+import regex as re
 from romtools.dump import BorlandPointer, DumpExcel, PointerExcel
 from romtools.disk import Gamefile
 
 from rominfo import POINTER_CONSTANT, POINTER_TABLES, POINTER_TABLE_SEPARATOR, FILE_BLOCKS, DUMP_XLS_PATH
 
-FILES_WITH_POINTERS = POINTER_CONSTANT
+#FILES_WITH_POINTERS = POINTER_CONSTANT
+FILES_WITH_POINTERS = ['POS1.MSD']
 
 # POINTER_CONSTANT is the line where "Borland Compiler" appears, rounded down to the nearest 0x10.
 
@@ -27,12 +29,13 @@ Dump = DumpExcel(DUMP_XLS_PATH)
 
 # Removing the 9a at the end of this one. Didn't show up in some pointers.
 pointer_regex = r'\\xbe\\x([0-f][0-f])\\x([0-f][0-f])\\xe8'
-msd_pointer_regex = r'\\xff\\x02\\x([0-f][0-f])\\x([0-f][0-f])'
+# msd_pointer_regex = r'\\xff\\x02\\x([0-f][0-f])\\x([0-f][0-f])'
+msd_pointer_regex = r'\\x02\\x([0-f][0-f])\\x([0-f][0-f])'
 table_pointer_regex = r'\\x([0-f][0-f])\\x([0-f][0-f])sep'
 
 
 def capture_pointers_from_function(hx, regex): 
-    return re.compile(regex).finditer(hx)
+    return re.compile(regex).finditer(hx, overlapped=True)
 
 
 def location_from_pointer(pointer, constant):
@@ -84,7 +87,9 @@ for gamefile in FILES_WITH_POINTERS:
             for t in Dump.get_translations(gamefile, include_blank=True):
                 if b'[Start]' in t.japanese:
                     #target_areas.append((t.location - 8, t.location - 7))
-                    target_areas.append((t.location, t.location))
+                    if t.location > 0x00:
+                        print("Target: " + hex(t.location))
+                        target_areas.append((t.location, t.location))
 
 
         # target_area = (GF.pointer_constant, len(bs))
@@ -157,15 +162,13 @@ for gamefile in FILES_WITH_POINTERS:
                     # TODO: The +2 might be extraneous. Might just be the next one
                     pointer_location = p.start()//4 + 2
                 elif regex == msd_pointer_regex:
-                    pointer_location = p.start()//4 + 4
+                    pointer_location = p.start()//4 + 1
                 else:
                     pointer_location = p.start()//4
 
                 pointer_location = '0x%05x' % pointer_location
 
                 text_location = int(location_from_pointer((p.group(1), p.group(2)), GF.pointer_constant), 16)
-
-                #print("Text:", hex(text_location), "Pointer:", pointer_location)
 
                 if all([not t[0] <= text_location<= t[1] for t in target_areas]):
                     #print("Skipping")
@@ -198,7 +201,7 @@ for gamefile in FILES_WITH_POINTERS:
         else:
             separator = b'\x0d'
         obj = BorlandPointer(gamefile, pointer_locations, text_location, separator=separator)
-        print(text_location)
+        print(hex(text_location))
         #print(pointer_locations)
         for pointer_loc in pointer_locations:
             worksheet.write(row, 0, hex(text_location))
