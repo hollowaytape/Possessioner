@@ -29,6 +29,7 @@ FILES = ['POSM.EXE', 'POS.EXE', 'POS1.MSD', 'P_7.MSD', 'P_71.MSD',
 # "Arisa, songs of being fucked by the machine"
 
 CONTROL_CODES = {
+    b'\x0d\xf3': b'[LN]',
 
     # Text colors
     b'\xf0\x00': b'[Black]',
@@ -86,7 +87,6 @@ CONTROL_CODES = {
     b'\xf2\x2c': b'[I really dunno]',
     b'\xf2\x44': b'[I still dunno]',
 
-
     # Portraits
     b'\xf4\x00': b'[P-Same]',
     b'\xf4\x01': b'[P-Al-Neutral]',
@@ -127,10 +127,13 @@ FILE_BLOCKS = {
         (0xa122, 0xa397),  # table thing
         (0xab98, 0xac3e),
         (0xcf61, 0xd12a),
-        (0xdb2d, 0xdb3f), # Arisa
-        (0xdb63, 0xdb74), # Hong Ho
-        (0xdb99, 0xdbaa), # Melissa
-        (0xdbcf, 0xdbe0), # Sedora
+        (0xdb2d, 0xdb3f), # Alisa
+        (0xdb63, 0xdb74), # Honghua
+        (0xdb99, 0xdbaa), # Meryl
+        (0xdbcf, 0xdbe0), # Nedra
+        (0xdc13, 0xdc23),
+        (0xdc60, 0xdc70),
+        (0xdcad, 0xdcbd),
         # Some more annoying ones to map between 0xdc13 and 0sdd93
         (0xe00b, 0xe1fb),
         # and a ton more between ~0x17000 and 0x28000
@@ -151,6 +154,7 @@ POINTER_CONSTANT = {
     'POS.EXE': 0x7b00,
     'POSM.EXE': 0xafe0,
     'POS1.MSD': 0,
+    #'YUMI.MSD': 0,
 }
 
 # b238  = 58 02
@@ -161,6 +165,7 @@ POINTER_CONSTANT = {
 POINTER_TABLES = {
     'POS.EXE': [
         (0x88bf, 0x8b03),
+        (0xdfab, 0xe00b), # battle things
     ]
 }
 
