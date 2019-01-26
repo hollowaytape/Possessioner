@@ -31,6 +31,8 @@ FILES = ['POSM.EXE', 'POS.EXE', 'POS1.MSD', 'P_7.MSD', 'P_71.MSD',
 CONTROL_CODES = {
     b'\x0d\xf3': b'[LN]',
 
+    b'\x0d': b'[0d]',
+
     # Text colors
     b'\xf0\x00': b'[Black]',
     b'\xf0\x01': b'[Blue]',
@@ -136,7 +138,54 @@ FILE_BLOCKS = {
         (0xdcad, 0xdcbd),
         # Some more annoying ones to map between 0xdc13 and 0sdd93
         (0xe00b, 0xe1fb),
-        # and a ton more between ~0x17000 and 0x28000
+
+        (0xf0ac, 0xf0bc), # BC 1
+        (0xf0f9, 0xf109), # BC 2
+        (0xf146, 0xf156), # BC 3
+        (0xf193, 0xf197), # Yumi
+
+        # The rest are all Bio Clusters
+        (0x162a4, 0x162b4),
+        (0x162f1, 0x16301),
+        (0x1633e, 0x1634e),
+        (0x1638b, 0x1639b),
+
+        (0x166b3, 0x166c3),
+        (0x16700, 0x16710),
+        (0x1674d, 0x1675d),
+        (0x1679a, 0x167aa),
+        (0x16c22, 0x16c32),
+
+        (0x17338, 0x17348),
+        (0x17385, 0x17395),
+        (0x173d2, 0x173e2),
+        (0x1741f, 0x1742f),
+
+        (0x17596, 0x175a6),
+        (0x175e3, 0x175f3),
+        (0x17630, 0x17640),
+        (0x17900, 0x17910),
+        (0x1794d, 0x1795d),
+        (0x1799a, 0x179aa),
+
+        (0x17ce1, 0x17cf1),
+        (0x17d2e, 0x17d3e),
+
+        (0x1814a, 0x1815a),
+        (0x18380, 0x18390),
+        (0x183cd, 0x183dd),
+
+        (0x186f8, 0x18708),
+        (0x18745, 0x18755),
+        (0x18792, 0x187a2),
+
+        (0x18a5b, 0x18a6b),
+        (0x18aa8, 0x18ab8),
+        (0x18af5, 0x18b05),
+
+        (0x18f7c, 0x18f8c),
+        (0x18fc9, 0x18fd9),
+
     ],
 
     "POSE.EXE": [
@@ -172,6 +221,11 @@ POINTER_TABLES = {
 POINTER_TABLE_SEPARATOR = {
     'POSM.EXE': '\\\\x1e\\\\x0a'
 }
+
+
+BAD_POINTERS = [
+#    (0xd0a8, )  # oops, this wasn't bad
+]
 
 # default to dumping the whole file
 for f in FILES:

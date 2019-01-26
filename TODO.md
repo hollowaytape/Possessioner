@@ -8,5 +8,3 @@
 	* Battles display text instantly. Might be nice to get instant text everywhere else
 	* Nametags also display instantly...
 	* Seems like more of a last-minute thing, but the sooner I do this the more time I'll save!
-* Are P_GYOTEI.MSD and P_GYOTEI.MSG the same file?
-	* No.

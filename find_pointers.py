@@ -5,7 +5,7 @@ import regex as re
 from romtools.dump import BorlandPointer, DumpExcel, PointerExcel
 from romtools.disk import Gamefile
 
-from rominfo import POINTER_CONSTANT, POINTER_TABLES, POINTER_TABLE_SEPARATOR, FILE_BLOCKS, DUMP_XLS_PATH
+from rominfo import POINTER_CONSTANT, POINTER_TABLES, POINTER_TABLE_SEPARATOR, FILE_BLOCKS, DUMP_XLS_PATH, BAD_POINTERS
 
 FILES_WITH_POINTERS = POINTER_CONSTANT
 #FILES_WITH_POINTERS = ['POS1.MSD']
@@ -160,7 +160,7 @@ for gamefile in FILES_WITH_POINTERS:
                 # Different offsets for each regex?
                 if regex == pointer_regex:
                     # TODO: The +2 might be extraneous. Might just be the next one
-                    pointer_location = p.start()//4 + 2
+                    pointer_location = p.start()//4 + 1
                 elif regex == msd_pointer_regex:
                     pointer_location = p.start()//4 + 1
                 else:
@@ -177,6 +177,9 @@ for gamefile in FILES_WITH_POINTERS:
                 all_locations = [int(pointer_location, 16),]
 
                 #print(pointer_locations)
+
+                if (text_location, pointer_location) in BAD_POINTERS:
+                    continue
 
                 if (GF2, text_location) in pointer_locations.keys():
                     all_locations = pointer_locations[(GF2, text_location)]

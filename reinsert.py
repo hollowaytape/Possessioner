@@ -14,7 +14,7 @@ PtrDump = PointerExcel(POINTER_DUMP_XLS_PATH)
 OriginalPssr = Disk(ORIGINAL_ROM_PATH, dump_excel=Dump, pointer_excel = PtrDump)
 TargetPssr = Disk(TARGET_ROM_PATH)
 
-FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE', 'POS1.MSD', 'YUMI.MSD']
+FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE',]
 
 for filename in FILES_TO_REINSERT:
     path_in_disk = "PSSR\\"
@@ -58,11 +58,6 @@ for filename in FILES_TO_REINSERT:
             #print(t.english)
             loc_in_block = t.location - block.start + diff
 
-            if t.en_bytestring != b'' and t.en_bytestring != t.prefix:
-                print(t.en_bytestring)
-                print(t.prefix)
-                print("hi", t.en_bytestring)
-
             for cc in inverse_CTRL:
                 t.jp_bytestring = t.jp_bytestring.replace(cc, inverse_CTRL[cc])
                 t.en_bytestring = t.en_bytestring.replace(cc, inverse_CTRL[cc])
@@ -104,6 +99,8 @@ for filename in FILES_TO_REINSERT:
                 index += len(t.jp_bytestring) # +2 because len('ll') == 2
 
             assert loc_in_block == i, (t, hex(loc_in_block), hex(i))
+            #while loc_in_block != i:
+
 
             block.blockstring = block.blockstring.replace(t.jp_bytestring, t.en_bytestring, 1)
 
