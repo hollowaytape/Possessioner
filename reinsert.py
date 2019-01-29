@@ -14,7 +14,7 @@ PtrDump = PointerExcel(POINTER_DUMP_XLS_PATH)
 OriginalPssr = Disk(ORIGINAL_ROM_PATH, dump_excel=Dump, pointer_excel = PtrDump)
 TargetPssr = Disk(TARGET_ROM_PATH)
 
-FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE',]
+FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE', 'YUMI.MSD']
 
 for filename in FILES_TO_REINSERT:
     path_in_disk = "PSSR\\"
@@ -55,7 +55,7 @@ for filename in FILES_TO_REINSERT:
         previous_text_offset = block.start
         diff = 0
         for t in Dump.get_translations(block, include_blank=True):
-            #print(t.english)
+            print(t.english)
             loc_in_block = t.location - block.start + diff
 
             for cc in inverse_CTRL:
@@ -65,15 +65,6 @@ for filename in FILES_TO_REINSERT:
                     t.prefix = t.prefix.replace(cc, inverse_CTRL[cc])
 
             this_diff = len(t.en_bytestring) - len(t.jp_bytestring)
-
-            # Taking off training wheels
-            #if this_diff > 0:
-            #    print(t.en_bytestring, t.jp_bytestring)
-            #    raise Exception
-            #while this_diff < 0 and t.en_bytestring != b'':
-            #    t.en_bytestring += b' '
-            #    this_diff = len(t.en_bytestring) - len(t.jp_bytestring)
-
 
             if t.english == b'' or t.en_bytestring == t.prefix or t.english == t.japanese:
                 #print(hex(t.location), t.english, "Blank string")
@@ -101,14 +92,14 @@ for filename in FILES_TO_REINSERT:
             assert loc_in_block == i, (t, hex(loc_in_block), hex(i))
             #while loc_in_block != i:
 
-
             block.blockstring = block.blockstring.replace(t.jp_bytestring, t.en_bytestring, 1)
+            #print(block.blockstring)
 
             pointer_gamefile.edit_pointers_in_range((previous_text_offset, t.location), diff)
             previous_text_offset = t.location
 
             diff += this_diff
-            print("Diff is", diff)
+            #print("Diff is", diff)
 
         if not filename.endswith('.MSD'):
             block_diff = len(block.blockstring) - len(block.original_blockstring)
@@ -117,6 +108,9 @@ for filename in FILES_TO_REINSERT:
             block_diff = len(block.blockstring) - len(block.original_blockstring)
             assert block_diff == 0, block_diff
 
+        if block.start in (0xdcfa, 0xdd47, 0xdd93, 0xf193):
+            print(block.original_blockstring)
+            print(gamefile.filestring[block.start:block.stop])
         block.incorporate()
 
     gamefile.write(path_in_disk=path_in_disk)

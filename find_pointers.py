@@ -29,6 +29,7 @@ Dump = DumpExcel(DUMP_XLS_PATH)
 
 # Removing the 9a at the end of this one. Didn't show up in some pointers.
 pointer_regex = r'\\xbe\\x([0-f][0-f])\\x([0-f][0-f])\\xe8'
+pointer_regex_2 = r'\\xbe\\x([0-f][0-f])\\x([0-f][0-f])\\xbf'  # that one combat pointer
 # msd_pointer_regex = r'\\xff\\x02\\x([0-f][0-f])\\x([0-f][0-f])'
 msd_pointer_regex = r'\\x02\\x([0-f][0-f])\\x([0-f][0-f])'
 table_pointer_regex = r'\\x([0-f][0-f])\\x([0-f][0-f])sep'
@@ -149,7 +150,7 @@ for gamefile in FILES_WITH_POINTERS:
 
 
         #print(pointer_regex)
-        for regex in (pointer_regex, msd_regex, table_regex):
+        for regex in (pointer_regex, pointer_regex_2, msd_regex, table_regex):
             if regex is None:
                 continue
             print(regex)
@@ -159,7 +160,8 @@ for gamefile in FILES_WITH_POINTERS:
                 #print(p)
                 # Different offsets for each regex?
                 if regex == pointer_regex:
-                    # TODO: The +2 might be extraneous. Might just be the next one
+                    pointer_location = p.start()//4 + 1
+                elif regex == pointer_regex_2:
                     pointer_location = p.start()//4 + 1
                 elif regex == msd_pointer_regex:
                     pointer_location = p.start()//4 + 1
