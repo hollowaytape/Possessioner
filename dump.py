@@ -116,7 +116,7 @@ def dump(files):
                         elif 0x20 <=contents[cursor] <= 0x7e and ASCII_MODE in (1, 2):
                             sjis_buffer += contents[cursor].to_bytes(1, byteorder='little')
 
-                        elif contents[cursor] in (0xf0, 0xf2, 0xf4, 0xf5):
+                        elif contents[cursor] in (0xf0, 0xf2, 0xf4, 0xf3, 0xf5):
                             code = contents[cursor:cursor+2]
                             #print(filename, hex(start + cursor))
                             #print(code)

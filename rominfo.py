@@ -89,6 +89,8 @@ CONTROL_CODES = {
     b'\xf2\x2c': b'[I really dunno]',
     b'\xf2\x44': b'[I still dunno]',
 
+    b'\xf3': b'[Clear?]',
+
     # Portraits
     b'\xf4\x00': b'[P-Same]',
     b'\xf4\x01': b'[P-Al-Neutral]',
@@ -204,13 +206,48 @@ FILE_BLOCKS = {
 POINTER_CONSTANT = {
     'POS.EXE': 0x7b00,
     'POSM.EXE': 0xafe0,
-    'POS1.MSD': 0,
-    #'YUMI.MSD': 0,
+    'POS1.MSD': 0,    # HQ (intro)
+    'YUMI.MSD': 0,
+    'P_HON1.MSD': 0,  # HQ
+    'P_ROU1.MSD': 0,   # Corridor
+    'P_SE.MSD': 0,    # Maintenance Room
+    'P_ENT.MSD': 0,   # Entrance
+    'P_BYO.MSD': 0,   # Medical Ward
+    'P_HI.MSD': 0,    # Lounge
+    'P_SW1.MSD': 0,   # Shower
+    'MERYL.MSD': 0,
 }
 
-# b238  = 58 02
-# b244 = 64 02
-# b251 = 71 02
+MSD_POINTER_RANGES = {
+    'POS1.MSD': [
+        (0xeaf6, 0xee2f)
+    ],
+    'YUMI.MSD': [
+        (0xefcc, 0xf06a),     # Adv scene
+        (0x2776e, 0x28aac)    # Yumi scene
+    ],
+    'MERYL.MSD': [
+        (0x1c252, 0x1e10e),
+    ],
+    'P_BYO.MSD': [
+        (0x1a81a, 0x1c000),
+    ],
+    'P_SE.MSD': [
+        (0x28700, 0x291e1)
+    ],
+    'P_ENT.MSD': [
+        (0x1b115, 0x1ff00),
+    ],
+    'P_HI.MSD': [
+        (0x128a2, 0x13d19),
+    ],
+    'P_HON1.MSD': [
+        (0xf2fe, 0x10c8e),
+    ],
+    'P_ROU1.MSD': [
+        (0x21061, 0x24000),
+    ]
+}
 
 # Plain, continuous pointer tables with no distinguishing prefix/suffix/separator.
 POINTER_TABLES = {
@@ -227,6 +264,10 @@ POINTER_TABLE_SEPARATOR = {
 
 BAD_POINTERS = [
 #    (0xd0a8, )  # oops, this wasn't bad
+
+    # Battle crashes from POS1.MSD
+    (0xe13, 0xc3b9), 
+    (0xdf2, 0x263d4),
 ]
 
 # default to dumping the whole file

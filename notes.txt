@@ -87,6 +87,11 @@ Images:
 	* Intro text images.
 		* PTOKYO1.CGX - "Year 2035 Tokyo"
 		* PTOKYO2.CGX - some more text
+	* Various other images
+		* A_AR6.SEL - top secret thing that belongs to Nedra?
+		* LISTP.SEL - names of possessioners. (If the spellings change, change this too)
+		* LM1.SEL-LM7.SEL - description text of possessioners. Definitely gotta translate this
+
 	* I think all of the grey panels in battle are images. So, attack names/categories, nametags, etc
 	* FIGHT.CGX is the fight layout. (All the parts that don't need translating)
 	* MENU.CGX is the title screen
