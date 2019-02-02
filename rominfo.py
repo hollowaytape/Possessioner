@@ -262,13 +262,19 @@ POINTER_TABLE_SEPARATOR = {
     'POSM.EXE': '\\\\x1e\\\\x0a'
 }
 
-
-BAD_POINTERS = [
+#BAD_POINTERS = [
 #    (0xd0a8, )  # oops, this wasn't bad
 
     # Battle crashes from POS1.MSD
-    (0xe13, 0xc3b9), 
-    (0xdf2, 0x263d4),
+#    (0xe13, 0xc3b9), 
+#    (0xdf2, 0x263d4),
+#]
+
+# This is a better idea
+POINTER_DISAMBIGUATION = [
+    ('P_HON1.MSD', 0x1ff, 0xf59f),
+    ('POS1.MSD', 0xe13, 0xed59),
+    ('POS1.MSD', 0xdf2, 0x1da35),
 ]
 
 # default to dumping the whole file

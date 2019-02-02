@@ -14,7 +14,8 @@ PtrDump = PointerExcel(POINTER_DUMP_XLS_PATH)
 OriginalPssr = Disk(ORIGINAL_ROM_PATH, dump_excel=Dump, pointer_excel = PtrDump)
 TargetPssr = Disk(TARGET_ROM_PATH)
 
-FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE', 'POS1.MSD', 'YUMI.MSD', 'P_HON1.MSD',]
+FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE', 'POS1.MSD', 'YUMI.MSD', 'P_HON1.MSD',
+                     'P_ROU1.MSD', 'P_HI.MSD',]
 
 for filename in FILES_TO_REINSERT:
     path_in_disk = "PSSR\\"
@@ -45,7 +46,7 @@ for filename in FILES_TO_REINSERT:
         # Meryl
         gamefile.edit(0xd82a, b'aafghi')
 
-        # Nedra?
+        # Nedra
         gamefile.edit(0xd831, b'ajgklm')
 
 

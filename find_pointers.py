@@ -5,7 +5,7 @@ import regex as re
 from romtools.dump import BorlandPointer, DumpExcel, PointerExcel
 from romtools.disk import Gamefile
 
-from rominfo import POINTER_CONSTANT, POINTER_TABLES, POINTER_TABLE_SEPARATOR, CONTROL_CODES,  FILE_BLOCKS, DUMP_XLS_PATH, BAD_POINTERS, MSD_POINTER_RANGES
+from rominfo import POINTER_CONSTANT, POINTER_TABLES, POINTER_TABLE_SEPARATOR, CONTROL_CODES, POINTER_DISAMBIGUATION,  FILE_BLOCKS, DUMP_XLS_PATH, MSD_POINTER_RANGES
 
 FILES_WITH_POINTERS = POINTER_CONSTANT
 #FILES_WITH_POINTERS = ['POS1.MSD']
@@ -217,28 +217,22 @@ for gamefile in FILES_WITH_POINTERS:
         if len(pointer_locations) > 1:
             if gamefile.filename in MSD_POINTER_RANGES:
                 better_pointer_locations = []
-                print("Text is at", hex(text_location))
+                #print("Text is at", hex(text_location))
                 for pointer_loc in pointer_locations:
                     if any([s[0] <= pointer_loc <= s[1] for s in MSD_POINTER_RANGES[gamefile.filename]]):
                         print(hex(text_location), hex(pointer_loc), "is good")
                         better_pointer_locations.append(pointer_loc)
                     else:
                         print(hex(text_location), hex(pointer_loc), "is bad")
+                        pass
                 if better_pointer_locations != []:
                     pointer_locations = better_pointer_locations
 
-        # Throw out ones specifically identified as bad
-        even_better_pointer_locations = []
-        for pointer_loc in pointer_locations:
-            if (text_location, pointer_loc) in BAD_POINTERS:
-                print("THROWING THAT OUT")
-                continue
-            else:
-                even_better_pointer_locations.append(pointer_loc)
-        #print(pointer_locations)
-        #print(even_better_pointer_locations)
-        #print()
-        pointer_locations = even_better_pointer_locations
+        # Use pointer disambiguation to remove pointers with hundreds of locs
+        for (dis_file, dis_text_loc, dis_pointer_loc) in POINTER_DISAMBIGUATION:
+            if dis_file == gamefile.filename and dis_text_loc == text_location:
+                print("Using pointer disambiguation for %s, %s" % (dis_file, dis_text_loc))
+                pointer_locations = [dis_pointer_loc,]
 
 
         for pointer_loc in pointer_locations:
