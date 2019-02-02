@@ -187,10 +187,6 @@ for gamefile in FILES_WITH_POINTERS:
 
                 #print(pointer_locations)
 
-                # TODO: Not implemented fully
-                if (text_location, pointer_location) in BAD_POINTERS:
-                    continue
-
                 if (GF2, text_location) in pointer_locations.keys():
                     all_locations = pointer_locations[(GF2, text_location)]
                     all_locations.append(int(pointer_location, 16))
@@ -217,6 +213,7 @@ for gamefile in FILES_WITH_POINTERS:
         #print(hex(text_location))
         #print(pointer_locations)
 
+        # Restrict pointer locations to a particular area when there are dupes
         if len(pointer_locations) > 1:
             if gamefile.filename in MSD_POINTER_RANGES:
                 better_pointer_locations = []
@@ -227,7 +224,22 @@ for gamefile in FILES_WITH_POINTERS:
                         better_pointer_locations.append(pointer_loc)
                     else:
                         print(hex(text_location), hex(pointer_loc), "is bad")
-                pointer_locations = better_pointer_locations
+                if better_pointer_locations != []:
+                    pointer_locations = better_pointer_locations
+
+        # Throw out ones specifically identified as bad
+        even_better_pointer_locations = []
+        for pointer_loc in pointer_locations:
+            if (text_location, pointer_loc) in BAD_POINTERS:
+                print("THROWING THAT OUT")
+                continue
+            else:
+                even_better_pointer_locations.append(pointer_loc)
+        #print(pointer_locations)
+        #print(even_better_pointer_locations)
+        #print()
+        pointer_locations = even_better_pointer_locations
+
 
         for pointer_loc in pointer_locations:
             worksheet.write(row, 0, '0x' + hex(text_location).lstrip('0x').zfill(5))

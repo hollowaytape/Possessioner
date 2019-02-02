@@ -3,6 +3,7 @@
 """
 
 import os
+from collections import OrderedDict
 
 ORIGINAL_ROM_DIR = 'original'
 TARGET_ROM_DIR = 'patched'
@@ -203,7 +204,7 @@ FILE_BLOCKS = {
     ]
 }
 
-POINTER_CONSTANT = {
+POINTER_CONSTANT = OrderedDict({
     'POS.EXE': 0x7b00,
     'POSM.EXE': 0xafe0,
     'POS1.MSD': 0,    # HQ (intro)
@@ -216,7 +217,7 @@ POINTER_CONSTANT = {
     'P_HI.MSD': 0,    # Lounge
     'P_SW1.MSD': 0,   # Shower
     'MERYL.MSD': 0,
-}
+})
 
 MSD_POINTER_RANGES = {
     'POS1.MSD': [
