@@ -90,7 +90,7 @@ for gamefile in FILES_WITH_POINTERS:
                 if t.command is not None:
                     #target_areas.append((t.location - 8, t.location - 7))
                     if t.location > 0x00:
-                        #print("Target: " + hex(t.location))
+                        print("Target: " + hex(t.location))
                         target_areas.append((t.location, t.location))
 
 

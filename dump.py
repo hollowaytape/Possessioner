@@ -51,19 +51,19 @@ def dump(files):
             worksheet.write(0, CODES_COLUMN, 'Ctrl Codes', header)
 
             worksheet.set_column('B:B', 20)
-            worksheet.set_column('D:D', 60)
+            worksheet.set_column('D:D', 50)
             worksheet.set_column('E:E', 5)
-            worksheet.set_column('F:F', 60)
+            worksheet.set_column('F:F', 50)
             worksheet.set_column('G:G', 5)
-            worksheet.set_column('H:H', 60)
+            worksheet.set_column('H:H', 50)
             JP_COLUMN_LETTER = 'D'
             EN_COLUMN_LETTER = 'F'
         else:
-            worksheet.set_column('B:B', 60)
+            worksheet.set_column('B:B', 50)
             worksheet.set_column('C:C', 5)
-            worksheet.set_column('D:D', 60)
+            worksheet.set_column('D:D', 50)
             worksheet.set_column('E:E', 5)
-            worksheet.set_column('F:F', 60)
+            worksheet.set_column('F:F', 50)
             JP_COLUMN_LETTER = 'B'
             EN_COLUMN_LETTER = 'D'
 

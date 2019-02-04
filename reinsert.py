@@ -15,12 +15,13 @@ OriginalPssr = Disk(ORIGINAL_ROM_PATH, dump_excel=Dump, pointer_excel = PtrDump)
 TargetPssr = Disk(TARGET_ROM_PATH)
 
 FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE', 'POS1.MSD', 'YUMI.MSD', 'P_HON1.MSD',
-                     'P_ROU1.MSD', 'P_HI.MSD',]
+                     'P_ROU1.MSD', 'P_HI.MSD', 'P_ENT.MSD', 'P_BYO.MSD', 'P_SW1.MSD',
+                     'P_SE.MSD', 'MERYL.MSD', ]
 
 for filename in FILES_TO_REINSERT:
     path_in_disk = "PSSR\\"
     gamefile_path = os.path.join('original', filename)
-
+    print(filename)
     gamefile = Gamefile(gamefile_path, disk=OriginalPssr, dest_disk=TargetPssr)
 
     # .MSD files have their pointers in 

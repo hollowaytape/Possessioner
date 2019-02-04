@@ -13,15 +13,15 @@ TARGET_ROM_PATH = os.path.join(TARGET_ROM_DIR, 'Possessioner.hdi')
 DUMP_XLS_PATH = 'PSSR_dump.xlsx'
 POINTER_DUMP_XLS_PATH = 'PSSR_pointer_dump.xlsx'
 
-FILES = ['POSM.EXE', 'POS.EXE', 'POS1.MSD', 'P_7.MSD', 'P_71.MSD', 
+FILES = ['POSM.EXE', 'POS.EXE', 'POS1.MSD', 'P_7.MSD', 'P_71.MSD',
          'P_BILL.MLL', 'P_BILL.MSD', 'P_BOX.MSD', 'P_BYO.MSD',
-         'P_CITY.MSD', 'P_ENT.MSD', 'P_ENT2.MSD', 'P_GE.MSD', 
+         'P_CITY.MSD', 'P_ENT.MSD', 'P_ENT2.MSD', 'P_GE.MSD',
          'P_GYOTEI.MSD', 'P_GYOTEI.MSG', 'P_HI.MSD', 'P_HON1.MSD',
          'P_HOU.MSD', 'P_JUNK.MSD', 'P_KYU.MSD', 'P_ROU1.MSD',
          'P_SE.MSD', 'P_SIRYO.MSD', 'P_SUTE.MSD', 'P_SW1.MSD',
          'P_SYO.MSD', 'RASU1.MSD', 'RASU2.MSD', 'STAFF.TXT',
          'TINA.MSD', 'YUMI.MSD', 'ARISA.MSD', 'AYAKA.MSD',
-         'ERIS.MSD', 'HONHOA.MSD', 'MAI.MSD', 'MERYL.MSD', 
+         'ERIS.MSD', 'HONHOA.MSD', 'MAI.MSD', 'MERYL.MSD',
          'MINS.MSD', 'MISHA.MSD', 'NEDRA1.MSD', 'NEDRA2.MSD',
          'DOCTOR.MSD', 'PLYM.MSD', 
          'POSE.EXE', 'END.MSD', ]
@@ -247,7 +247,10 @@ MSD_POINTER_RANGES = {
     ],
     'P_ROU1.MSD': [
         (0x21061, 0x24000),
-    ]
+    ],
+    'P_SW1.MSD': [
+        (0xffc2, 0x10ebe),
+    ],
 }
 
 # Plain, continuous pointer tables with no distinguishing prefix/suffix/separator.
