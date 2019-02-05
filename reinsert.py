@@ -16,7 +16,14 @@ TargetPssr = Disk(TARGET_ROM_PATH)
 
 FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE', 'POS1.MSD', 'YUMI.MSD', 'P_HON1.MSD',
                      'P_ROU1.MSD', 'P_HI.MSD', 'P_ENT.MSD', 'P_BYO.MSD', 'P_SW1.MSD',
-                     'P_SE.MSD', 'MERYL.MSD', ]
+                     'P_SE.MSD', 'MERYL.MSD', 'P_CITY.MSD', 'P_SYO.MSD', 'P_7.MSD',
+                     'P_71.MSD', 'P_BILL.MSD', 'P_BOX.MSD', 'P_GE.MSD', 'P_ENT2.MSD',
+                     'P_GYOTEI.MSD', 'P_HOU.MSD', 'P_JUNK.MSD', 'P_KYU.MSD', 'P_SIRYO.MSD',
+                     'P_SUTE.MSD', 'RASU1.MSD', 'RASU2.MSD', 'TINA.MSD', 'ARISA.MSD',
+                     'AYAKA.MSD', 'ERIS.MSD', 'HONHOA.MSD', 'MAI.MSD', 'MINS.MSD',
+                     'MISHA.MSD', 'NEDRA1.MSD', "NEDRA2.MSD", 'DOCTOR.MSD', 'PLYM.MSD']
+
+MAPPING_MODE = True
 
 for filename in FILES_TO_REINSERT:
     path_in_disk = "PSSR\\"
@@ -56,8 +63,8 @@ for filename in FILES_TO_REINSERT:
         print(block)
         previous_text_offset = block.start
         diff = 0
-        for t in Dump.get_translations(block, include_blank=True):
-            print(t.english)
+        for i, t in enumerate(Dump.get_translations(block, include_blank=True)):
+            #print(t.english)
             loc_in_block = t.location - block.start + diff
 
             for cc in inverse_CTRL:
@@ -69,13 +76,31 @@ for filename in FILES_TO_REINSERT:
             this_diff = len(t.en_bytestring) - len(t.jp_bytestring)
 
             if t.english == b'' or t.en_bytestring == t.prefix or t.english == t.japanese:
-                #print(hex(t.location), t.english, "Blank string")
-                this_diff = 0
-                #print("Diff is", diff)
+                if filename.endswith('MSD') and MAPPING_MODE:
+                    print(this_diff)
+                    if this_diff >= -8:
+                        id_string = b'%i' % (i+2)
+                    else:
+                        id_string = b'%b-%i' % (filename[:4].encode('ascii'), (i+2))
+                    t.en_bytestring += id_string
+                    print(t.en_bytestring)
+                    while len(t.en_bytestring) < len(t.jp_bytestring):
+                        t.en_bytestring += b' '
+                    #if len(id_string) < len(t.jp_bytestring):
+                    #    print(id_string)
+                    #    t.en_bytestring = id_string + t.jp_bytestring[len(id_string):]
+                    this_diff = len(t.en_bytestring) - len(t.jp_bytestring)
+                    print(t.en_bytestring)
+                    assert this_diff == 0
 
-                pointer_gamefile.edit_pointers_in_range((previous_text_offset, t.location), diff)
-                previous_text_offset = t.location
-                continue
+                else:
+                    #print(hex(t.location), t.english, "Blank string")
+                    this_diff = 0
+                    #print("Diff is", diff)
+
+                    pointer_gamefile.edit_pointers_in_range((previous_text_offset, t.location), diff)
+                    previous_text_offset = t.location
+                    continue
 
             try:
                 i = block.blockstring.index(t.jp_bytestring)
@@ -84,9 +109,11 @@ for filename in FILES_TO_REINSERT:
                 continue
             j = block.blockstring.count(t.jp_bytestring)
 
+            # Does this do anything????
             index = 0
             while index < len(block.blockstring):
                 index = block.blockstring.find(t.jp_bytestring, index)
+                #print("Found it at", hex(index))
                 if index == -1:
                     break
                 index += len(t.jp_bytestring) # +2 because len('ll') == 2
@@ -110,9 +137,9 @@ for filename in FILES_TO_REINSERT:
             block_diff = len(block.blockstring) - len(block.original_blockstring)
             assert block_diff == 0, block_diff
 
-        if block.start in (0xdcfa, 0xdd47, 0xdd93, 0xf193):
-            print(block.original_blockstring)
-            print(gamefile.filestring[block.start:block.stop])
+        i#f block.start in (0xdcfa, 0xdd47, 0xdd93, 0xf193):
+         #   print(block.original_blockstring)
+         #   print(gamefile.filestring[block.start:block.stop])
         block.incorporate()
 
     gamefile.write(path_in_disk=path_in_disk)

@@ -303,3 +303,5 @@ Images:
 		* Are they in different blocks?
 			* POS1.MSD: (0xea40, 0xef20)
 			* YUMI.MSD: (0xef20, ?)
+
+* There's apparently extra line drawings of this game's art in 「ぷるぷる」（あまとりあ社／１９９４年） Volume 3. Might be worth tracking down.

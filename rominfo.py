@@ -191,6 +191,11 @@ FILE_BLOCKS = {
         (0x18f7c, 0x18f8c),
         (0x18fc9, 0x18fd9),
 
+        (0x27f8c, 0x27f9c),
+        (0x27fd9, 0x27fe9),
+        (0x28026, 0x28036),
+        (0x28073, 0x28083), # Misha
+
     ],
 
     "POSE.EXE": [
@@ -209,6 +214,7 @@ POINTER_CONSTANT = OrderedDict({
     'POSM.EXE': 0xafe0,
     'POS1.MSD': 0,    # HQ (intro)
     'YUMI.MSD': 0,
+
     'P_HON1.MSD': 0,  # HQ
     'P_ROU1.MSD': 0,   # Corridor
     'P_SE.MSD': 0,    # Maintenance Room
@@ -217,6 +223,18 @@ POINTER_CONSTANT = OrderedDict({
     'P_HI.MSD': 0,    # Lounge
     'P_SW1.MSD': 0,   # Shower
     'MERYL.MSD': 0,
+
+    'P_CITY.MSD': 0,  # City
+    'P_SYO.MSD': 0,   # Commercial District
+    'P_SUTE.MSD': 0,  # "Stella" clothing shop
+    'P_KYU.MSD': 0,   # Old Town
+    'P_HOU.MSD': 0,   # Abandoned Area
+    'P_BILL.MSD': 0,  # Abandoned Building
+    'MISHA.MSD': 0,
+
+    'ERIS.MSD': 0,
+    'P_JUNK.MSD': 0,  # Junk Shop,
+    'DOCTOR.MSD': 0,
 })
 
 MSD_POINTER_RANGES = {
