@@ -33,6 +33,7 @@ CONTROL_CODES = {
     b'\x0d\xf3': b'[LN]',
 
     b'\x0d': b'[0d]',
+    b'\x00': b'[00]',
 
     # Text colors
     b'\xf0\x00': b'[Black]',
@@ -191,11 +192,54 @@ FILE_BLOCKS = {
         (0x18f7c, 0x18f8c),
         (0x18fc9, 0x18fd9),
 
+        (0x19016, 0x19026), # Fairy
+
+        (0x2382a, 0x2383a), # Ayaka
+
+        (0x23b9c, 0x23bac), # BC 1
+        (0x23be9, 0x23bf9), # BC 2
+        (0x23c36, 0x23c46), # Carmine
+        (0x23c83, 0x23c93), # Iris
+
+        (0x23eb0, 0x23ec0), # BC1
+        (0x23efd, 0x23f0d), # BC2
+        (0x23f4a, 0x23f5a), # BC3
+        (0x23f99, 0x23fa9), # BC4
+        (0x23fe4, 0x23ff4), # BC5
+
+        (0x2442a, 0x2443a), # Empress
+        (0x24477, 0x24487), # BC3
+        (0x244c6, 0x244d6), # BC1
+        (0x24511, 0x24521), # BC2
+
+        (0x24759, 0x24769), # BC1
+        (0x247a6, 0x247b6), # BC2
+        (0x247f3, 0x24803), # Nedra (o shit spoilers!)
+
+        (0x25749, 0x25759), # BC1
+        (0x25794, 0x257a4), # BC2
+        (0x257e1, 0x257f1), # BC3
+
+        (0x25c0e, 0x25c1e), # BC1
+        (0x25c5b, 0x25c6b), # BC2
+        (0x25ca8, 0x25cb8), # BC3
+        (0x25cf5, 0x25d05), # BC4
+        (0x25d48, 0x25d58), # BC5
+
+        (0x2681e, 0x2682e), # BC1
+        (0x2686b, 0x2687b), # BC2
+        (0x268b8, 0x268c8), # May
+        (0x26905, 0x26915), # BC3
+
+        (0x26d97, 0x26da7), # Rashmar
+        (0x26de4, 0x26df4), # BC1
+        (0x26e31, 0x26e41), # BC2
+        (0x26e7e, 0x26e8e), # BC3
+
         (0x27f8c, 0x27f9c),
         (0x27fd9, 0x27fe9),
         (0x28026, 0x28036),
         (0x28073, 0x28083), # Misha
-
     ],
 
     "POSE.EXE": [
@@ -223,7 +267,6 @@ POINTER_CONSTANT = OrderedDict({
     'P_HI.MSD': 0,    # Lounge
     'P_SW1.MSD': 0,   # Shower
     'MERYL.MSD': 0,
-
     'P_CITY.MSD': 0,  # City
     'P_SYO.MSD': 0,   # Commercial District
     'P_SUTE.MSD': 0,  # "Stella" clothing shop
@@ -233,8 +276,14 @@ POINTER_CONSTANT = OrderedDict({
     'MISHA.MSD': 0,
 
     'ERIS.MSD': 0,
-    'P_JUNK.MSD': 0,  # Junk Shop,
+    'P_JUNK.MSD': 0,  # Junk Shop
     'DOCTOR.MSD': 0,
+    'P_ENT2.MSD': 0,  # Entrance during Ayaka attack
+    'AYAKA.MSD': 0,
+
+    'P_GYOTEI.MSD': 0, # Communications Point/Temple
+    'MINS.MSD': 0,     # Minskys
+    'PLYM.MSD': 0,     # Empress
 })
 
 MSD_POINTER_RANGES = {
@@ -245,11 +294,11 @@ MSD_POINTER_RANGES = {
         (0xefcc, 0xf06a),     # Adv scene
         (0x2776e, 0x28aac)    # Yumi scene
     ],
-    'MERYL.MSD': [
-        (0x1c252, 0x1e10e),
+    'P_HON1.MSD': [
+        (0xf2fe, 0x10c8e),
     ],
-    'P_BYO.MSD': [
-        (0x1a81a, 0x1c000),
+    'P_ROU1.MSD': [
+        (0x21061, 0x24000),
     ],
     'P_SE.MSD': [
         (0x28700, 0x291e1)
@@ -257,17 +306,64 @@ MSD_POINTER_RANGES = {
     'P_ENT.MSD': [
         (0x1b115, 0x1ff00),
     ],
+    'P_BYO.MSD': [
+        (0x1a81a, 0x1c000),
+    ],
     'P_HI.MSD': [
         (0x128a2, 0x13d19),
     ],
-    'P_HON1.MSD': [
-        (0xf2fe, 0x10c8e),
-    ],
-    'P_ROU1.MSD': [
-        (0x21061, 0x24000),
-    ],
     'P_SW1.MSD': [
         (0xffc2, 0x10ebe),
+    ],
+    'MERYL.MSD': [
+        (0x1c252, 0x1e10e),
+    ],
+    'P_CITY.MSD': [
+        (0x13fb2, 0x16605),
+    ],
+    'P_SYO.MSD': [
+        (0x1f33d, 0x20086),
+    ],
+    'P_SUTE.MSD': [
+        (0x1b2c8, 0x1beba),
+    ],
+    'P_KYU.MSD': [
+        (0x1f761, 0x20e0f),
+    ],
+    'P_HOU.MSD': [
+        (0x2026a, 0x208f5),
+    ],
+    'P_BILL.MSD': [
+        (0x14811, 0x159a8),
+        (0x27a2d, 0x28d5c),
+    ],
+    'MISHA.MSD': [
+        (0x21f50, 0x2231f),
+    ],
+    'ERIS.MSD': [
+        (0x1eaf5, 0x1ef52),
+    ],
+    'P_JUNK.MSD': [
+        (0x28134, 0x283b8),
+    ],
+    #'DOCTOR.MSD': [
+    # Really hard to tell
+    #],
+    'P_ENT2.MSD': [
+        (0x234a6, 0x238e2),
+    ],
+    'AYAKA.MSD': [
+        (0x216c1, 0x21b85),
+    ],
+    'P_GYOTEI.MSD': [
+        (0x22acf, 0x2508b),
+        # probably others
+    ],
+    # Too few strings to tell
+    #'MINS.MSD': [
+    #],
+    'PLYM.MSD': [
+
     ],
 }
 

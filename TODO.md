@@ -5,6 +5,7 @@
 	* Just gotta keep playing past the Meryl scene.
 * P_HI.MSD is missing a string at 0xdf0 for some reason.
 	* もう遅いしね。じゃあ、今日はここで解散
+	* MINS.MSD is also missing a string at 0x2b44. Text is in the cell above it.
 * Hack the intro text to be halfwidth
 	* Already have a cursor-increment hack.
 	* Also it doesn't display commas/apostrophes correctly?

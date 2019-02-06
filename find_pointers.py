@@ -228,6 +228,9 @@ for gamefile in FILES_WITH_POINTERS:
                 if better_pointer_locations != []:
                     pointer_locations = better_pointer_locations
 
+        # TODO: Could I do something like throw out all MSD pointers below 0x10000?
+        # Might work...
+
         # Use pointer disambiguation to remove pointers with hundreds of locs
         for (dis_file, dis_text_loc, dis_pointer_loc) in POINTER_DISAMBIGUATION:
             if dis_file == gamefile.filename and dis_text_loc == text_location:
