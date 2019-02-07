@@ -1,8 +1,8 @@
 # TODO
+* "Bio Cluster 1 took 56HP increased."
 * Can I reliably add another line to some dialogue? The [LN] control code doesn't seem to work.
 	* Does each pointer have a number of lines it's expected to read?
 * Reinsert and map more files.
-	* Just gotta keep playing past the Meryl scene.
 * P_HI.MSD is missing a string at 0xdf0 for some reason.
 	* もう遅いしね。じゃあ、今日はここで解散
 	* MINS.MSD is also missing a string at 0x2b44. Text is in the cell above it.
@@ -19,3 +19,7 @@
 	* Nametags also display instantly...
 	* Seems like more of a last-minute thing, but the sooner I do this the more time I'll save!
 	* Check out E.V.O. again, since it has a modifiable text speed option. See where that gets written, see what the code does with it.
+* I could probably refer to HP and MP as <3 and * respectively. (with SJIS)
+
+## Bugs in original version
+* You select a target for Meryl's Grenade, but it hits all enemies...

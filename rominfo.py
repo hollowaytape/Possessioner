@@ -160,39 +160,42 @@ FILE_BLOCKS = {
         (0x16700, 0x16710),
         (0x1674d, 0x1675d),
         (0x1679a, 0x167aa),
-        (0x16c22, 0x16c32),
+        (0x16c22, 0x16c32), # BC 1
 
         (0x17338, 0x17348),
         (0x17385, 0x17395),
         (0x173d2, 0x173e2),
         (0x1741f, 0x1742f),
 
-        (0x17596, 0x175a6),
+        (0x17596, 0x175a6), # BC 1
         (0x175e3, 0x175f3),
         (0x17630, 0x17640),
-        (0x17900, 0x17910),
+        (0x17900, 0x17910), # BC 1
         (0x1794d, 0x1795d),
         (0x1799a, 0x179aa),
 
-        (0x17ce1, 0x17cf1),
-        (0x17d2e, 0x17d3e),
+        (0x17ce1, 0x17cf1), # BC 1
+        (0x17d2e, 0x17d3e), # BC 1
 
         (0x1814a, 0x1815a),
         (0x18380, 0x18390),
-        (0x183cd, 0x183dd),
+        (0x183cd, 0x183dd), # BC 1
 
-        (0x186f8, 0x18708),
+        (0x186f8, 0x18708), # BC 1
         (0x18745, 0x18755),
         (0x18792, 0x187a2),
 
-        (0x18a5b, 0x18a6b),
+        (0x18a5b, 0x18a6b), # BC 1
         (0x18aa8, 0x18ab8),
         (0x18af5, 0x18b05),
 
-        (0x18f7c, 0x18f8c),
+        (0x18f7c, 0x18f8c), # BC 1
         (0x18fc9, 0x18fd9),
 
         (0x19016, 0x19026), # Fairy
+
+        (0x23743, 0x23753), # BC 1
+        (0x23790, 0x237a0), # BC 2
 
         (0x2382a, 0x2383a), # Ayaka
 
@@ -224,7 +227,7 @@ FILE_BLOCKS = {
         (0x25c5b, 0x25c6b), # BC2
         (0x25ca8, 0x25cb8), # BC3
         (0x25cf5, 0x25d05), # BC4
-        (0x25d48, 0x25d58), # BC5
+        (0x25d42, 0x25d52), # BC5
 
         (0x2681e, 0x2682e), # BC1
         (0x2686b, 0x2687b), # BC2
@@ -237,7 +240,7 @@ FILE_BLOCKS = {
         (0x26e7e, 0x26e8e), # BC3
 
         (0x27f8c, 0x27f9c),
-        (0x27fd9, 0x27fe9),
+        (0x27fd9, 0x27fe9), # BC2
         (0x28026, 0x28036),
         (0x28073, 0x28083), # Misha
     ],
@@ -256,6 +259,7 @@ FILE_BLOCKS = {
 POINTER_CONSTANT = OrderedDict({
     'POS.EXE': 0x7b00,
     'POSM.EXE': 0xafe0,
+
     'POS1.MSD': 0,    # HQ (intro)
     'YUMI.MSD': 0,
 
@@ -267,6 +271,7 @@ POINTER_CONSTANT = OrderedDict({
     'P_HI.MSD': 0,    # Lounge
     'P_SW1.MSD': 0,   # Shower
     'MERYL.MSD': 0,
+
     'P_CITY.MSD': 0,  # City
     'P_SYO.MSD': 0,   # Commercial District
     'P_SUTE.MSD': 0,  # "Stella" clothing shop
@@ -275,7 +280,7 @@ POINTER_CONSTANT = OrderedDict({
     'P_BILL.MSD': 0,  # Abandoned Building
     'MISHA.MSD': 0,
 
-    'ERIS.MSD': 0,
+    'ERIS.MSD': 0,    # Operators
     'P_JUNK.MSD': 0,  # Junk Shop
     'DOCTOR.MSD': 0,
     'P_ENT2.MSD': 0,  # Entrance during Ayaka attack
@@ -284,6 +289,16 @@ POINTER_CONSTANT = OrderedDict({
     'P_GYOTEI.MSD': 0, # Communications Point/Temple
     'MINS.MSD': 0,     # Minskys
     'PLYM.MSD': 0,     # Empress
+
+    'P_BOX.MSD': 0,    # Nedra's Box Crisis
+    'HONHOA.MSD': 0,
+    'P_GE.MSD': 0,     # Sewer Entrance
+    'RASU1.MSD': 0,    # Sewer
+    'RASU2.MSD': 0,    # More sewer
+    'MAI.MSD': 0,
+
+    'ARISA.MSD': 0,    # Fixing the Box
+    'P_SIRYO.MSD': 0,  # Data Room/Library
 })
 
 MSD_POINTER_RANGES = {
@@ -363,6 +378,9 @@ MSD_POINTER_RANGES = {
     #'MINS.MSD': [
     #],
     'PLYM.MSD': [
+
+    ],
+    'P_BOX.MSD': [
 
     ],
 }
