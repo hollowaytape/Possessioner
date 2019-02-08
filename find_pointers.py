@@ -10,7 +10,7 @@ from rominfo import POINTER_CONSTANT, POINTER_TABLES, POINTER_TABLE_SEPARATOR, C
 #FILES_WITH_POINTERS = POINTER_CONSTANT
 #FILES_WITH_POINTERS = ['POS1.MSD']
 
-FILES_WITH_POINTERS = ['P_SIRYO.MSD']
+FILES_WITH_POINTERS = ['P_SIRYO.MSD', 'P_JUNK.MSD']
 
 # POINTER_CONSTANT is the line where "Borland Compiler" appears, rounded down to the nearest 0x10.
 
@@ -34,7 +34,8 @@ pointer_regex = r'\\xbe\\x([0-f][0-f])\\x([0-f][0-f])\\xe8'
 pointer_regex_2 = r'\\xbe\\x([0-f][0-f])\\x([0-f][0-f])\\xbf'  # that one combat pointer
 # msd_pointer_regex = r'\\xff\\x02\\x([0-f][0-f])\\x([0-f][0-f])'
 # Prefixes are ff 02 and 00 02 always?
-msd_pointer_regex = r'\\x02\\x([0-f][0-f])\\x([0-f][0-f])'
+
+msd_pointer_regex = r'\\x02\\x([0-f][0-f])\\x([0-f][0-f])\\x([0-f][0-f])'
 msd_pointer_regex_2 = r'\\xbe\\x([0-f][0-f])\\x([0-f][0-f])\\xb9'
 table_pointer_regex = r'\\x([0-f][0-f])\\x([0-f][0-f])sep'
 
@@ -67,6 +68,8 @@ except FileNotFoundError:
 
 PtrXl = PointerExcel('PSSR_pointer_dump.xlsx')
 
+final_target_areas = {}
+
 for gamefile in FILES_WITH_POINTERS:
     print(gamefile)
     pointer_locations = OrderedDict()
@@ -90,11 +93,14 @@ for gamefile in FILES_WITH_POINTERS:
         if gamefile.endswith('.MSD'):
             target_areas = []
             for t in Dump.get_translations(gamefile, include_blank=True):
-                if t.command is not None:
-                    #target_areas.append((t.location - 8, t.location - 7))
-                    if t.location > 0x00:
-                        print("Target: " + hex(t.location))
-                        target_areas.append((t.location, t.location))
+                # IMPORTANT!Disabling this for now
+
+                #if t.command is not None:
+
+                # Disabling this too. It can tell you which of the next few strings to skip
+                #if t.location > 0x00:
+                print("Target: " + hex(t.location))
+                target_areas.append((t.location, t.location))
 
 
         # target_area = (GF.pointer_constant, len(bs))
@@ -165,6 +171,7 @@ for gamefile in FILES_WITH_POINTERS:
             for p in pointers:
                 #print(p)
                 # Different offsets for each regex?
+                
                 if regex == pointer_regex:
                     pointer_location = p.start()//4 + 1
                 elif regex == pointer_regex_2:
@@ -178,13 +185,41 @@ for gamefile in FILES_WITH_POINTERS:
                 else:
                     raise Exception
 
-                pointer_location = '0x%05x' % pointer_location
 
                 text_location = int(location_from_pointer((p.group(1), p.group(2)), GF.pointer_constant), 16)
 
                 if all([not t[0] <= text_location<= t[1] for t in target_areas]):
                     #print("Skipping")
                     continue
+
+                throwaway = False
+                if regex == msd_pointer_regex:
+                    byte_before = bs[p.start()//4 - 1]
+                    if byte_before in (0x00, 0x04, 0xff):
+                        print(pointer_location)
+                        #print(byte_before)
+                        #print("length: " + int(p.group(3), 16))
+
+                        ranges = MSD_POINTER_RANGES[gamefile]
+                        for r in ranges:
+                            if r[0] <= pointer_location <= r[1]:
+                                pointer_lines = int(p.group(3), 16)
+                                print(hex(pointer_location), hex(text_location), pointer_lines)
+                                i = target_areas.index((text_location, text_location))
+                                pointer_lines -= 1
+                                while pointer_lines:
+                                    print("No longer looking for " + hex(target_areas.pop(i+1)[0]))
+                                    pointer_lines -= 1
+                            else:
+                                throwaway = True
+                        # Remove the next N target areas
+                    else:
+                        throwaway = True
+
+                if throwaway:
+                    continue
+
+                pointer_location = '0x%05x' % pointer_location
 
                 all_locations = [int(pointer_location, 16),]
 
@@ -196,6 +231,7 @@ for gamefile in FILES_WITH_POINTERS:
 
                 pointer_locations[(GF2, text_location)] = all_locations
 
+        final_target_areas[gamefile] = target_areas
 
     # Setup the worksheet for this file
     worksheet = PtrXl.add_worksheet(GF2.filename)
@@ -217,6 +253,23 @@ for gamefile in FILES_WITH_POINTERS:
         #print(pointer_locations)
 
         # Restrict pointer locations to a particular area when there are dupes
+        if text_location == 0x0:
+            # Definitely don't use these. They were useful for pointer_lines calculation,
+            # but they have served their purpose
+            continue
+
+        # TODO: Need to throw out pointers not in target areas.
+        #print(final_target_areas['P_SIRYO.MSD'])
+        #print(gamefile.filename)
+        if not any([text_location == ta[0] for ta in final_target_areas[gamefile.filename]]):
+            print(hex(text_location), "wasn't on the targets list")
+            continue
+        #for ta in final_target_areas[gamefile.filename]:
+        #    #print(ta)
+        #    print(text_location, ta[0])
+        #    if text_location == ta[0]:
+        #        print(ta, "was the location")
+
         if len(pointer_locations) > 1:
             if gamefile.filename in MSD_POINTER_RANGES:
                 better_pointer_locations = []
@@ -235,10 +288,16 @@ for gamefile in FILES_WITH_POINTERS:
         # Might work...
 
         # Use pointer disambiguation to remove pointers with hundreds of locs
+        throwaway = False
         for (dis_file, dis_text_loc, dis_pointer_loc) in POINTER_DISAMBIGUATION:
             if dis_file == gamefile.filename and dis_text_loc == text_location:
                 print("Using pointer disambiguation for %s, %s" % (dis_file, dis_text_loc))
+                if dis_pointer_loc is None:
+                    throwaway = True
                 pointer_locations = [dis_pointer_loc,]
+
+        if throwaway:
+            continue
 
 
         for pointer_loc in pointer_locations:

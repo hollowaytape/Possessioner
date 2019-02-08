@@ -302,8 +302,8 @@ POINTER_CONSTANT = OrderedDict({
     'NEDRA1.MSD': 0,
     'NEDRA2.MSD': 0,
 
+    'P_7.MSD': 0,      # Tower
     # Haven't seen these yet
-    'P_7.MSD': 0,
     'P_71.MSD': 0,
     'TINA.MSD': 0,
     'STAFF.TXT': 0,
@@ -372,7 +372,7 @@ MSD_POINTER_RANGES = {
     'ERIS.MSD': [
         (0x1eaf5, 0x1ef52),
     ],
-    'P_JUNK.MSD': [
+    'P_JUNK.MSD': [               # Good
         (0x28134, 0x283b8),
     ],
     #'DOCTOR.MSD': [
@@ -395,7 +395,8 @@ MSD_POINTER_RANGES = {
 
     ],
     'P_BOX.MSD': [
-
+        (0x25270, 0x25331),
+        # probably more
     ],
     'HONHOA.MSD': [
 
@@ -415,11 +416,12 @@ MSD_POINTER_RANGES = {
     'ARISA.MSD': [
 
     ],
-    'P_SIRYO.MSD': [
-
+    'P_SIRYO.MSD': [            # Good
+        (0x245aa, 0x246e8)
     ],
     'NEDRA1.MSD': [
-
+        (0x10fda, 0x112ab),
+        # definitely more
     ],
     'NEDRA2.MSD': [
 
@@ -451,6 +453,7 @@ POINTER_DISAMBIGUATION = [
     ('P_HON1.MSD', 0x1ff, 0xf59f),
     ('POS1.MSD', 0xe13, 0xed59),
     ('POS1.MSD', 0xdf2, 0x1da35),
+    ('P_SIRYO.MSD', 0x1b, None), # can I do this?
 ]
 
 # default to dumping the whole file
