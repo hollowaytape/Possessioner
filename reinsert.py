@@ -57,6 +57,9 @@ for filename in FILES_TO_REINSERT:
         # Nedra
         gamefile.edit(0xd831, b'ajgklm')
 
+        # Increase text speed
+        gamefile.edit(0xa3bf, b'\xa8\x04')
+
 
     for block in FILE_BLOCKS[filename]:
         block = Block(gamefile, block)

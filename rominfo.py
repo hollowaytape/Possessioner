@@ -299,6 +299,20 @@ POINTER_CONSTANT = OrderedDict({
 
     'ARISA.MSD': 0,    # Fixing the Box
     'P_SIRYO.MSD': 0,  # Data Room/Library
+    'NEDRA1.MSD': 0,
+    'NEDRA2.MSD': 0,
+
+    # Haven't seen these yet
+    'P_7.MSD': 0,
+    'P_71.MSD': 0,
+    'TINA.MSD': 0,
+    'STAFF.TXT': 0,
+    'POSE.EXE': 0,
+    'END.MSD': 0,
+
+    # Unused?
+    'P_BILL.MLL': 0,
+    'P_GYOTEI.MSG': 0,
 })
 
 MSD_POINTER_RANGES = {
@@ -381,6 +395,33 @@ MSD_POINTER_RANGES = {
 
     ],
     'P_BOX.MSD': [
+
+    ],
+    'HONHOA.MSD': [
+
+    ],
+    'P_GE.MSD': [
+
+    ],
+    'RASU1.MSD': [
+
+    ],
+    'RASU2.MSD': [
+
+    ],
+    'MAI.MSD': [
+
+    ],
+    'ARISA.MSD': [
+
+    ],
+    'P_SIRYO.MSD': [
+
+    ],
+    'NEDRA1.MSD': [
+
+    ],
+    'NEDRA2.MSD': [
 
     ],
 }

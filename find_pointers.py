@@ -7,8 +7,10 @@ from romtools.disk import Gamefile
 
 from rominfo import POINTER_CONSTANT, POINTER_TABLES, POINTER_TABLE_SEPARATOR, CONTROL_CODES, POINTER_DISAMBIGUATION,  FILE_BLOCKS, DUMP_XLS_PATH, MSD_POINTER_RANGES
 
-FILES_WITH_POINTERS = POINTER_CONSTANT
+#FILES_WITH_POINTERS = POINTER_CONSTANT
 #FILES_WITH_POINTERS = ['POS1.MSD']
+
+FILES_WITH_POINTERS = ['P_SIRYO.MSD']
 
 # POINTER_CONSTANT is the line where "Borland Compiler" appears, rounded down to the nearest 0x10.
 
@@ -31,6 +33,7 @@ Dump = DumpExcel(DUMP_XLS_PATH)
 pointer_regex = r'\\xbe\\x([0-f][0-f])\\x([0-f][0-f])\\xe8'
 pointer_regex_2 = r'\\xbe\\x([0-f][0-f])\\x([0-f][0-f])\\xbf'  # that one combat pointer
 # msd_pointer_regex = r'\\xff\\x02\\x([0-f][0-f])\\x([0-f][0-f])'
+# Prefixes are ff 02 and 00 02 always?
 msd_pointer_regex = r'\\x02\\x([0-f][0-f])\\x([0-f][0-f])'
 msd_pointer_regex_2 = r'\\xbe\\x([0-f][0-f])\\x([0-f][0-f])\\xb9'
 table_pointer_regex = r'\\x([0-f][0-f])\\x([0-f][0-f])sep'

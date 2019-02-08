@@ -304,4 +304,19 @@ Images:
 			* POS1.MSD: (0xea40, 0xef20)
 			* YUMI.MSD: (0xef20, ?)
 
+
+## Timing Hack
+* Changes from letter to letter:
+	* 27360: 00 -> 04
+	* a bunch of values at 0x2b311
+	* some other values at 0xa0b6d, 20 20 20 20 -> 2b 5c ab 5c
+	* 0x27217: decrements a lot.
+	* 0x27360 gets set to "4" every character. (2440:28bb, 2ea1602f mov ax, cs:[2f60])
+		* Pointing it somewhere else? That's a 0?
+			* Nah, that causes it to hang forever
+		* Change "test ax, ax" to "test ax, 04": Super fast text, yay!
+			POS.EXE:a3b7: 85c0 -> a804
+
+## Other
+
 * There's apparently extra line drawings of this game's art in 「ぷるぷる」（あまとりあ社／１９９４年） Volume 3. Might be worth tracking down.
