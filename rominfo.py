@@ -184,6 +184,7 @@ FILE_BLOCKS = {
         (0x186f8, 0x18708), # BC 1
         (0x18745, 0x18755),
         (0x18792, 0x187a2),
+        (0x187df, 0x187ef), # Tina
 
         (0x18a5b, 0x18a6b), # BC 1
         (0x18aa8, 0x18ab8),
@@ -259,6 +260,7 @@ FILE_BLOCKS = {
 POINTER_CONSTANT = OrderedDict({
     'POS.EXE': 0x7b00,
     'POSM.EXE': 0xafe0,
+    'POSE.EXE': 0x9480,
 
     'POS1.MSD': 0,    # HQ (intro)
     'YUMI.MSD': 0,
@@ -286,9 +288,9 @@ POINTER_CONSTANT = OrderedDict({
     'P_ENT2.MSD': 0,  # Entrance during Ayaka attack
     'AYAKA.MSD': 0,
 
-    'P_GYOTEI.MSD': 0, # Communications Point/Temple
-    'MINS.MSD': 0,     # Minskys
-    'PLYM.MSD': 0,     # Empress
+    'P_GYOTEI.MSD': 0,  # Communications Point/Temple
+    'MINS.MSD': 0,      # Minskys
+    'PLYM.MSD': 0,      # Empress
 
     'P_BOX.MSD': 0,    # Nedra's Box Crisis
     'HONHOA.MSD': 0,
@@ -303,12 +305,11 @@ POINTER_CONSTANT = OrderedDict({
     'NEDRA2.MSD': 0,
 
     'P_7.MSD': 0,      # Tower
-    # Haven't seen these yet
-    'P_71.MSD': 0,
+    'P_71.MSD': 0,     # Tower, after bullshit maze
     'TINA.MSD': 0,
+    'END.MSD': 0,      # Fairy
+
     'STAFF.TXT': 0,
-    'POSE.EXE': 0,
-    'END.MSD': 0,
 
     # Unused?
     'P_BILL.MLL': 0,
@@ -319,12 +320,12 @@ MSD_POINTER_RANGES = {
     'POS1.MSD': [
         (0xeaf6, 0xee2f)
     ],
+    'P_HON1.MSD': [               # Good
+        (0xf2fe, 0x10c8e),
+    ],
     'YUMI.MSD': [
         (0xefcc, 0xf06a),     # Adv scene
         (0x2776e, 0x28aac)    # Yumi scene
-    ],
-    'P_HON1.MSD': [
-        (0xf2fe, 0x10c8e),
     ],
     'P_ROU1.MSD': [
         (0x21061, 0x24000),
@@ -426,6 +427,12 @@ MSD_POINTER_RANGES = {
     'NEDRA2.MSD': [
 
     ],
+    'P_7.MSD': [
+
+    ],
+    'P_71.MSD': [
+
+    ],
 }
 
 # Plain, continuous pointer tables with no distinguishing prefix/suffix/separator.
@@ -437,7 +444,8 @@ POINTER_TABLES = {
 }
 
 POINTER_TABLE_SEPARATOR = {
-    'POSM.EXE': '\\\\x1e\\\\x0a'
+    'POSM.EXE': '\\\\x1e\\\\x0a',
+    'POSE.EXE': '\\\\xa8\\\\x08',
 }
 
 #BAD_POINTERS = [
@@ -454,7 +462,15 @@ POINTER_DISAMBIGUATION = [
     ('POS1.MSD', 0xe13, 0xed59),
     ('POS1.MSD', 0xdf2, 0x1da35),
     ('P_SIRYO.MSD', 0x1b, None), # can I do this?
+    ('YUMI.MSD', 0x40, None),
 ]
+
+SKIP_TARGET_AREAS ={
+    'YUMI.MSD': [
+        0x17,
+        0x40
+    ]
+}
 
 # default to dumping the whole file
 for f in FILES:

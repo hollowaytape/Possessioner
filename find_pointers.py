@@ -5,12 +5,14 @@ import regex as re
 from romtools.dump import BorlandPointer, DumpExcel, PointerExcel
 from romtools.disk import Gamefile
 
-from rominfo import POINTER_CONSTANT, POINTER_TABLES, POINTER_TABLE_SEPARATOR, CONTROL_CODES, POINTER_DISAMBIGUATION,  FILE_BLOCKS, DUMP_XLS_PATH, MSD_POINTER_RANGES
+from rominfo import POINTER_CONSTANT, POINTER_TABLES, POINTER_TABLE_SEPARATOR, CONTROL_CODES, POINTER_DISAMBIGUATION, SKIP_TARGET_AREAS,  FILE_BLOCKS, DUMP_XLS_PATH, MSD_POINTER_RANGES
 
 #FILES_WITH_POINTERS = POINTER_CONSTANT
-#FILES_WITH_POINTERS = ['POS1.MSD']
+FILES_WITH_POINTERS = ['YUMI.MSD']
 
-FILES_WITH_POINTERS = ['P_SIRYO.MSD', 'P_JUNK.MSD']
+#FILES_WITH_POINTERS = ['POS.EXE', 'POSM.EXE', 'POSE.EXE', 
+#                       'POS1.MSD', 'YUMI.MSD',
+#                       'P_SIRYO.MSD', 'P_JUNK.MSD', ]
 
 # POINTER_CONSTANT is the line where "Borland Compiler" appears, rounded down to the nearest 0x10.
 
@@ -85,6 +87,8 @@ for gamefile in FILES_WITH_POINTERS:
         GF = Gamefile(gamefile_path, pointer_constant=POINTER_CONSTANT[gamefile])
         GF2 = Gamefile(gamefile_path, pointer_constant=POINTER_CONSTANT[gamefile])
 
+        # Missing ptr const here
+
     with open(gamefile_path, 'rb') as f:
         print(gamefile_path)
         bs = f.read()
@@ -101,6 +105,9 @@ for gamefile in FILES_WITH_POINTERS:
                 #if t.location > 0x00:
                 print("Target: " + hex(t.location))
                 target_areas.append((t.location, t.location))
+            for sta in SKIP_TARGET_AREAS[gamefile]:
+                target_areas.remove((sta, sta))
+                assert sta not in target_areas
 
 
         # target_area = (GF.pointer_constant, len(bs))
@@ -165,7 +172,7 @@ for gamefile in FILES_WITH_POINTERS:
         for regex in (pointer_regex, pointer_regex_2, msd_regex, msd_regex_2, table_regex):
             if regex is None:
                 continue
-            #print(regex)
+            print(regex)
             pointers = capture_pointers_from_function(only_hex, regex)
 
             for p in pointers:
@@ -185,12 +192,14 @@ for gamefile in FILES_WITH_POINTERS:
                 else:
                     raise Exception
 
-
                 text_location = int(location_from_pointer((p.group(1), p.group(2)), GF.pointer_constant), 16)
 
                 if all([not t[0] <= text_location<= t[1] for t in target_areas]):
+                    #for t in target_areas:
+                    #    print(hex(t[0]), hex(t[1]))
                     #print("Skipping")
                     continue
+
 
                 throwaway = False
                 if regex == msd_pointer_regex:
@@ -201,18 +210,24 @@ for gamefile in FILES_WITH_POINTERS:
                         #print("length: " + int(p.group(3), 16))
 
                         ranges = MSD_POINTER_RANGES[gamefile]
-                        for r in ranges:
-                            if r[0] <= pointer_location <= r[1]:
+
+                        # Don't do this removal if there are multiple pointers to one text location.
+                        # That would skip areas unnecessarily
+                        if (GF2, text_location) not in pointer_locations.keys():
+                            if any([r[0] <= pointer_location <= r[1] for r in ranges]):
                                 pointer_lines = int(p.group(3), 16)
                                 print(hex(pointer_location), hex(text_location), pointer_lines)
                                 i = target_areas.index((text_location, text_location))
                                 pointer_lines -= 1
+                                # Remove the next N target areas
                                 while pointer_lines:
                                     print("No longer looking for " + hex(target_areas.pop(i+1)[0]))
                                     pointer_lines -= 1
                             else:
                                 throwaway = True
-                        # Remove the next N target areas
+                        else:
+                            # That's fine, just don't do pointer_line removals
+                            pass
                     else:
                         throwaway = True
 
@@ -261,9 +276,10 @@ for gamefile in FILES_WITH_POINTERS:
         # TODO: Need to throw out pointers not in target areas.
         #print(final_target_areas['P_SIRYO.MSD'])
         #print(gamefile.filename)
-        if not any([text_location == ta[0] for ta in final_target_areas[gamefile.filename]]):
-            print(hex(text_location), "wasn't on the targets list")
-            continue
+        if gamefile.filename.endswith('.MSD'):
+            if not any([text_location == ta[0] for ta in final_target_areas[gamefile.filename]]):
+                print(hex(text_location), "wasn't on the targets list")
+                continue
         #for ta in final_target_areas[gamefile.filename]:
         #    #print(ta)
         #    print(text_location, ta[0])

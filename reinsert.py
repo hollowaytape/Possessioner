@@ -21,7 +21,8 @@ FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE', 'POS1.MSD', 'YUMI.MSD', 'P_HON1.MSD'
                      'P_GYOTEI.MSD', 'P_HOU.MSD', 'P_JUNK.MSD', 'P_KYU.MSD', 'P_SIRYO.MSD',
                      'P_SUTE.MSD', 'RASU1.MSD', 'RASU2.MSD', 'TINA.MSD', 'ARISA.MSD',
                      'AYAKA.MSD', 'ERIS.MSD', 'HONHOA.MSD', 'MAI.MSD', 'MINS.MSD',
-                     'MISHA.MSD', 'NEDRA1.MSD', "NEDRA2.MSD", 'DOCTOR.MSD', 'PLYM.MSD']
+                     'MISHA.MSD', 'NEDRA1.MSD', "NEDRA2.MSD", 'DOCTOR.MSD', 'PLYM.MSD',
+                     'END.MSD',]
 
 MAPPING_MODE = True
 
