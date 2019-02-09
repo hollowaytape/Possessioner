@@ -5,7 +5,7 @@
 
 import os
 
-from rominfo import FILE_BLOCKS, ORIGINAL_ROM_PATH, TARGET_ROM_PATH, DUMP_XLS_PATH, POINTER_DUMP_XLS_PATH, inverse_CTRL
+from rominfo import FILE_BLOCKS, ORIGINAL_ROM_PATH, TARGET_ROM_PATH, DUMP_XLS_PATH, POINTER_DUMP_XLS_PATH, inverse_CONCISE_CTRL, inverse_CTRL
 from romtools.disk import Disk, Gamefile, Block
 from romtools.dump import DumpExcel, PointerExcel
 
@@ -70,6 +70,12 @@ for filename in FILES_TO_REINSERT:
         for i, t in enumerate(Dump.get_translations(block, include_blank=True)):
             #print(t.english)
             loc_in_block = t.location - block.start + diff
+
+            for ccc in inverse_CONCISE_CTRL:
+                t.jp_bytestring = t.jp_bytestring.replace(ccc, inverse_CONCISE_CTRL[ccc])
+                t.en_bytestring = t.en_bytestring.replace(ccc, inverse_CONCISE_CTRL[ccc])
+                if t.prefix is not None:
+                    t.prefix = t.prefix.replace(ccc, inverse_CONCISE_CTRL[ccc])
 
             for cc in inverse_CTRL:
                 t.jp_bytestring = t.jp_bytestring.replace(cc, inverse_CTRL[cc])

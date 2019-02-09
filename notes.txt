@@ -113,7 +113,7 @@ Images:
 	* Looks like MLD might be able to open CSX and SEL files??
 		* mld -selpsr MLD\FONT2.SEL
 		* mld -selpsr -f -c  MLD\*.SEL (asterisk key is :)
-			* a f d key: sort
+			* a f a key: sort
 			* s key: save file...?
 				* I think it just sends data to the MAG saver. Not useful for this
 

@@ -6,7 +6,7 @@
 import sys
 import os
 import xlsxwriter
-from rominfo import FILE_BLOCKS, FILES, ORIGINAL_ROM_DIR, DUMP_XLS_PATH, CONTROL_CODES
+from rominfo import FILE_BLOCKS, FILES, ORIGINAL_ROM_DIR, DUMP_XLS_PATH, CONTROL_CODES, CONCISE_CONTROL_CODES, POINTER_CONSTANT
 
 COMPILER_MESSAGES = [b'Turbo', b'Borland', b'C++', b'Library', b'Copyright']
 
@@ -17,9 +17,9 @@ ASCII_MODE = 2
 
 THRESHOLD = 2
 
-
 def dump(files):
     for filename in FILES:
+        print(filename)
         worksheet = workbook.add_worksheet(filename)
 
         OFFSET_COLUMN = 0
@@ -116,18 +116,16 @@ def dump(files):
                         elif 0x20 <=contents[cursor] <= 0x7e and ASCII_MODE in (1, 2):
                             sjis_buffer += contents[cursor].to_bytes(1, byteorder='little')
 
-                        elif contents[cursor] in (0xf0, 0xf2, 0xf4, 0xf3, 0xf5):
+                        elif contents[cursor] in (0xf0, 0xf2, 0xf4, 0xf5):
                             code = contents[cursor:cursor+2]
                             #print(filename, hex(start + cursor))
                             #print(code)
                             sjis_buffer += CONTROL_CODES[code]
                             cursor += 1
 
-                        # C string formatting with %
-                        #elif contents[cursor] == 0x25:
-                        #    #sjis_buffer += b'%'
-                        #    cursor += 1
-                        #    if contents[cursor]
+                        elif contents[cursor] == 0xf3:
+                            code = b'\xf3'
+                            sjis_buffer += CONTROL_CODES[code]
 
                         # End of continuous SJIS string, so add the buffer to the strings and reset buffer
                         else:
@@ -150,12 +148,12 @@ def dump(files):
 
             for s in sjis_strings:
                 # Remove leading U's
-                while s[1].startswith(b'U'):
-                    s = (s[0] + 1, s[1][1:])
-                    #s[1] = s[1][1:]
-                    #s[0] += 1
+                #while s[1].startswith(b'U'):
+                #    s = (s[0] + 1, s[1][1:])
+                #    #s[1] = s[1][1:]
+                #    #s[0] += 1
 
-                s = (s[0], s[1].rstrip(b'U'))
+                #s = (s[0], s[1].rstrip(b'U'))
 
                 if s[1].startswith(b'='):
                     s = (s[0], s[1].replace(b'=', b'[=]'))
@@ -167,15 +165,27 @@ def dump(files):
                 while s[1].startswith(b'['):
                     codes += s[1].split(b']')[0] + b']'
                     s = (s[0], b']'.join(s[1].split(b']')[1:]))
+                if codes:
+                    #print(codes)
+                    for ccc in CONCISE_CONTROL_CODES:
+                        codes = codes.replace(ccc, CONCISE_CONTROL_CODES[ccc])
+                    #print(codes)
+
+                if codes == b'[Clear]':
+                    codes = b''
+                    s = (s[0] + 1, s[1])
 
                 command = b''
-                if b'[Start]' in codes:
-                    command = b'?'
+                # Ignoring this, find_pointers.py has a better way of doing it
+                #if b'[Start]' in codes:
+                #    command = b'?'
 
                 loc = '0x' + hex(s[0]).lstrip('0x').zfill(5)
                 try:
                     jp = s[1].decode('shift-jis')
                 except UnicodeDecodeError:
+                    print(loc)
+                    print(s[1])
                     print("Couldn't decode that")
                     continue
 

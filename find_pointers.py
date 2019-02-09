@@ -5,10 +5,16 @@ import regex as re
 from romtools.dump import BorlandPointer, DumpExcel, PointerExcel
 from romtools.disk import Gamefile
 
-from rominfo import POINTER_CONSTANT, POINTER_TABLES, POINTER_TABLE_SEPARATOR, CONTROL_CODES, POINTER_DISAMBIGUATION, SKIP_TARGET_AREAS,  FILE_BLOCKS, DUMP_XLS_PATH, MSD_POINTER_RANGES
+from rominfo import POINTER_CONSTANT, POINTER_TABLES, POINTER_TABLE_SEPARATOR
+from rominfo import EXTRA_POINTERS,  CONTROL_CODES, POINTER_DISAMBIGUATION, SKIP_TARGET_AREAS
+from rominfo import FILE_BLOCKS, DUMP_XLS_PATH, MSD_POINTER_RANGES
 
 #FILES_WITH_POINTERS = POINTER_CONSTANT
-FILES_WITH_POINTERS = ['YUMI.MSD']
+#FILES_WITH_POINTERS = [ 'PLYM.MSD', 'P_ROU1.MSD',
+#'P_SE.MSD', 'P_7.MSD', ]
+
+FILES_WITH_POINTERS = ['HONHOA.MSD', 'DOCTOR.MSD', 'MINS.MSD', 'P_GE.MSD', 'MAI.MSD',]
+
 
 #FILES_WITH_POINTERS = ['POS.EXE', 'POSM.EXE', 'POSE.EXE', 
 #                       'POS1.MSD', 'YUMI.MSD',
@@ -103,11 +109,12 @@ for gamefile in FILES_WITH_POINTERS:
 
                 # Disabling this too. It can tell you which of the next few strings to skip
                 #if t.location > 0x00:
-                print("Target: " + hex(t.location))
+                #print("Target: " + hex(t.location))
                 target_areas.append((t.location, t.location))
-            for sta in SKIP_TARGET_AREAS[gamefile]:
-                target_areas.remove((sta, sta))
-                assert sta not in target_areas
+            if gamefile in SKIP_TARGET_AREAS:
+                for sta in SKIP_TARGET_AREAS[gamefile]:
+                    target_areas.remove((sta, sta))
+                    assert sta not in target_areas
 
 
         # target_area = (GF.pointer_constant, len(bs))
@@ -200,13 +207,18 @@ for gamefile in FILES_WITH_POINTERS:
                     #print("Skipping")
                     continue
 
+                if (gamefile, text_location, None) in POINTER_DISAMBIGUATION:
+                    print("Really bad pointer, skipping that one")
+                    continue
 
                 throwaway = False
-                if regex == msd_pointer_regex:
+                if regex == msd_pointer_regex and gamefile in MSD_POINTER_RANGES:
                     byte_before = bs[p.start()//4 - 1]
-                    if byte_before in (0x00, 0x04, 0xff):
-                        print(pointer_location)
-                        #print(byte_before)
+                    # This started out as a reasonable list. Oops
+                    if byte_before in (0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 
+                                       0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 
+                                       0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x20, 0x21, 0x2b, 0x39, 0xff):
+                        #print(pointer_location)
                         #print("length: " + int(p.group(3), 16))
 
                         ranges = MSD_POINTER_RANGES[gamefile]
@@ -216,13 +228,15 @@ for gamefile in FILES_WITH_POINTERS:
                         if (GF2, text_location) not in pointer_locations.keys():
                             if any([r[0] <= pointer_location <= r[1] for r in ranges]):
                                 pointer_lines = int(p.group(3), 16)
-                                print(hex(pointer_location), hex(text_location), pointer_lines)
+                                #print(hex(pointer_location), hex(text_location), pointer_lines)
                                 i = target_areas.index((text_location, text_location))
                                 pointer_lines -= 1
+                                print(gamefile, hex(byte_before))
                                 # Remove the next N target areas
-                                while pointer_lines:
-                                    print("No longer looking for " + hex(target_areas.pop(i+1)[0]))
-                                    pointer_lines -= 1
+                                # TODO: Disabling this
+                                #while pointer_lines:
+                                #    print("No longer looking for " + hex(target_areas.pop(i+1)[0]))
+                                #    pointer_lines -= 1
                             else:
                                 throwaway = True
                         else:
@@ -247,6 +261,15 @@ for gamefile in FILES_WITH_POINTERS:
                 pointer_locations[(GF2, text_location)] = all_locations
 
         final_target_areas[gamefile] = target_areas
+
+    # Add those pesky manual ones that don't get found
+    print(final_target_areas.keys())
+    for gf in EXTRA_POINTERS:
+        if gf in FILES_WITH_POINTERS:
+            gamefile_path = os.path.join('original', gf)
+            GF = Gamefile(gamefile_path, pointer_constant=POINTER_CONSTANT[gf])
+            for (text_loc, pointer_loc) in EXTRA_POINTERS[gf]:
+                pointer_locations[(GF, text_loc)] = [pointer_loc,]
 
     # Setup the worksheet for this file
     worksheet = PtrXl.add_worksheet(GF2.filename)
@@ -273,19 +296,12 @@ for gamefile in FILES_WITH_POINTERS:
             # but they have served their purpose
             continue
 
-        # TODO: Need to throw out pointers not in target areas.
-        #print(final_target_areas['P_SIRYO.MSD'])
-        #print(gamefile.filename)
         if gamefile.filename.endswith('.MSD'):
             if not any([text_location == ta[0] for ta in final_target_areas[gamefile.filename]]):
                 print(hex(text_location), "wasn't on the targets list")
                 continue
-        #for ta in final_target_areas[gamefile.filename]:
-        #    #print(ta)
-        #    print(text_location, ta[0])
-        #    if text_location == ta[0]:
-        #        print(ta, "was the location")
 
+        """
         if len(pointer_locations) > 1:
             if gamefile.filename in MSD_POINTER_RANGES:
                 better_pointer_locations = []
@@ -299,6 +315,25 @@ for gamefile in FILES_WITH_POINTERS:
                         pass
                 if better_pointer_locations != []:
                     pointer_locations = better_pointer_locations
+        """
+        if gamefile.filename in MSD_POINTER_RANGES:
+            better_pointer_locations = []
+            for pointer_loc in pointer_locations:
+                if any([s[0] <= pointer_loc <= s[1] for s in MSD_POINTER_RANGES[gamefile.filename]]):
+                    print(hex(text_location), hex(pointer_loc), "is good")
+                    better_pointer_locations.append(pointer_loc)
+                else:
+                    # One more chance...?
+                    if Gamefile('original/POS.EXE').filestring[pointer_loc-1] == 0xbe:
+                        print("It's good because it's a 0xbe pointer")
+                        better_pointer_locations.append(pointer_loc)
+                    else:
+                        print(hex(text_location), hex(pointer_loc), "is bad")
+            pointer_locations = better_pointer_locations
+            if pointer_locations == []:
+                print("Oops, no good pointers for", hex(text_location))
+                continue
+
 
         # TODO: Could I do something like throw out all MSD pointers below 0x10000?
         # Might work...

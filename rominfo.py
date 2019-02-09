@@ -13,21 +13,111 @@ TARGET_ROM_PATH = os.path.join(TARGET_ROM_DIR, 'Possessioner.hdi')
 DUMP_XLS_PATH = 'PSSR_dump.xlsx'
 POINTER_DUMP_XLS_PATH = 'PSSR_pointer_dump.xlsx'
 
-FILES = ['POSM.EXE', 'POS.EXE', 'POS1.MSD', 'P_7.MSD', 'P_71.MSD',
-         'P_BILL.MLL', 'P_BILL.MSD', 'P_BOX.MSD', 'P_BYO.MSD',
-         'P_CITY.MSD', 'P_ENT.MSD', 'P_ENT2.MSD', 'P_GE.MSD',
-         'P_GYOTEI.MSD', 'P_GYOTEI.MSG', 'P_HI.MSD', 'P_HON1.MSD',
-         'P_HOU.MSD', 'P_JUNK.MSD', 'P_KYU.MSD', 'P_ROU1.MSD',
-         'P_SE.MSD', 'P_SIRYO.MSD', 'P_SUTE.MSD', 'P_SW1.MSD',
-         'P_SYO.MSD', 'RASU1.MSD', 'RASU2.MSD', 'STAFF.TXT',
-         'TINA.MSD', 'YUMI.MSD', 'ARISA.MSD', 'AYAKA.MSD',
-         'ERIS.MSD', 'HONHOA.MSD', 'MAI.MSD', 'MERYL.MSD',
-         'MINS.MSD', 'MISHA.MSD', 'NEDRA1.MSD', 'NEDRA2.MSD',
-         'DOCTOR.MSD', 'PLYM.MSD', 
-         'POSE.EXE', 'END.MSD', ]
+FILES = ['POSM.EXE', 'POS.EXE', 'POS1.MSD', 'YUMI.MSD',
+         'P_HON1.MSD', 'P_ROU1.MSD', 'P_SE.MSD', 'P_ENT.MSD',
+         'P_BYO.MSD', 'P_HI.MSD', 'P_SW1.MSD', 'MERYL.MSD',
+         'P_CITY.MSD', 'P_SYO.MSD', 'P_SUTE.MSD', 'P_KYU.MSD',
+         'P_HOU.MSD', 'P_BILL.MSD', 'MISHA.MSD', 'ERIS.MSD', 'P_JUNK.MSD',
+         'DOCTOR.MSD', 'P_ENT2.MSD', 'AYAKA.MSD', 'P_GYOTEI.MSD', 'MINS.MSD',
+         'PLYM.MSD', 'P_BOX.MSD', 'HONHOA.MSD', 'P_GE.MSD', "RASU1.MSD",
+         'RASU2.MSD', 'MAI.MSD', 'ARISA.MSD', 'P_SIRYO.MSD', 'NEDRA1.MSD',
+         'NEDRA2.MSD', 'P_7.MSD', 'P_71.MSD', 'TINA.MSD', 'END.MSD',
+         'POSE.EXE', "STAFF.TXT",
+         'P_BILL.MLL', 'P_GYOTEI.MSG'
+         ]
 
 # .M files have song titles/descriptions in them, probably just internal
 # "Arisa, songs of being fucked by the machine"
+
+CONCISE_CONTROL_CODES = {
+    b'[White][Alisa][P-Same][Start]': b'[Alisa-Start]',
+    b'[White][Alisa][P-Same][Continue]': b'[Alisa-Continue]',
+    b'[White][Alisa][P-Al-Neutral][Start]': b'[Alisa-Neutral]',
+    b'[White][Alisa][P-Al-Energetic][Start]': b'[Alisa-Neutral]',
+    b'[White][Alisa][P-Al-Upset][Start]': b'[Alisa-Neutral]',
+    b'[White][Alisa][P-Al-Surprised][Start]': b'[Alisa-Neutral]',
+
+    b'[Cyan][Honghua][P-Same][Start]': b'[Honghua-Start]',
+    b'[Cyan][Honghua][P-Same][Continue]': b'[Honghua-Continue]',
+    b'[Cyan][Honghua][P-Ho-Neutral][Start]': b'[Honghua-Neutral]',
+    b'[Cyan][Honghua][P-Ho-Happy][Start]': b'[Honghua-Happy]',
+    b'[Cyan][Honghua][P-Ho-Upset][Start]': b'[Honghua-Upset]',
+    b'[Cyan][Honghua][P-Ho-Sad][Start]': b'[Honghua-Sad]',
+
+    b'[Green][Meryl][P-Same][Start]': b'[Meryl-Start]',
+    b'[Green][Meryl][P-Same][Continue]': b'[Meryl-Continue]',
+    b'[Green][Meryl][P-Me-Neutral][Start]': b'[Meryl-Neutral]',
+    b'[Green][Meryl][P-Me-Excited][Start]': b'[Meryl-Happy]',
+    b'[Green][Meryl][P-Me-Upset][Start]': b'[Meryl-Upset]',
+    b'[Green][Meryl][P-Me-Sad][Start]': b'[Meryl-Sad]',
+
+    b'[Purple][Nedra][P-Same][Start]': b'[Nedra-Start]',
+    b'[Purple][Nedra][P-Same][Continue]': b'[Nedra-Continue]',
+    b'[Purple][Nedra][P-Ne-Neutral][Start]': b'[Nedra-Neutral]',
+    b'[Purple][Nedra][P-Ne-Happy][Start]': b'[Nedra-Happy]',
+    b'[Purple][Nedra][P-Ne-Upset][Start]': b'[Nedra-Upset]',
+    b'[Purple][Nedra][P-Ne-Sad][Start]': b'[Nedra-Sad]',
+
+    b'[Yellow][Kumiko][P-Blue][Start]': b'[Kumiko-Start]',
+    b'[Yellow][Kumiko][P-Blue][Continue]': b'[Kumiko-Continue]',
+
+    b'[Green][Eris][P-Blonde][Start]': b'[Eris-Start]',
+    b'[Green][Eris][P-Blonde][Continue]': b'[Eris-Continue]',
+
+    b'[Cyan][Deal][P-Brun][Start]': b'[Deal-Start]',
+    b'[Cyan][Deal][P-Brun][Continue]': b'[Deal-Continue]',
+
+    b'[Yellow][Yumi][P-Same][Start]': b'[Yumi-Start]',
+    b'[Yellow][Yumi][P-Same][Continue]': b'[Yumi-Continue]',
+    b'[Yellow][Ayaka][P-Same][Start]': b'[Ayaka-Start]',
+    b'[Yellow][Ayaka][P-Same][Continue]': b'[Ayaka-Continue]',
+    b'[Yellow][Misha][P-Same][Start]': b'[Misha-Start]',
+    b'[Yellow][Misha][P-Same][Continue]': b'[Misha-Continue]',
+
+    b'[Yellow][Prim][P-Same][Start]': b'[Prim-Start]',
+    b'[Yellow][Prim][P-Same][Continue': b'[Prim-Continue]',
+
+    b'[White][P-Same][Start][Clear]': b'[Narration]',
+    b'[White][Possessioner][P-Same][Start]': b'[Possessioner-White-Start]',
+    b'[Cyan][Possessioner][P-Same][Start]': b'[Possessioner-Cyan-Start]',
+
+    b'[Cyan][Mechanic 1][P-Same][Start]': b'[Mechanic1-Start]',
+    b'[Cyan][Mechanic 2][P-Same][Start]': b'[Mechanic2-Start]',
+    b'[Cyan][Mechanic 3][P-Same][Start]': b'[Mechanic3-Start]',
+
+    b'[Yellow][Doctor][P-Same][Start]': b'[Doc-Start]',
+    b'[Yellow][Doctor][P-Same][Continue]': b'[Doc-Continue]',
+
+    b'[Cyan][Passerby 1][P-Same][Start]': b'[Passerby1-Cyan-Start]',
+    b'[White[Passerby 1][P-Same][Start]': b'[Passerby1-White-Start]',
+    b'[Cyan][Passerby 2][P-Same][Start]': b'[Passerby2-Cyan-Start]',
+    b'[White[Passerby 2][P-Same][Start]': b'[Passerby2-White-Start]',
+    b'[Cyan][Passerby][P-Same][Start]': b'[Passerby-Start]',
+
+    b'[Cyan][Carmine][P-Same][Start]': b'[Carmine-Start]',
+    b'[Cyan][Carmine][P-Same][Continue]': b'[Carmine-Continue]',
+    b'[Yellow][Iris][P-Same][Start]': b'[Iris-Start]',
+    b'[Yellow][Iris][P-Same][Continue]': b'[Iris-Continue]',
+
+    b'[Yellow][May][P-Same][Start]': b'[May-Start]',
+    b'[Yellow][May][P-Same][Continue]': b'[May-Continue]',
+
+    b'[Cyan][Rashmar][P-Same][Start]': b'[Rashmar-Start]',
+    b'[Cyan][Rashmar][P-Same][Continue]': b'[Rashmar-Continue]',
+
+    b'[Yellow][Fairy][P-Same][Start]': b'[Fairy-Start]',
+    b'[Yellow][Fairy][P-Same][Continue]': b'[Fairy-Continue]',
+
+    b'[Yellow][Tina][P-Same][Start]': b'[Tina-Start]',
+    b'[Yellow][Tina][P-Same][Continue]': b'[Tina-Continue]',
+
+    b'[White][Clerk][P-Same][Start]': b'[Clerk-Start]',
+    b'[Cyan][Owner][P-Same][Start]': b'[Owner-Start]',
+    b'[Cyan][Master][P-Same][Start]': b'[Master-Start]',
+    b'[Cyan][Assistant][P-Same][Start]': b'[Assistant-Start]',
+    b'[Cyan][Person][P-Same][Start]': b'[Person-Start]',
+
+}
 
 CONTROL_CODES = {
     b'\x0d\xf3': b'[LN]',
@@ -58,15 +148,15 @@ CONTROL_CODES = {
     b'\xf2\x06': b'[Nedra]',
     b'\xf2\x07': b'[Yumi]',
     b'\xf2\x08': b'[Ayaka]',
-    b'\xf2\x09': b'[Purim]',
+    b'\xf2\x09': b'[Prim]',
     b'\xf2\x0a': b'[Eris]',
     b'\xf2\x0b': b'[Deal]',
     b'\xf2\x0c': b'[Kumiko]',
     b'\xf2\x0d': b'[Message]',
     b'\xf2\x0e': b'[Voice]',
-    b'\xf2\x0f': b'[Janitor 1]',
-    b'\xf2\x10': b'[Janitor 2]',
-    b'\xf2\x11': b'[Janitor 3]',
+    b'\xf2\x0f': b'[Mechanic 1]',
+    b'\xf2\x10': b'[Mechanic 2]',
+    b'\xf2\x11': b'[Mechanic 3]',
     b'\xf2\x12': b'[Clerk]',
     b'\xf2\x13': b'[Owner]',
     b'\xf2\x14': b'[Receptionist]',
@@ -78,7 +168,7 @@ CONTROL_CODES = {
     b'\xf2\x1a': b'[Passerby]',
     b'\xf2\x1b': b'[Carmine]',
     b'\xf2\x1c': b'[Iris]',
-    b'\xf2\x1d': b'[Michaas]',
+    b'\xf2\x1d': b'[Misha]',
     b'\xf2\x1e': b'[May]',
     b'\xf2\x1f': b'[Person]',
     b'\xf2\x20': b'[Man]',
@@ -91,7 +181,7 @@ CONTROL_CODES = {
     b'\xf2\x2c': b'[I really dunno]',
     b'\xf2\x44': b'[I still dunno]',
 
-    b'\xf3': b'[Clear?]',
+    b'\xf3': b'[Clear]',
 
     # Portraits
     b'\xf4\x00': b'[P-Same]',
@@ -113,7 +203,7 @@ CONTROL_CODES = {
     b'\xf4\x10': b'[P-Ne-Sad]',
     # Operators? Dunno their names yet
     b'\xf4\x11': b'[P-Blonde]',
-    b'\xf4\x12': b'[P-Brun',
+    b'\xf4\x12': b'[P-Brun]',
     b'\xf4\x13': b'[P-Blue]',
 
     # Text things
@@ -124,6 +214,7 @@ CONTROL_CODES = {
 }
 
 inverse_CTRL = {v: k for k, v in CONTROL_CODES.items()}
+inverse_CONCISE_CTRL = {v: k for k, v in CONCISE_CONTROL_CODES.items()}
 
 
 FILE_BLOCKS = {
@@ -260,7 +351,6 @@ FILE_BLOCKS = {
 POINTER_CONSTANT = OrderedDict({
     'POS.EXE': 0x7b00,
     'POSM.EXE': 0xafe0,
-    'POSE.EXE': 0x9480,
 
     'POS1.MSD': 0,    # HQ (intro)
     'YUMI.MSD': 0,
@@ -309,6 +399,7 @@ POINTER_CONSTANT = OrderedDict({
     'TINA.MSD': 0,
     'END.MSD': 0,      # Fairy
 
+    'POSE.EXE': 0x9480,
     'STAFF.TXT': 0,
 
     # Unused?
@@ -317,26 +408,26 @@ POINTER_CONSTANT = OrderedDict({
 })
 
 MSD_POINTER_RANGES = {
-    'POS1.MSD': [
+    'POS1.MSD': [                 # Good
         (0xeaf6, 0xee2f)
     ],
     'P_HON1.MSD': [               # Good
         (0xf2fe, 0x10c8e),
     ],
     'YUMI.MSD': [
-        (0xefcc, 0xf06a),     # Adv scene
-        (0x2776e, 0x28aac)    # Yumi scene
+        (0xefcc, 0xf06a),         # Good
+        (0x27670, 0x28aac)
     ],
-    'P_ROU1.MSD': [
+    'P_ROU1.MSD': [               # Good
         (0x21061, 0x24000),
     ],
-    'P_SE.MSD': [
+    'P_SE.MSD': [                # Good
         (0x28700, 0x291e1)
     ],
-    'P_ENT.MSD': [
-        (0x1b115, 0x1ff00),
+    'P_ENT.MSD': [              # Good
+        (0x1b115, 0x1ff00), # This range might be too broad...
     ],
-    'P_BYO.MSD': [
+    'P_BYO.MSD': [              # Good
         (0x1a81a, 0x1c000),
     ],
     'P_HI.MSD': [
@@ -376,62 +467,71 @@ MSD_POINTER_RANGES = {
     'P_JUNK.MSD': [               # Good
         (0x28134, 0x283b8),
     ],
-    #'DOCTOR.MSD': [
-    # Really hard to tell
-    #],
+    'DOCTOR.MSD': [             # Missing b5
+        (0x118d3, 0x11f90),
+    ],
     'P_ENT2.MSD': [
         (0x234a6, 0x238e2),
     ],
-    'AYAKA.MSD': [
-        (0x216c1, 0x21b85),
+    'AYAKA.MSD': [              # Missing 340f (might be mislabeled)
+        (0x216b0, 0x21b85),
     ],
     'P_GYOTEI.MSD': [
         (0x22acf, 0x2508b),
         # probably others
     ],
-    # Too few strings to tell
-    #'MINS.MSD': [
-    #],
-    'PLYM.MSD': [
-
+    'MINS.MSD': [            # MIssing 375f, maybe mislabeled?
+        (0x1d102, 0x1d6a5),
+    ],
+    'PLYM.MSD': [                 # Good
+        (0x20f60, 0x21444),
     ],
     'P_BOX.MSD': [
         (0x25270, 0x25331),
         # probably more
     ],
     'HONHOA.MSD': [
-
+        (0x1d904, 0x1dd9f),
     ],
     'P_GE.MSD': [
-
+        (0x1530a, 0x1553f),
     ],
-    'RASU1.MSD': [
-
+    'RASU1.MSD': [                  # Good
+        (0x253ce, 0x26138),
     ],
-    'RASU2.MSD': [
-
+    'RASU2.MSD': [                 # Good
+        (0x261d4, 0x26d5b),
     ],
     'MAI.MSD': [
-
+        (0x1caaf, 0x1cf30),
     ],
-    'ARISA.MSD': [
-
+    'ARISA.MSD': [              # Good
+        (0x1e455, 0x1ef52),
+        (0x209e8, 0x20a53),
     ],
     'P_SIRYO.MSD': [            # Good
         (0x245aa, 0x246e8)
     ],
-    'NEDRA1.MSD': [
-        (0x10fda, 0x112ab),
-        # definitely more
+    'NEDRA1.MSD': [             # Good
+        (0x10f30, 0x112ab),
+        (0x11630, 0x1164a),
     ],
-    'NEDRA2.MSD': [
-
+    'NEDRA2.MSD': [            # Just missing string at 0x854... maybe it is mislabeled
+        (0x11282, 0x11ef8),
     ],
     'P_7.MSD': [
-
+        (0x15aa2, 0x17559),
     ],
-    'P_71.MSD': [
-
+    'P_71.MSD': [                 # Good
+        (0x17700, 0x1943a),
+    ],
+    'TINA.MSD': [                # Good
+        (0x121d0, 0x1290b),
+        (0x13520, 0x13890),
+        (0x12480, 0x12670),
+    ],
+    'END.MSD': [                # Good
+        (0x13115, 0x13dff),
     ],
 }
 
@@ -448,14 +548,6 @@ POINTER_TABLE_SEPARATOR = {
     'POSE.EXE': '\\\\xa8\\\\x08',
 }
 
-#BAD_POINTERS = [
-#    (0xd0a8, )  # oops, this wasn't bad
-
-    # Battle crashes from POS1.MSD
-#    (0xe13, 0xc3b9), 
-#    (0xdf2, 0x263d4),
-#]
-
 # This is a better idea
 POINTER_DISAMBIGUATION = [
     ('P_HON1.MSD', 0x1ff, 0xf59f),
@@ -463,13 +555,80 @@ POINTER_DISAMBIGUATION = [
     ('POS1.MSD', 0xdf2, 0x1da35),
     ('P_SIRYO.MSD', 0x1b, None), # can I do this?
     ('YUMI.MSD', 0x40, None),
+
+    ('END.MSD', 0x3b56, None),
+    ('PLYM.MSD', 0x8bb, None),
+
+    ('NEDRA1.MSD', 0x752, 0x10fca),
+    ('END.MSD', 0x3b84, 0x13d5a),
+
+    ('TINA.MSD', 0xa64, None),
+
+    ('P_71.MSD', 0x2673, 0x1a318),
+
+    ('P_71.MSD', 0x8bb, None),
+    ('P_71.MSD', 0x33f5, None),
+
+    ('RASU1.MSD', 0x123a, 0x25ae8),
+    ('RASU2.MSD', 0x0474, None),
+    ('RASU2.MSD', 0x1e7d, None),
+
+    ('P_ROU1.MSD', 0x34d, None),
+    ('P_ROU1.MSD', 0x479, None),
+    ('P_ROU1.MSD', 0x8d3, None),
+    ('P_ROU1.MSD', 0xa9d, None),
+    ('P_ROU1.MSD', 0xfb1, None),
+    ('P_ROU1.MSD', 0x2520, None),
+    ('P_ROU1.MSD', 0x2730, None),
+    ('P_ROU1.MSD', 0x2afc, None),
+
+    ('P_SE.MSD', 0x10e0, None),
+    ('P_SE.MSD', 0x22f0, None),
+
+    ('P_ENT.MSD', 0x86a, None),
+    ('P_ENT.MSD', 0x10f7, None),
+    ('P_ENT.MSD', 0xc64, None),
+    ('P_ENT.MSD', 0x1494, None),
+    ('P_ENT.MSD', 0x22a6, None),
+    ('P_ENT.MSD', 0x282a, None),
+    ('P_ENT.MSD', 0x3f34, None),
+
+    ('P_BYO.MSD', 0x2673, None),
+    ('P_BYO.MSD', 0xfb0, None),
+    ('P_BYO.MSD', 0x60b, None),
+    ('P_BYO.MSD', 0x41e, None),
+
+
+    # NEDRA1 is missing 0x752 (ptr at 10fca), 
 ]
+
+EXTRA_POINTERS = {
+    'END.MSD': [
+        (0x3b84, 0x13d5a),
+    ],
+
+    #'AYAKA.MSD': [
+    #    (0x50c, 0x216b9),
+    #]
+}
 
 SKIP_TARGET_AREAS ={
     'YUMI.MSD': [
         0x17,
         0x40
-    ]
+    ],
+
+    #'NEDRA1.MSD': [0x29,],
+
+    'NEDRA2.MSD': [ 0x81,],
+
+    'ARISA.MSD': [0xe1, ],
+
+    'AYAKA.MSD': [0x45f, ],
+
+    'END.MSD': [0x19, 0x609,],
+
+    'TINA.MSD': [0x43, ],
 }
 
 # default to dumping the whole file
