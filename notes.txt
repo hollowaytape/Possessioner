@@ -14,6 +14,65 @@ You can replace with ascii text but it gets stretched out to twice its width ons
 		W is 57, gets flipped to 5700 and put in dx
 		Eventually moved back to al, where it gets sub al, 20
 			Then mult by 20 (6e0)
+
+
+		xor ax, ax
+		mov al, dh
+		sub al, 20
+		mov cx, 20
+		mul cx
+		mov si, 109c
+		add si, ax
+		mov cx, 10
+		repe movsw
+		ret
+
+		xor ah, ah
+		mov cx, 10
+		mov al, ah
+		or 1l, 20
+		out a5, al
+		in al, a9
+		stosb
+		mov al, ah
+		out a5, al
+		in al, a9
+		stosb
+		inc ah
+		loop 0a5a (mov al, ah)
+
+		Change 1156:09e5 e85700 -> e86d00 (call 0a55 instead of 0a3f)
+			Nothing is in AX, need to load stuff from DX first?
+		Change 8ac4 (mov al, ah) to 8ac6 (mov al, dh)
+
+		Alright, so the intro text is using a custom font called QUEENS.FNT.
+			If it's ASCII text, it gets converted into an offset in QUEENS.FNT and that gets written to VRAM.
+			So I have 2 options here:
+				1. Try to edit the font itself
+					* Won't open in TileMolestor. Fuck that then
+				2. Do a fullwidth/halfwidth hack like usual
+					* POSM.EXE:28d2: 1fa1  -> c025 (redirect FW to HW)
+					* 1156:094a 2ec606a202801 -> 2ec606a20802
+					* nop out 1156:09a9 inc si
+					* change mov ah, al to mov ah, 82 (b482)
+					* Nop out mov al, [si]
+
+					TEXT TEXT text text = 59 &5UY FU   ??
+					What if I get rid of the inc si at 1156:0a29: (context: 46e2fceb0890a840)
+						* No
+					How about 1905:017b, 46eb0cb82800?
+						* No
+					How about the double one, 46463b76fe7cbfff46fe?
+						* Yep
+
+
+					* Punctuation problems.
+						* At 1156:1ad7 (cmp dh, 28), normal text is:
+							* 294d, 2961, 296e, etc
+						* Punctuation is:
+							* 2a20
+							* 822e -> 042e -> 040f -> 04ee -> 2aae
+
 	Dialogue and exposition text in the intro seem to behave differently. Dialogue is double wide and double tall, exposition is just double wide
 
 

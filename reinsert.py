@@ -34,7 +34,7 @@ for filename in FILES_TO_REINSERT:
         gamefile.edit(0xa0ba, b'\x74\x15\x30\xe4\x90\x90\x90\x90\x90\x90\x90\x90')
         gamefile.edit(0xa0cd, b'\x90\x90')
 
-        # Reassign tile numbers for in-battle nametag images
+        # Reassign tile indices for in-battle nametag images
         # a = space
         # Alisa
         gamefile.edit(0xd81a, b'aabcde')
@@ -51,6 +51,31 @@ for filename in FILES_TO_REINSERT:
         # Increase text speed
         gamefile.edit(0xa3bf, b'\xa8\x04')
 
+    elif filename == 'POSM.EXE':
+        # Redirect font table reference
+        gamefile.edit(0x28d1, b'\xc0\x25')
+
+        # Make ascii text go to fullwidth routine
+        gamefile.edit(0x174f, b'\x02')
+
+        # Nop out an "inc si"
+        gamefile.edit(0x17aa, b'\x90') 
+
+        # Top byte is always 82
+        gamefile.edit(0x17ab, b'\xb4\x82')
+
+        # Nop out mov al, [si]
+        gamefile.edit(0x17ad, b'\x90\x90')
+
+        # Mysterious double-inc [si]
+        gamefile.edit(0x8b19, b'\x90')
+
+        # Extremely inelegant punctuation fix
+        gamefile.edit(0x28d7, b'\xb6\x29')
+
+        # Fix "@  QUEEN  SOFT"
+        gamefile.edit(0xb450, b' ')
+        gamefile.edit(0xb45f, b' ')
 
     for block in FILE_BLOCKS[filename]:
         block = Block(gamefile, block)
@@ -77,20 +102,20 @@ for filename in FILES_TO_REINSERT:
 
             if t.english == b'' or t.en_bytestring == t.prefix or t.english == t.japanese:
                 if filename.endswith('MSD') and MAPPING_MODE:
-                    print(this_diff)
+                    #print(this_diff)
                     if this_diff >= -8:
                         id_string = b'%i' % (i+2)
                     else:
                         id_string = b'%b-%i' % (filename[:4].encode('ascii'), (i+2))
                     t.en_bytestring += id_string
-                    print(t.en_bytestring)
+                    #print(t.en_bytestring)
                     while len(t.en_bytestring) < len(t.jp_bytestring):
                         t.en_bytestring += b' '
                     #if len(id_string) < len(t.jp_bytestring):
                     #    print(id_string)
                     #    t.en_bytestring = id_string + t.jp_bytestring[len(id_string):]
                     this_diff = len(t.en_bytestring) - len(t.jp_bytestring)
-                    print(t.en_bytestring)
+                    #print(t.en_bytestring)
                     assert this_diff == 0
 
                 else:
@@ -137,9 +162,6 @@ for filename in FILES_TO_REINSERT:
             block_diff = len(block.blockstring) - len(block.original_blockstring)
             assert block_diff == 0, block_diff
 
-        i#f block.start in (0xdcfa, 0xdd47, 0xdd93, 0xf193):
-         #   print(block.original_blockstring)
-         #   print(gamefile.filestring[block.start:block.stop])
         block.incorporate()
 
     gamefile.write(path_in_disk=path_in_disk)
