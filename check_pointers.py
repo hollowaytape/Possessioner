@@ -9,7 +9,7 @@ PtrDump = PointerExcel(POINTER_DUMP_XLS_PATH)
 OriginalPssr = Disk(ORIGINAL_ROM_PATH, dump_excel=Dump, pointer_excel = PtrDump)
 TargetPssr = Disk(TARGET_ROM_PATH)
 
-FILES= ['HONHOA.MSD', 'DOCTOR.MSD', 'MINS.MSD', 'P_GE.MSD', 'MAI.MSD',]
+#FILES = ['HONHOA.MSD', 'DOCTOR.MSD', 'MINS.MSD', 'P_GE.MSD', 'MAI.MSD',]
 
 for filename in [f for f in FILES if f.endswith('.MSD')]:
     GF = Gamefile('original/%s' % filename, disk=OriginalPssr, dest_disk=TargetPssr)
@@ -31,6 +31,6 @@ for filename in [f for f in FILES if f.endswith('.MSD')]:
             important_locations.remove(p)
 
     if len(important_locations) > 0:
-        print("Still remaining without a pointer:")
+        print(filename, ":")
         for t in important_locations:
             print(hex(t))

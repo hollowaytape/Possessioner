@@ -5,7 +5,7 @@
 
 import os
 
-from rominfo import FILE_BLOCKS, ORIGINAL_ROM_PATH, TARGET_ROM_PATH, DUMP_XLS_PATH, POINTER_DUMP_XLS_PATH, inverse_CONCISE_CTRL, inverse_CTRL
+from rominfo import FILE_BLOCKS, FILES_TO_REINSERT, ORIGINAL_ROM_PATH, TARGET_ROM_PATH, DUMP_XLS_PATH, POINTER_DUMP_XLS_PATH, inverse_CONCISE_CTRL, inverse_CTRL
 from romtools.disk import Disk, Gamefile, Block
 from romtools.dump import DumpExcel, PointerExcel
 
@@ -13,16 +13,6 @@ Dump = DumpExcel(DUMP_XLS_PATH)
 PtrDump = PointerExcel(POINTER_DUMP_XLS_PATH)
 OriginalPssr = Disk(ORIGINAL_ROM_PATH, dump_excel=Dump, pointer_excel = PtrDump)
 TargetPssr = Disk(TARGET_ROM_PATH)
-
-FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE', 'POS1.MSD', 'YUMI.MSD', 'P_HON1.MSD',
-                     'P_ROU1.MSD', 'P_HI.MSD', 'P_ENT.MSD', 'P_BYO.MSD', 'P_SW1.MSD',
-                     'P_SE.MSD', 'MERYL.MSD', 'P_CITY.MSD', 'P_SYO.MSD', 'P_7.MSD',
-                     'P_71.MSD', 'P_BILL.MSD', 'P_BOX.MSD', 'P_GE.MSD', 'P_ENT2.MSD',
-                     'P_GYOTEI.MSD', 'P_HOU.MSD', 'P_JUNK.MSD', 'P_KYU.MSD', 'P_SIRYO.MSD',
-                     'P_SUTE.MSD', 'RASU1.MSD', 'RASU2.MSD', 'TINA.MSD', 'ARISA.MSD',
-                     'AYAKA.MSD', 'ERIS.MSD', 'HONHOA.MSD', 'MAI.MSD', 'MINS.MSD',
-                     'MISHA.MSD', 'NEDRA1.MSD', "NEDRA2.MSD", 'DOCTOR.MSD', 'PLYM.MSD',
-                     'END.MSD',]
 
 MAPPING_MODE = True
 

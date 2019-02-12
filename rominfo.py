@@ -26,6 +26,16 @@ FILES = ['POSM.EXE', 'POS.EXE', 'POS1.MSD', 'YUMI.MSD',
          'P_BILL.MLL', 'P_GYOTEI.MSG'
          ]
 
+FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE', 'POS1.MSD', 'YUMI.MSD', 'P_HON1.MSD',
+                     'P_ROU1.MSD', 'P_HI.MSD', 'P_ENT.MSD', 'P_BYO.MSD', 'P_SW1.MSD',
+                     'P_SE.MSD', 'MERYL.MSD', 'P_CITY.MSD', 'P_SYO.MSD', 'P_7.MSD',
+                     'P_71.MSD', 'P_BILL.MSD', 'P_BOX.MSD', 'P_GE.MSD', 'P_ENT2.MSD',
+                     'P_GYOTEI.MSD', 'P_HOU.MSD', 'P_JUNK.MSD', 'P_KYU.MSD', 'P_SIRYO.MSD',
+                     'P_SUTE.MSD', 'RASU1.MSD', 'RASU2.MSD', 'TINA.MSD', 'ARISA.MSD',
+                     'AYAKA.MSD', 'ERIS.MSD', 'HONHOA.MSD', 'MAI.MSD', 'MINS.MSD',
+                     'MISHA.MSD', 'NEDRA1.MSD', "NEDRA2.MSD", 'DOCTOR.MSD', 'PLYM.MSD',
+                     'END.MSD',]
+
 # .M files have song titles/descriptions in them, probably just internal
 # "Arisa, songs of being fucked by the machine"
 
@@ -33,9 +43,9 @@ CONCISE_CONTROL_CODES = {
     b'[White][Alisa][P-Same][Start]': b'[Alisa-Start]',
     b'[White][Alisa][P-Same][Continue]': b'[Alisa-Continue]',
     b'[White][Alisa][P-Al-Neutral][Start]': b'[Alisa-Neutral]',
-    b'[White][Alisa][P-Al-Energetic][Start]': b'[Alisa-Neutral]',
-    b'[White][Alisa][P-Al-Upset][Start]': b'[Alisa-Neutral]',
-    b'[White][Alisa][P-Al-Surprised][Start]': b'[Alisa-Neutral]',
+    b'[White][Alisa][P-Al-Energetic][Start]': b'[Alisa-Energetic]',
+    b'[White][Alisa][P-Al-Upset][Start]': b'[Alisa-Upset]',
+    b'[White][Alisa][P-Al-Surprised][Start]': b'[Alisa-Surprised]',
 
     b'[Cyan][Honghua][P-Same][Start]': b'[Honghua-Start]',
     b'[Cyan][Honghua][P-Same][Continue]': b'[Honghua-Continue]',

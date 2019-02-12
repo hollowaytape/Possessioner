@@ -242,6 +242,14 @@ Images:
 	Wider-than-8 images seem to work as expected - it writes the whole block, then goes to the next one
 
 
+## CGX file format
+* Images is 74 (or 80) tall, 362 wide.
+	* 362 = 2d+change blocks.
+* Header:
+	* 00: Width in blocks
+	* 01-02: Height
+	* 
+
 
 
 .MSD file format:

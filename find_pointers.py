@@ -7,33 +7,7 @@ from romtools.disk import Gamefile
 
 from rominfo import POINTER_CONSTANT, POINTER_TABLES, POINTER_TABLE_SEPARATOR
 from rominfo import EXTRA_POINTERS,  CONTROL_CODES, POINTER_DISAMBIGUATION, SKIP_TARGET_AREAS
-from rominfo import FILE_BLOCKS, DUMP_XLS_PATH, MSD_POINTER_RANGES
-
-#FILES_WITH_POINTERS = POINTER_CONSTANT
-#FILES_WITH_POINTERS = [ 'PLYM.MSD', 'P_ROU1.MSD',
-#'P_SE.MSD', 'P_7.MSD', ]
-
-FILES_WITH_POINTERS = ['HONHOA.MSD', 'DOCTOR.MSD', 'MINS.MSD', 'P_GE.MSD', 'MAI.MSD',]
-
-
-#FILES_WITH_POINTERS = ['POS.EXE', 'POSM.EXE', 'POSE.EXE', 
-#                       'POS1.MSD', 'YUMI.MSD',
-#                       'P_SIRYO.MSD', 'P_JUNK.MSD', ]
-
-# POINTER_CONSTANT is the line where "Borland Compiler" appears, rounded down to the nearest 0x10.
-
-# 8b03 = 03 10
-# 8b0c = 0c 10
-# 8b15
-# 8b1c
-
-# constant = 0x7b00
-
-# battle things:
-# cfb8 = b8 54 
-    # found at c227, be b8 54 e8 fe
-# cfcf = cf 54
-    # found at c4a6, be cf 54 e8 7f
+from rominfo import FILE_BLOCKS, DUMP_XLS_PATH, MSD_POINTER_RANGES, FILES_TO_REINSERT
 
 Dump = DumpExcel(DUMP_XLS_PATH)
 
@@ -78,8 +52,8 @@ PtrXl = PointerExcel('PSSR_pointer_dump.xlsx')
 
 final_target_areas = {}
 
-for gamefile in FILES_WITH_POINTERS:
-    print(gamefile)
+for gamefile in FILES_TO_REINSERT:
+    print("Getting pointers for", gamefile)
     pointer_locations = OrderedDict()
     gamefile_path = os.path.join('original', gamefile)
 
@@ -263,9 +237,9 @@ for gamefile in FILES_WITH_POINTERS:
         final_target_areas[gamefile] = target_areas
 
     # Add those pesky manual ones that don't get found
-    print(final_target_areas.keys())
+    #print(final_target_areas.keys())
     for gf in EXTRA_POINTERS:
-        if gf in FILES_WITH_POINTERS:
+        if gf in final_target_areas:
             gamefile_path = os.path.join('original', gf)
             GF = Gamefile(gamefile_path, pointer_constant=POINTER_CONSTANT[gf])
             for (text_loc, pointer_loc) in EXTRA_POINTERS[gf]:
@@ -295,7 +269,7 @@ for gamefile in FILES_WITH_POINTERS:
             # Definitely don't use these. They were useful for pointer_lines calculation,
             # but they have served their purpose
             continue
-
+        print(gamefile)
         if gamefile.filename.endswith('.MSD'):
             if not any([text_location == ta[0] for ta in final_target_areas[gamefile.filename]]):
                 print(hex(text_location), "wasn't on the targets list")
@@ -325,7 +299,6 @@ for gamefile in FILES_WITH_POINTERS:
                 else:
                     # One more chance...?
                     if Gamefile('original/POS.EXE').filestring[pointer_loc-1] == 0xbe:
-                        print("It's good because it's a 0xbe pointer")
                         better_pointer_locations.append(pointer_loc)
                     else:
                         print(hex(text_location), hex(pointer_loc), "is bad")
