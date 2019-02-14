@@ -424,8 +424,8 @@ MSD_POINTER_RANGES = {
     'P_HON1.MSD': [               # Good
         (0xf2fe, 0x10c8e),
     ],
-    'YUMI.MSD': [
-        (0xefcc, 0xf06a),         # Good
+    'YUMI.MSD': [                 # Good
+        (0xefcc, 0xf06a),
         (0x27670, 0x28aac)
     ],
     'P_ROU1.MSD': [               # Good
@@ -440,19 +440,19 @@ MSD_POINTER_RANGES = {
     'P_BYO.MSD': [              # Good
         (0x1a81a, 0x1c000),
     ],
-    'P_HI.MSD': [
+    'P_HI.MSD': [              # Good
         (0x128a2, 0x13d19),
     ],
     'P_SW1.MSD': [
         (0xffc2, 0x10ebe),
     ],
-    'MERYL.MSD': [
+    'MERYL.MSD': [             # Missing 0xdf6, 0x231f
         (0x1c252, 0x1e10e),
     ],
     'P_CITY.MSD': [
         (0x13fb2, 0x16605),
     ],
-    'P_SYO.MSD': [
+    'P_SYO.MSD': [            # Missing 0xdbb, 0x1e80
         (0x1f33d, 0x20086),
     ],
     'P_SUTE.MSD': [
@@ -461,16 +461,18 @@ MSD_POINTER_RANGES = {
     'P_KYU.MSD': [
         (0x1f761, 0x20e0f),
     ],
-    'P_HOU.MSD': [
+    'P_HOU.MSD': [             # Missing 0x69e, 0x1b36, 0x2043, 0x22a3
         (0x2026a, 0x208f5),
     ],
     'P_BILL.MSD': [
         (0x14811, 0x159a8),
         (0x27a2d, 0x28d5c),
     ],
-    'MISHA.MSD': [
+    'MISHA.MSD': [             # Missing 0x1432
         (0x21f50, 0x2231f),
+        (0x222a0, 0x224a0,)
     ],
+    # 1e40: not found
     'ERIS.MSD': [
         (0x1eaf5, 0x1ef52),
     ],
@@ -478,7 +480,7 @@ MSD_POINTER_RANGES = {
         (0x28134, 0x283b8),
     ],
     'DOCTOR.MSD': [             # Missing b5
-        (0x118d3, 0x11f90),
+        (0x118c0, 0x11f90),
     ],
     'P_ENT2.MSD': [
         (0x234a6, 0x238e2),
@@ -494,6 +496,7 @@ MSD_POINTER_RANGES = {
         (0x1d102, 0x1d6a5),
     ],
     'PLYM.MSD': [                 # Good
+        (0x1e7a0, 0x1e7b0),       # Just for 1e51... can that be right?
         (0x20f60, 0x21444),
     ],
     'P_BOX.MSD': [
@@ -515,7 +518,7 @@ MSD_POINTER_RANGES = {
     'MAI.MSD': [
         (0x1caaf, 0x1cf30),
     ],
-    'ARISA.MSD': [              # Good
+    'ARISA.MSD': [              # Missing 0x324d
         (0x1e455, 0x1ef52),
         (0x209e8, 0x20a53),
     ],
@@ -529,7 +532,7 @@ MSD_POINTER_RANGES = {
     'NEDRA2.MSD': [            # Just missing string at 0x854... maybe it is mislabeled
         (0x11282, 0x11ef8),
     ],
-    'P_7.MSD': [
+    'P_7.MSD': [                 # Good
         (0x15aa2, 0x17559),
     ],
     'P_71.MSD': [                 # Good
