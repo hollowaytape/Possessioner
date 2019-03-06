@@ -150,7 +150,18 @@ for filename in FILES_TO_REINSERT:
             #print(block.blockstring)
 
             pointer_gamefile.edit_pointers_in_range((previous_text_offset, t.location), diff)
+            if b'\x0d' in t.en_bytestring and filename.endswith(".MSD"):
+                inc = t.en_bytestring.count(b'\x0d')
+                for p in [p for p in pointer_gamefile.pointers if previous_text_offset+1 <= p <= t.location+1]:
+                    print(p, pointer_gamefile.pointers[p])
+                    for ptr in pointer_gamefile.pointers[p]:
+                        line_count_location = ptr.location + 2
+                        #print(hex(line_count_location))
+                        #pointer_gamefile.edit(line_count_location, inc, diff=True)
+                        #input()
+
             previous_text_offset = t.location
+
 
             diff += this_diff
             #print("Diff is", diff)

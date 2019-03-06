@@ -221,6 +221,9 @@ CONTROL_CODES = {
     b'\xf5\x01': b'[Continue]',
     b'\xf5\x02': b'[f502?]',
     b'\xf5\x03': b'[f503?]',
+
+    # Weird quote thing in the intro
+    b'\x85\x41': b'[Quote]',
 }
 
 inverse_CTRL = {v: k for k, v in CONTROL_CODES.items()}

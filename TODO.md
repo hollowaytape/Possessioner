@@ -1,4 +1,6 @@
 # TODO
+* Weird graphical glitch in the choices. What did I change?? Something in POS1.MSD pointers?
+* Tall dialogue in intro is broken, might need more ASM hacking
 * Reinserter/pointer editor needs to be extended to increment the line counter when a string contains [LN].
 * Look at .CGX
 	* Yep, looks hard.
