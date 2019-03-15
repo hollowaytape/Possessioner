@@ -73,6 +73,9 @@ You can replace with ascii text but it gets stretched out to twice its width ons
 							* 2a20
 							* 822e -> 042e -> 040f -> 04ee -> 2aae
 
+			* Needs an additional fix to prevent every-other-character reading in the tall dialogue.
+				* 1156:093d?
+
 	Dialogue and exposition text in the intro seem to behave differently. Dialogue is double wide and double tall, exposition is just double wide
 
 

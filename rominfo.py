@@ -35,7 +35,6 @@ FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE', 'POS1.MSD', 'YUMI.MSD', 'P_HON1.MSD'
                      'AYAKA.MSD', 'ERIS.MSD', 'HONHOA.MSD', 'MAI.MSD', 'MINS.MSD',
                      'MISHA.MSD', 'NEDRA1.MSD', "NEDRA2.MSD", 'DOCTOR.MSD', 'PLYM.MSD',
                      'END.MSD',]
-
 # .M files have song titles/descriptions in them, probably just internal
 # "Arisa, songs of being fucked by the machine"
 
@@ -566,11 +565,43 @@ POINTER_TABLE_SEPARATOR = {
 
 # This is a better idea
 POINTER_DISAMBIGUATION = [
-    ('P_HON1.MSD', 0x1ff, 0xf59f),
+
     ('POS1.MSD', 0xe13, 0xed59),
     ('POS1.MSD', 0xdf2, 0x1da35),
-    ('P_SIRYO.MSD', 0x1b, None), # can I do this?
+    ('P_SIRYO.MSD', 0x1b, None),
+
     ('YUMI.MSD', 0x40, None),
+    ('YUMI.MSD', 0x71c, None),
+    ('YUMI.MSD', 0xba0, 0x27826),
+    ('YUMI.MSD', 0x11e8, 0x27931),
+    ('YUMI.MSD', 0x1d7a, None),
+
+    ('P_HON1.MSD', 0x1ff, 0xf59f),
+    ('P_HON1.MSD', 0x1526, None),
+    ('P_HON1.MSD', 0x3610, None),
+    ('P_HON1.MSD', 0x366c, None),
+
+    ('P_HI.MSD', 0x94, None),
+    ('P_HI.MSD', 0xe1, None),
+    ('P_HI.MSD', 0x221, 0x12937),
+    #('P_HI.MSD', 0x2ff, )          # TODO: Lots of plausible duplicates. Need to find this one
+    ('P_HI.MSD', 0xc06, None),
+    ('P_HI.MSD', 0xc56, None),
+    ('P_HI.MSD', 0xe77, None),
+    ('P_HI.MSD', 0x258a, None),
+    ('P_HI.MSD', 0x320d, None),
+    ('P_HI.MSD', 0x3479, None),
+
+    ('P_ENT.MSD', 0x221, None),
+    ('P_ENT.MSD', 0x428, None),
+    ('P_ENT.MSD', 0x4ad, None),
+    ('P_ENT.MSD', 0x2fff, None),
+    ('P_ENT.MSD', 0xfd0, 0x1b4fc),
+    ('P_ENT.MSD', 0x1350, 0x1ba1d),
+    ('P_ENT.MSD', 0x1c81, 0x1ba8e),
+    ('P_ENT.MSD', 0x2fff, None),
+    ('P_ENT.MSD', 0x2eff, None),
+
 
     ('END.MSD', 0x3b56, None),
     ('PLYM.MSD', 0x8bb, None),

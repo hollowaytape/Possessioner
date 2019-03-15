@@ -157,7 +157,7 @@ for filename in FILES_TO_REINSERT:
                     for ptr in pointer_gamefile.pointers[p]:
                         line_count_location = ptr.location + 2
                         #print(hex(line_count_location))
-                        #pointer_gamefile.edit(line_count_location, inc, diff=True)
+                        pointer_gamefile.edit(line_count_location, inc, diff=True)
                         #input()
 
             previous_text_offset = t.location
