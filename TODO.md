@@ -1,6 +1,4 @@
 # TODO
-* Weird graphical glitch in the choices. What did I change?? Something in POS1.MSD pointers?
-	* YUMI pointers.
 * Reinserter/pointer editor needs to be extended to increment the line counter when a string contains [LN].
 	* Implemented, but needs stress testing.
 * Look at .CGX

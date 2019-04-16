@@ -572,6 +572,8 @@ POINTER_DISAMBIGUATION = [
 
     ('YUMI.MSD', 0x40, None),
     ('YUMI.MSD', 0x71c, None),
+    ('YUMI.MSD', 0x8bb, 0x277b7),
+    ('YUMI.MSD', 0xb40, None),
     ('YUMI.MSD', 0xba0, 0x27826),
     ('YUMI.MSD', 0x11e8, 0x27931),
     ('YUMI.MSD', 0x1d7a, None),
@@ -601,6 +603,9 @@ POINTER_DISAMBIGUATION = [
     ('P_ENT.MSD', 0x1c81, 0x1ba8e),
     ('P_ENT.MSD', 0x2fff, None),
     ('P_ENT.MSD', 0x2eff, None),
+
+    ('P_BYO.MSD', 0x1e7d, 0x1ad07),
+
 
 
     ('END.MSD', 0x3b56, None),
