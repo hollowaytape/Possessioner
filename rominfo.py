@@ -130,6 +130,7 @@ CONCISE_CONTROL_CODES = {
 
 CONTROL_CODES = {
     b'\x0d\xf3': b'[LN]',
+    b'': b'[BLANK]',
 
     b'\x0d': b'[0d]',
     b'\x00': b'[00]',
