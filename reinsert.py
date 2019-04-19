@@ -150,15 +150,26 @@ for filename in FILES_TO_REINSERT:
             #print(block.blockstring)
 
             pointer_gamefile.edit_pointers_in_range((previous_text_offset, t.location), diff)
-            if filename.endswith('.MSD') and b'[LN]' in t.english:
-                print(t.en_bytestring)
-            if b'\r' in t.en_bytestring and filename.endswith(".MSD"):
-                inc = t.en_bytestring.count(b'\x0d')
-                for p in [p for p in pointer_gamefile.pointers if previous_text_offset+1 <= p <= t.location+1]:
-                    print(p, pointer_gamefile.pointers[p])
+
+            # Adjust line-counter bytes
+            # TODO: This needs to adjust the most recent pointer, not one in the most recent text range.
+            #if b'[LN]' in t.english:
+            #    print(t.en_bytestring)
+            if b'\r\xf3' in t.en_bytestring and filename.endswith(".MSD"):
+                inc = t.en_bytestring.count(b'\r\xf3')
+                #print(inc)
+                this_window_pointers = []
+                window_cursor = 0
+                #print(pointer_gamefile.pointers)
+                while this_window_pointers == []:
+                    window_cursor += 1
+                    #print(hex(t.location-window_cursor), hex(t.location))
+                    this_window_pointers = [p for p in pointer_gamefile.pointers if t.location - window_cursor <= p <= t.location]
+                for p in this_window_pointers:
+                    #print(p, pointer_gamefile.pointers[p], "being incremented")
                     for ptr in pointer_gamefile.pointers[p]:
                         line_count_location = ptr.location + 2
-                        #print(hex(line_count_location))
+                        print(hex(line_count_location), "being incremented by", inc)
                         pointer_gamefile.edit(line_count_location, inc, diff=True)
                         #input()
 
