@@ -76,7 +76,7 @@ for m in filenames:
             print(lines)
             print(f, free_row_count)
             if lines:
-                if f == free_row_count-1:
+                if f == free_row_count:
                     print("Putting the rest of the lines here")
                     print('[LN]'.join(lines))
                     list(worksheet.rows)[row_count+f-1][en_typeset_col].value = '[LN]'.join(lines)

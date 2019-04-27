@@ -6,6 +6,7 @@
 import os
 
 from rominfo import FILE_BLOCKS, FILES_TO_REINSERT, ORIGINAL_ROM_PATH, TARGET_ROM_PATH, DUMP_XLS_PATH, POINTER_DUMP_XLS_PATH, inverse_CONCISE_CTRL, inverse_CTRL
+from rominfo import ENEMY_NAME_LOCATIONS
 from romtools.disk import Disk, Gamefile, Block
 from romtools.dump import DumpExcel, PointerExcel
 
@@ -15,6 +16,7 @@ OriginalPssr = Disk(ORIGINAL_ROM_PATH, dump_excel=Dump, pointer_excel = PtrDump)
 TargetPssr = Disk(TARGET_ROM_PATH)
 
 MAPPING_MODE = True
+CHEATS_ON = True
 
 for filename in FILES_TO_REINSERT:
     path_in_disk = "PSSR\\"
@@ -50,6 +52,12 @@ for filename in FILES_TO_REINSERT:
 
         # Increase text speed
         gamefile.edit(0xa3bf, b'\xa8\x04')
+
+        if CHEATS_ON:
+            # Set all enemy HP to 0, so they die in one hit
+            for loc in ENEMY_NAME_LOCATIONS:
+                gamefile.edit(loc - 9, b'\x00')   # HP = 0
+                gamefile.edit(loc - 10, b'\x80')  # State = dead?
 
     elif filename == 'POSM.EXE':
         # Redirect font table reference
@@ -149,29 +157,30 @@ for filename in FILES_TO_REINSERT:
             block.blockstring = block.blockstring.replace(t.jp_bytestring, t.en_bytestring, 1)
             #print(block.blockstring)
 
+
             pointer_gamefile.edit_pointers_in_range((previous_text_offset, t.location), diff)
 
             # Adjust line-counter bytes
-            # TODO: This needs to adjust the most recent pointer, not one in the most recent text range.
-            #if b'[LN]' in t.english:
-            #    print(t.en_bytestring)
             if b'\r\xf3' in t.en_bytestring and filename.endswith(".MSD"):
                 inc = t.en_bytestring.count(b'\r\xf3')
-                #print(inc)
                 this_window_pointers = []
+
+                # Look back through the pointers until we find the most recent one
                 window_cursor = 0
-                #print(pointer_gamefile.pointers)
-                while this_window_pointers == []:
+                while this_window_pointers == [] and t.location - window_cursor > 0:
                     window_cursor += 1
-                    #print(hex(t.location-window_cursor), hex(t.location))
                     this_window_pointers = [p for p in pointer_gamefile.pointers if t.location - window_cursor <= p <= t.location]
                 for p in this_window_pointers:
-                    #print(p, pointer_gamefile.pointers[p], "being incremented")
                     for ptr in pointer_gamefile.pointers[p]:
                         line_count_location = ptr.location + 2
+
+                        # Don't try to increment the thing that loads a new image (?)
+                        if pointer_gamefile.filestring[line_count_location] == 0xb9:
+                            print("Bad idea to increment this... let's try the next byte instead")
+                            line_count_location += 1
+
                         print(hex(line_count_location), "being incremented by", inc)
-                        pointer_gamefile.edit(line_count_location, inc, diff=True)
-                        #input()
+                        pointer_gamefile.edit(line_count_location, inc, diff=True, window_increment=True)
 
             previous_text_offset = t.location
 

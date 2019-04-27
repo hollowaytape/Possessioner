@@ -1,6 +1,6 @@
 # TODO
-* Reinserter/pointer editor needs to be extended to increment the line counter when a string contains [LN].
-	* Implemented, but needs stress testing.
+* Typesetter - what should it do about blank lines?
+	* Just setting all blank lines to [BLANK] will make it harder to find missing/unknown context lines.
 * Look at .CGX
 	* Yep, looks hard.
 * More .SEL images to edit
@@ -9,7 +9,6 @@
 	* LM1.SEL-LM7.SEL - description text of possessioners. Definitely gotta translate this
 * Need to use check_pointers for the rest of the files.
 * Need to check for extraneous pointers too.
-* Can I get any .SEL to display instead of a CGX in the intro?
 * Need to revamp some of the verbs. "Behind" is really confusing in the maze
 
 ## Bugs in original version
