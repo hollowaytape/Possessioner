@@ -8,8 +8,9 @@ from romtools.dump import DumpExcel
 
 Dump = DumpExcel(DUMP_XLS_PATH)
 
-#filenames = ['POS1.MSD', 'YUMI.MSD', 'P_HON1.MSD']
-filenames = ['YUMI.MSD']
+filenames = FILES_TO_REINSERT
+filenames.remove('POS.EXE')
+filenames.remove('POSM.EXE')
 
 def typeset(text, length):
     if len(text) <= length:
@@ -61,14 +62,14 @@ for m in filenames:
         free_row_count = 1
 
         for j, l in enumerate(lines):
-            print(j, l)
+            #print(j, l)
             try:
                 if list(worksheet.rows)[row_count+j][en_col].value is None:
-                    print("Blank")
+                    #print("Blank")
                     #print ("blank ->" + l)
                     free_row_count += 1
                 else:
-                    print("Running into " + str(list(worksheet.rows)[row_count+j][en_col].value))
+                    #print("Running into " + str(list(worksheet.rows)[row_count+j][en_col].value))
                     #print(list(worksheet.rows)[row_count+j][en_col].value + " -> " + l)
                     break
             except IndexError:
@@ -117,37 +118,6 @@ for m in filenames:
                 print("Well, that's the last string")
             lines = []
 
-        """
-        for f in range(free_row_count):
-            #print("Looking at row", row_count+f-1, list(worksheet.rows)[row_count+f-1][en_col].value)
-            print(lines)
-            print(f, free_row_count)
-            if lines:
-                print("Free lines, still lines remaining")
-                if f == free_row_count-1:
-                    print("Putting the rest of the lines here")
-                    print('[LN]'.join(lines))
-                    assert list(worksheet.rows)[row_count+f-1][en_typeset_col].value == "", list(worksheet.rows)[row_count+f-1][en_typeset_col].value
-                    list(worksheet.rows)[row_count+f-1][en_typeset_col].value = '[LN]'.join(lines)
-                    lines = []
-                else:
-                    print("Popping one line")
-                    assert list(worksheet.rows)[row_count+f-1][en_typeset_col].value == "", list(worksheet.rows)[row_count+f-1][en_typeset_col].value
-                    list(worksheet.rows)[row_count+f-1][en_typeset_col].value = lines.pop(0)
-
-        # Catch remaining lines (especially if it's a one-line string)
-        if lines:
-            print("Remaining lines:", lines)
-            last_row = list(worksheet.rows)[row_count+free_row_count-1][en_typeset_col].value
-            print("Last row: " + last_row)
-            if last_row:
-                list(worksheet.rows)[row_count+free_row_count-1][en_typeset_col].value = '[LN]' + '[LN]'.join(lines)
-            else:
-                list(worksheet.rows)[row_count+free_row_count-1][en_typeset_col].value = '[LN]'.join(lines)
-            #assert list(worksheet.rows)[row_count+free_row_count-2][en_typeset_col].value == "", list(worksheet.rows)[row_count+f-1][en_typeset_col].value
-        """
-
-        #print()
         row_count += 1
 
 
