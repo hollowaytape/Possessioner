@@ -26,7 +26,7 @@ FILES = ['POSM.EXE', 'POS.EXE', 'POS1.MSD', 'YUMI.MSD',
          'P_BILL.MLL', 'P_GYOTEI.MSG'
          ]
 
-FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE', 'POS1.MSD', 'YUMI.MSD', ]#'P_HON1.MSD',
+FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE', 'POS1.MSD', 'YUMI.MSD', 'P_HON1.MSD',]
 #                     'P_ROU1.MSD', 'P_HI.MSD', 'P_ENT.MSD', 'P_BYO.MSD', 'P_SW1.MSD',
 #                     'P_SE.MSD', 'MERYL.MSD', 'P_CITY.MSD', 'P_SYO.MSD', 'P_7.MSD',
 #                     'P_71.MSD', 'P_BILL.MSD', 'P_BOX.MSD', 'P_GE.MSD', 'P_ENT2.MSD',
