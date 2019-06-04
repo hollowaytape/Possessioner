@@ -83,15 +83,28 @@ for m in filenames:
         if free_row_count <= 1:
             print('[LN]'.join(lines))
             list(worksheet.rows)[row_count+lookahead_index][en_typeset_col].value = '[LN]'.join(lines)
-            lines = []
+            #free_row_count = 0
+            #lines = []
+            row_count += 1
+            continue
 
         # If there is space to spare, just put them all one after another
         if free_row_count >= len(lines):
+            # Put each line
             while lines:
                 print(lines[0])
                 assert list(worksheet.rows)[row_count+lookahead_index][en_typeset_col].value == '', list(worksheet.rows)[row_count+lookahead_index][en_typeset_col].value
                 list(worksheet.rows)[row_count+lookahead_index][en_typeset_col].value = lines.pop(0)
                 lookahead_index += 1
+                free_row_count -= 1
+            # Put blanks in the rest of the space
+            if free_row_count > 1:
+                print("Spare lines: %s" % free_row_count)
+                while free_row_count > 1:
+                    assert list(worksheet.rows)[row_count+lookahead_index][en_typeset_col].value == '', list(worksheet.rows)[row_count+lookahead_index][en_typeset_col].value
+                    list(worksheet.rows)[row_count+lookahead_index][en_typeset_col].value = '[BLANK]'
+                    lookahead_index += 1
+                    free_row_count -= 1
             assert lines == []
 
         # Otherwise, dump them individually and then squish the rest in the last line

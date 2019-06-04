@@ -3,13 +3,15 @@
 * Corridor: "The only noise is a mechanical" (trails off)
 * Ward: I don't like coming here unless I'm at death's (trails off)
 * Need to revamp some of the verbs. "Behind" is really confusing in the maze
+* Meryl: "(Hmph. I thought this would happen.)(LF)*Sigh*"
+	* Where's the LF coming from?
 
 ## Tools
 * Typesetter - what should it do about blank lines?
 	* Just setting all blank lines to [BLANK] will make it harder to find missing/unknown context lines.
 
 ## Pointers
-* Lounge: Need to check poiners. Crash after Look Room 2
+* HI.MSD - Haven't determined the pointer for 0x2ff yet, there are a lot to disambiguate.
 * Need to use check_pointers for the rest of the files.
 * Need to check for extraneous pointers too.
 

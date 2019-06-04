@@ -592,13 +592,15 @@ POINTER_DISAMBIGUATION = [
     ('P_HI.MSD', 0x94, None),
     ('P_HI.MSD', 0xe1, None),
     ('P_HI.MSD', 0x221, 0x12937),
-    #('P_HI.MSD', 0x2ff, )          # TODO: Lots of plausible duplicates. Need to find this one
+    ('P_HI.MSD', 0x2ff, 0x12aa1),  # Really important, there were like 20 0x2ff's
     ('P_HI.MSD', 0xc06, None),
     ('P_HI.MSD', 0xc56, None),
     ('P_HI.MSD', 0xe77, None),
     ('P_HI.MSD', 0x258a, None),
     ('P_HI.MSD', 0x320d, None),
     ('P_HI.MSD', 0x3479, None),
+
+    ('P_SE.MSD', 0x94, 0x2896d),
 
     ('P_ENT.MSD', 0x221, None),
     ('P_ENT.MSD', 0x428, None),
@@ -610,26 +612,140 @@ POINTER_DISAMBIGUATION = [
     ('P_ENT.MSD', 0x2fff, None),
     ('P_ENT.MSD', 0x2eff, None),
 
+    ('P_CITY.MSD', 0x4cf, None),
+    ('P_CITY.MSD', 0x647, None),
+    ('P_CITY.MSD', 0x856, 0x144ed),
+    ('P_CITY.MSD', 0x291e, 0x14178),
+
     ('P_BYO.MSD', 0x1e7d, 0x1ad07),
 
+    ('P_BILL.MSD', 0x94, 0x157bd),   # This might just be None
+    ('P_BILL.MSD', 0xfd, None),
+    ('P_BILL.MSD', 0x25b, 0x157bd),
+    ('P_BILL.MSD', 0x585, None),
+    ('P_BILL.MSD', 0x6f8, None),
+    ('P_BILL.MSD', 0x8c8, None),
+    ('P_BILL.MSD', 0xba0, 0x14c69),
+    ('P_BILL.MSD', 0xf17, None),
+    ('P_BILL.MSD', 0xf69, 0x14ae3),
+    ('P_BILL.MSD', 0xfc0, None),
+    ('P_BILL.MSD', 0x1017, None),
 
 
+    ('P_7.MSD', 0x994, None),
+    ('P_7.MSD', 0x4e20, 0x17299),
+
+    ('P_71.MSD', 0x742, 0x1788c),
+    ('P_71.MSD', 0x8bb, None),
+    ('P_71.MSD', 0xc2a, 0x17a98),
+    ('P_71.MSD', 0x2673, 0x1a318),
+    ('P_71.MSD', 0x33f5, None),
+    ('P_71.MSD', 0x3610, 0x1a5ac),
+
+    ('P_BOX.MSD', 0x609, None),
+    ('P_BOX.MSD', 0x9f4, None),
+    ('P_BOX.MSD', 0xb5c, None),
+
+    ('P_GE.MSD', 0x622, None),
+    ('P_GE.MSD', 0xb5c, None),
+
+    ('P_HOU.MSD', 0x4b, None),
+    ('P_HOU.MSD', 0x11f5, None),
+    ('P_HOU.MSD', 0x234e, 0x208ef),
+
+    ('P_JUNK.MSD', 0x4ec, None),
+    ('P_JUNK.MSD', 0xa64, None),
+
+    ('P_KYU.MSD', 0x370, 0x1fe9f),
+    ('P_KYU.MSD', 0x1035, None),
+    ('P_KYU.MSD', 0x2826, 0x201ab),
+    #('P_KYU.MSD', 0x774, 0x2005b), # not sure, this could also be 1fc29
+
+    ('P_SUTE.MSD', 0xfc0, 0x1c1ae), # also not sure, could be 0x157e8
+
+    ('ERIS.MSD', 0x4b, 0x1ef0a),
+    ('ERIS.MSD', 0xe6f, None),
+    ('ERIS.MSD', 0x10e0, 0x1ec52),
+    ('ERIS.MSD', 0x11e8, None),
+    ('ERIS.MSD', 0x14de, None),
+    ('ERIS.MSD', 0x17b9, None),
+
+    ('HONHOA.MSD', 0x4cf, None),
+    ('HONHOA.MSD', 0x585, None),
+    ('HONHOA.MSD', 0xe6f, None),
+    ('HONHOA.MSD', 0x2efa, None),
+    ('HONHOA.MSD', 0x324c, None),
+
+    ('MAI.MSD', 0x7a5, None),
+    ('MAI.MSD', 0x9f4, None),
+    ('MAI.MSD', 0x1a71, None),
+    ('MAI.MSD', 0x297c, 0x1ceba),
+    ('MAI.MSD', 0x2b82, 0x1cf04),
+    ('MAI.MSD', 0x3117, None),
+
+    ('MINS.MSD', 0x1ff, None),
+    ('MINS.MSD', 0x741, None),
+    ('MINS.MSD', 0x97c, None),
+    ('MINS.MSD', 0xe13, None),
+    ('MINS.MSD', 0x1680, None),
+    ('MINS.MSD', 0x258a, None),
+    ('MINS.MSD', 0x326e, None),
+    ('MINS.MSD', 0x366c, None),
+
+    ('MISHA.MSD', 0xf69, 0x22118),
+    ('MISHA.MSD', 0xfc0, None),
+    ('MISHA.MSD', 0x1152, 0x15702),
+    ('MISHA.MSD', 0x1301, None),
+
+    ('DOCTOR.MSD', 0x29, 0x118d8),
+    ('DOCTOR.MSD', 0xcea, None),
+    ('DOCTOR.MSD', 0xf71, 0x11aa33),
+    ('DOCTOR.MSD', 0x21ad, None),
+    ('DOCTOR.MSD', 0x3610, 0x1349b),   # or maybe None
+
+    ('RASU1.MSD', 0x4b, 0x25431),
+    ('RASU1.MSD', 0xe2, 0x2544e),
+    ('RASU1.MSD', 0x123a, 0x25ae8),
+
+    ('RASU2.MSD', 0x2e9, None),  # unsure; points to a Honghua line inculded somewhere already
+    ('RASU2.MSD', 0x474, None),
+    ('RASU2.MSD', 0xa56, 0x264ca),
+    ('RASU2.MSD', 0x1e7d, None),
+    ('RASU2.MSD', 0x3117, 0x26d50),
+
+    ('ARISA.MSD', 0x2c3, None),
+
+    ('TINA.MSD', 0x86a, None),
+    ('TINA.MSD', 0xa64, None),
+    ('TINA.MSD', 0xbb2, None),
+    ('TINA.MSD', 0x2673, None),
+    ('TINA.MSD', 0x291e, None),
+    ('TINA.MSD', 0x3c54, 0x12688),
+
+    ('END.MSD', 0x20c5, None),
     ('END.MSD', 0x3b56, None),
+    ('END.MSD', 0x3b84, 0x13d5a),
+    ('END.MSD', 0x4b6f, None),
+    ('END.MSD', 0x4dd6, None),
+
     ('PLYM.MSD', 0x8bb, None),
+    ('PLYM.MSD', 0x14de, None),
 
     ('NEDRA1.MSD', 0x752, 0x10fca),
-    ('END.MSD', 0x3b84, 0x13d5a),
+    ('NEDRA1.MSD', 0x781, None),
+    ('NEDRA1.MSD', 0xc56, None),
+    ('NEDRA1.MSD', 0xc79, None),
+    ('NEDRA1.MSD', 0x1ec6, None),
 
-    ('TINA.MSD', 0xa64, None),
+    ('NEDRA2.MSD', 0x6dd, None),
+    ('NEDRA2.MSD', 0x742, None),
+    ('NEDRA2.MSD', 0x1390, None),
+    ('NEDRA2.MSD', 0x15e4, None),
+    ('NEDRA2.MSD', 0x2ca7, None),
 
-    ('P_71.MSD', 0x2673, 0x1a318),
+    ('AYAKA.MSD', 0x3021, None),
+    ('AYAKA.MSD', 0x34fc, None),
 
-    ('P_71.MSD', 0x8bb, None),
-    ('P_71.MSD', 0x33f5, None),
-
-    ('RASU1.MSD', 0x123a, 0x25ae8),
-    ('RASU2.MSD', 0x0474, None),
-    ('RASU2.MSD', 0x1e7d, None),
 
     ('P_ROU1.MSD', 0x34d, None),
     ('P_ROU1.MSD', 0x479, None),
@@ -670,6 +786,7 @@ EXTRA_POINTERS = {
     #]
 }
 
+# Wow, I don't know what this means anymore
 SKIP_TARGET_AREAS ={
     'YUMI.MSD': [
         0x17,
@@ -689,6 +806,7 @@ SKIP_TARGET_AREAS ={
     'TINA.MSD': [0x43, ],
 }
 
+# Name locations, used for locating their stats (for cheats)
 ENEMY_NAME_LOCATIONS = [
     0x0f0ac,
     0x0f0f9,
@@ -769,7 +887,7 @@ ENEMY_NAME_LOCATIONS = [
     0x28073
 ]
 
-# default to dumping the whole file
+# If blocks not defined, just dump the whole file
 for f in FILES:
     if f not in FILE_BLOCKS:
         FILE_BLOCKS[f] = [(0, 0xfffff)]
