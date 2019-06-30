@@ -37,6 +37,7 @@ for m in filenames:
     worksheet = Dump.workbook[m]
     first_row = list(worksheet.rows)[0]
     header_values = [t.value for t in first_row]
+    command_col = header_values.index('Command')
     en_col = header_values.index('English')
     jp_col = header_values.index('Japanese')
     en_typeset_col = header_values.index('English (Typeset)')
@@ -64,7 +65,7 @@ for m in filenames:
         for j, l in enumerate(lines):
             #print(j, l)
             try:
-                if list(worksheet.rows)[row_count+j][en_col].value is None:
+                if list(worksheet.rows)[row_count+j][en_col].value is None and list(worksheet.rows)[row_count+j][command_col].value is None:
                     #print("Blank")
                     #print ("blank ->" + l)
                     free_row_count += 1

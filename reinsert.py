@@ -5,7 +5,7 @@
 
 import os
 
-from rominfo import FILE_BLOCKS, FILES_TO_REINSERT, ORIGINAL_ROM_PATH, TARGET_ROM_PATH, DUMP_XLS_PATH, POINTER_DUMP_XLS_PATH, inverse_CONCISE_CTRL, inverse_CTRL
+from rominfo import FILE_BLOCKS, FILES, FILES_TO_REINSERT, ORIGINAL_ROM_PATH, TARGET_ROM_PATH, DUMP_XLS_PATH, POINTER_DUMP_XLS_PATH, inverse_CONCISE_CTRL, inverse_CTRL
 from rominfo import ENEMY_NAME_LOCATIONS
 from romtools.disk import Disk, Gamefile, Block
 from romtools.dump import DumpExcel, PointerExcel
@@ -18,11 +18,27 @@ TargetPssr = Disk(TARGET_ROM_PATH)
 MAPPING_MODE = True
 CHEATS_ON = True
 
+# Calculate total number of strings in the dump
+total_strings = 0
+total_translations = 0
+for filename in FILES:
+    path_in_disk = "PSSR\\"
+    gamefile_path = os.path.join('original', filename)
+    #print(filename)
+    gamefile = Gamefile(gamefile_path, disk=OriginalPssr, dest_disk=TargetPssr)
+    string_count = len(Dump.get_translations(gamefile, include_blank=True))
+    total_strings += string_count
+
+# Start reinserting things
 for filename in FILES_TO_REINSERT:
     path_in_disk = "PSSR\\"
     gamefile_path = os.path.join('original', filename)
-    print(filename)
+    #print(filename)
     gamefile = Gamefile(gamefile_path, disk=OriginalPssr, dest_disk=TargetPssr)
+
+    string_count = len(Dump.get_translations(gamefile, include_blank=True))
+    #print(string_count)
+    translation_count = 0
 
     # .MSD files have their pointers in 
     if filename.endswith('.MSD'):
@@ -87,7 +103,7 @@ for filename in FILES_TO_REINSERT:
 
     for block in FILE_BLOCKS[filename]:
         block = Block(gamefile, block)
-        print(block)
+        #print(block)
         previous_text_offset = block.start
         diff = 0
         for i, t in enumerate(Dump.get_translations(block, include_blank=True)):
@@ -134,6 +150,9 @@ for filename in FILES_TO_REINSERT:
                     pointer_gamefile.edit_pointers_in_range((previous_text_offset, t.location), diff)
                     previous_text_offset = t.location
                     continue
+            else:
+                translation_count += 1
+                total_translations += 1
 
             try:
                 i = block.blockstring.index(t.jp_bytestring)
@@ -176,10 +195,10 @@ for filename in FILES_TO_REINSERT:
 
                         # Don't try to increment the thing that loads a new image (?)
                         if pointer_gamefile.filestring[line_count_location] == 0xb9:
-                            print("Bad idea to increment this... let's try the next byte instead")
+                            #print("Bad idea to increment this... let's try the next byte instead")
                             line_count_location += 1
 
-                        print(hex(line_count_location), "being incremented by", inc)
+                        #print(hex(line_count_location), "being incremented by", inc)
                         pointer_gamefile.edit(line_count_location, inc, diff=True, window_increment=True)
 
             previous_text_offset = t.location
@@ -197,5 +216,11 @@ for filename in FILES_TO_REINSERT:
 
         block.incorporate()
 
+    percentage = round((translation_count / string_count) * 100, 1)
+    print(gamefile, ": %s%% (%s / %s)" % (percentage, translation_count, string_count))
+
     gamefile.write(path_in_disk=path_in_disk)
     pointer_gamefile.write(path_in_disk=path_in_disk)
+
+percentage = round((total_translations / total_strings) * 100, 1)
+print("Possessioner: %s%% (%s / %s)" % (percentage, total_translations, total_strings))
