@@ -13,12 +13,23 @@ filenames.remove('POS.EXE')
 filenames.remove('POSM.EXE')
 
 def typeset(text, length):
+    text = text.replace("\x0a", "[LN]")
     if len(text) <= length:
         return [text,]
     lines = []
     words = text.split(' ')
     this_line = ''
     while words:
+        # Handle manual line breaks
+        if '[LN]' in words[0]:
+            ln_words = words.pop(0).split('[LN]')
+            this_line += ln_words[0]
+            lines.append(this_line)
+            this_line = ''
+            words.insert(0, ln_words[1])
+            continue
+
+        # Handle the normal case
         if len(this_line + words[0]) + 1 > length:
             this_line = this_line.rstrip(' ')
             lines.append(this_line)

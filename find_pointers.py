@@ -70,7 +70,6 @@ for gamefile in FILES_TO_REINSERT:
         # Missing ptr const here
 
     with open(gamefile_path, 'rb') as f:
-        print(gamefile_path)
         bs = f.read()
         target_areas = FILE_BLOCKS[gamefile]
 
@@ -126,6 +125,7 @@ for gamefile in FILES_TO_REINSERT:
                         all_locations.append(int(pointer_location, 16))
 
                     pointer_locations[(GF, text_location)] = all_locations
+                    assert (GF, text_location) in pointer_locations
                     #print(pointer_locations[(GF, text_location)])
 
         except KeyError:
@@ -153,7 +153,7 @@ for gamefile in FILES_TO_REINSERT:
         for regex in (pointer_regex, pointer_regex_2, msd_regex, msd_regex_2, table_regex):
             if regex is None:
                 continue
-            print(regex)
+            #print(regex)
             pointers = capture_pointers_from_function(only_hex, regex)
 
             for p in pointers:
@@ -182,7 +182,7 @@ for gamefile in FILES_TO_REINSERT:
                     continue
 
                 if (gamefile, text_location, None) in POINTER_DISAMBIGUATION:
-                    print("Really bad pointer, skipping that one")
+                    #print("Really bad pointer, skipping that one")
                     continue
 
                 throwaway = False
@@ -205,7 +205,7 @@ for gamefile in FILES_TO_REINSERT:
                                 #print(hex(pointer_location), hex(text_location), pointer_lines)
                                 i = target_areas.index((text_location, text_location))
                                 pointer_lines -= 1
-                                print(gamefile, hex(byte_before))
+                                #print(gamefile, hex(byte_before))
                                 # Remove the next N target areas
                                 # TODO: Disabling this
                                 #while pointer_lines:
@@ -239,11 +239,17 @@ for gamefile in FILES_TO_REINSERT:
     # Add those pesky manual ones that don't get found
     #print(final_target_areas.keys())
     for gf in EXTRA_POINTERS:
-        if gf in final_target_areas:
-            gamefile_path = os.path.join('original', gf)
-            GF = Gamefile(gamefile_path, pointer_constant=POINTER_CONSTANT[gf])
+        #if gf in final_target_areas:
+        if gf == gamefile:
+            print("It's an extra pointer")
+            # TODO: What is final_target_areas for??
+            #gamefile_path = os.path.join('original', gf)
+            #GF = Gamefile(gamefile_path, pointer_constant=POINTER_CONSTANT[gf])
             for (text_loc, pointer_loc) in EXTRA_POINTERS[gf]:
-                pointer_locations[(GF, text_loc)] = [pointer_loc,]
+                pointer_locations[(GF2, text_loc)] = [pointer_loc,]
+                final_target_areas[gf].append((text_loc, text_loc))
+                print(text_loc, pointer_loc)
+                print(pointer_locations[(GF2, text_loc)])
 
     # Setup the worksheet for this file
     worksheet = PtrXl.add_worksheet(GF2.filename)
@@ -266,10 +272,11 @@ for gamefile in FILES_TO_REINSERT:
 
         # Restrict pointer locations to a particular area when there are dupes
         if text_location == 0x0:
-            # Definitely don't use these. They were useful for pointer_lines calculation,
-            # but they have served their purpose
+            #print(gamefile, pointer_locations)
+        #    # Definitely don't use these. They were useful for pointer_lines calculation,
+        #    # but they have served their purpose
             continue
-        print(gamefile)
+        #print(gamefile)
         if gamefile.filename.endswith('.MSD'):
             if not any([text_location == ta[0] for ta in final_target_areas[gamefile.filename]]):
                 print(hex(text_location), "wasn't on the targets list")
@@ -294,17 +301,17 @@ for gamefile in FILES_TO_REINSERT:
             better_pointer_locations = []
             for pointer_loc in pointer_locations:
                 if any([s[0] <= pointer_loc <= s[1] for s in MSD_POINTER_RANGES[gamefile.filename]]):
-                    print(hex(text_location), hex(pointer_loc), "is good")
+                    #print(hex(text_location), hex(pointer_loc), "is good")
                     better_pointer_locations.append(pointer_loc)
                 else:
                     # One more chance...?
                     if Gamefile('original/POS.EXE').filestring[pointer_loc-1] == 0xbe:
                         better_pointer_locations.append(pointer_loc)
-                    else:
-                        print(hex(text_location), hex(pointer_loc), "is bad")
+                    #else:
+                    #    print(hex(text_location), hex(pointer_loc), "is bad")
             pointer_locations = better_pointer_locations
             if pointer_locations == []:
-                print("Oops, no good pointers for", hex(text_location))
+                #print("Oops, no good pointers for", hex(text_location))
                 continue
 
 
@@ -315,7 +322,7 @@ for gamefile in FILES_TO_REINSERT:
         throwaway = False
         for (dis_file, dis_text_loc, dis_pointer_loc) in POINTER_DISAMBIGUATION:
             if dis_file == gamefile.filename and dis_text_loc == text_location:
-                print("Using pointer disambiguation for %s, %s" % (dis_file, dis_text_loc))
+                #print("Using pointer disambiguation for %s, %s" % (dis_file, dis_text_loc))
                 if dis_pointer_loc is None:
                     throwaway = True
                 pointer_locations = [dis_pointer_loc,]

@@ -614,9 +614,19 @@ POINTER_DISAMBIGUATION = [
     ('P_ENT.MSD', 0x2eff, None),
 
     ('P_CITY.MSD', 0x4cf, None),
+    ('P_CITY.MSD', 0x204, None),
     ('P_CITY.MSD', 0x647, None),
+    ('P_CITY.MSD', 0xf0f, None),
     ('P_CITY.MSD', 0x856, 0x144ed),
+    ('P_CITY.MSD', 0x1b9b, None),
     ('P_CITY.MSD', 0x291e, 0x14178),
+    ('P_CITY.MSD', 0x2b21, None),
+    ('P_CITY.MSD', 0x3043, 0x13fba),
+
+    ('P_SYO.MSD', 0x385, None),   # It's normally 385; moving it one up to avoid a text glitch
+    ('P_SYO.MSD', 0x83c, 0x1fc6b),
+    ('P_SYO.MSD', 0xa3a, 0x1f520),
+    ('P_SYO.MSD', 0xc14, 0x1f850),
 
     ('P_BYO.MSD', 0x1e7d, 0x1ad07),
 
@@ -663,6 +673,10 @@ POINTER_DISAMBIGUATION = [
     #('P_KYU.MSD', 0x774, 0x2005b), # not sure, this could also be 1fc29
 
     ('P_SUTE.MSD', 0xfc0, 0x1c1ae), # also not sure, could be 0x157e8
+    ('P_SUTE.MSD', 0xf71, None),
+    ('P_SUTE.MSD', 0x1164, None),
+    #('P_SUTE.MSD', 0x542, 0x1b50a),  # This collides with a pointer in P_ENT. It is the other value, not 1b50a
+    ('P_SUTE.MSD', 0x542, 0x1bdeb),
 
     ('ERIS.MSD', 0x4b, 0x1ef0a),
     ('ERIS.MSD', 0xe6f, None),
@@ -760,9 +774,14 @@ POINTER_DISAMBIGUATION = [
     ('P_SE.MSD', 0x10e0, None),
     ('P_SE.MSD', 0x22f0, None),
 
+    ('P_ENT.MSD', 0x683, 0x1b5f8),
+    ('P_ENT.MSD', 0x542, 0x1b50a),
+    ('P_ENT.MSD', 0xa56, 0x1b9e1),
+    ('P_ENT.MSD', 0x01b5c, 0x1b115),
+    ('P_ENT.MSD', 0x02141, 0x1b7c3),
     ('P_ENT.MSD', 0x86a, None),
-    ('P_ENT.MSD', 0x10f7, None),
     ('P_ENT.MSD', 0xc64, None),
+    ('P_ENT.MSD', 0x10f7, None),
     ('P_ENT.MSD', 0x1494, None),
     ('P_ENT.MSD', 0x22a6, None),
     ('P_ENT.MSD', 0x282a, None),
@@ -781,6 +800,10 @@ EXTRA_POINTERS = {
     'END.MSD': [
         (0x3b84, 0x13d5a),
     ],
+
+    'P_SYO.MSD': [
+        (0x386, 0x1f788),
+    ]
 
     #'AYAKA.MSD': [
     #    (0x50c, 0x216b9),

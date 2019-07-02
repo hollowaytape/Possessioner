@@ -75,6 +75,9 @@ for filename in FILES_TO_REINSERT:
                 gamefile.edit(loc - 9, b'\x00')   # HP = 0
                 gamefile.edit(loc - 10, b'\x80')  # State = dead?
 
+            # Instant text display
+            gamefile.edit(0xa3bf, b'\xa8\x03')
+
     elif filename == 'POSM.EXE':
         # Redirect font table reference
         gamefile.edit(0x28d1, b'\xc0\x25')
@@ -173,6 +176,7 @@ for filename in FILES_TO_REINSERT:
             assert loc_in_block == i, (t, hex(loc_in_block), hex(i))
             #while loc_in_block != i:
 
+            #print(t.jp_bytestring, t.en_bytestring)
             block.blockstring = block.blockstring.replace(t.jp_bytestring, t.en_bytestring, 1)
             #print(block.blockstring)
 
@@ -181,6 +185,7 @@ for filename in FILES_TO_REINSERT:
 
             # Adjust line-counter bytes
             if b'\r\xf3' in t.en_bytestring and filename.endswith(".MSD"):
+                print(t.en_bytestring)
                 inc = t.en_bytestring.count(b'\r\xf3')
                 this_window_pointers = []
 
@@ -195,10 +200,10 @@ for filename in FILES_TO_REINSERT:
 
                         # Don't try to increment the thing that loads a new image (?)
                         if pointer_gamefile.filestring[line_count_location] == 0xb9:
-                            #print("Bad idea to increment this... let's try the next byte instead")
+                            print("Bad idea to increment this... let's try the next byte instead")
                             line_count_location += 1
 
-                        #print(hex(line_count_location), "being incremented by", inc)
+                        print(hex(line_count_location), "being incremented by", inc)
                         pointer_gamefile.edit(line_count_location, inc, diff=True, window_increment=True)
 
             previous_text_offset = t.location
@@ -212,12 +217,14 @@ for filename in FILES_TO_REINSERT:
             if block_diff < 0:
                 block.blockstring += (-1)*block_diff*b'\x00'
             block_diff = len(block.blockstring) - len(block.original_blockstring)
+            print(block)
             assert block_diff == 0, block_diff
 
         block.incorporate()
 
     percentage = round((translation_count / string_count) * 100, 1)
     print(gamefile, ": %s%% (%s / %s)" % (percentage, translation_count, string_count))
+    print()
 
     gamefile.write(path_in_disk=path_in_disk)
     pointer_gamefile.write(path_in_disk=path_in_disk)
