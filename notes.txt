@@ -386,6 +386,39 @@ Images:
 			* Nah, that causes it to hang forever
 		* Change "test ax, ax" to "test ax, 04": Super fast text, yay!
 			POS.EXE:a3b7: 85c0 -> a804
+	* Later addendum: Change the 04 to 03 and it just renders near-instantly. Yay!
+
+
+## Room Transition Codes
+* Need a way to modify the line-counts of "arrival" text. They are at offset 00, so they would be too hard to find with the pointer-locator. (Even by assuming hundreds of normal pointers in that format, the line-count wasn't edited at all.)
+* Setting breakpoints in the P_ENT -> P_CITY transition seems to load from the code 01 1a 00 ff.
+	* Changing 01 to other values negates the room transition and does something else.
+		* 02: Load more text
+		* 03: Starts a battle
+		* 04: Severe crash
+		* 05: Another crash
+		* 06: Fades to black, then hangs
+		* ff: Cancels out, lets you choose next action
+	* Changing 1a to other values changes the target area.
+		* 00: Maintenance room
+		* 01: HQ during intro
+		* 02: Yumi battle
+		* 03: Yumi battle (again?)
+		* 04: HQ
+		* 05: Corridor
+		* 06: Maintenance room
+		* 1b: Abandoned building
+		* 20: Abandoned building, door right before Michass battle
+		* 21: Sewer grate
+		* 22: Minsky gate (GYOTEI)
+		* 30: Rashmal lab
+		* 40: Some fuckin room in the last dungeon
+		* 48: Capsule in last dungeon
+		* 50: Medical ward
+	* Oh, it's actually a word. So maintenance room is 00 00, etc
+	* Anything to determine line count??
+* The code that loads the line count is 2440:0897. (lodsb, mov vx, ax, etc)
+	*...Doesn't run at all when the arrival text loads.
 
 ## Other
 
