@@ -23,7 +23,7 @@ FILES = ['POSM.EXE', 'POS.EXE', 'POS1.MSD', 'YUMI.MSD',
          'RASU2.MSD', 'MAI.MSD', 'ARISA.MSD', 'P_SIRYO.MSD', 'NEDRA1.MSD',
          'NEDRA2.MSD', 'P_7.MSD', 'P_71.MSD', 'TINA.MSD', 'END.MSD',
          'POSE.EXE', "STAFF.TXT",
-         'P_BILL.MLL', 'P_GYOTEI.MSG'
+         #'P_BILL.MLL', 'P_GYOTEI.MSG'
          ]
 
 FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE', 'POS1.MSD', 'YUMI.MSD', 'P_HON1.MSD',
@@ -585,10 +585,22 @@ POINTER_DISAMBIGUATION = [
     ('YUMI.MSD', 0x1d7a, None),
     ('YUMI.MSD', 0x1407, None),
 
+    ('P_SW1.MSD', 0x94, 0x10272),
+
+    ('MERYL.MSD', 0x45f, None),
+    ('MERYL.MSD', 0x6f8, None),
+    ('MERYL.MSD', 0x152d, 0x1c44f),
+    ('MERYL.MSD', 0x1d75, None),
+
+    ('P_HON1.MSD', 0xd7, None),
     ('P_HON1.MSD', 0x1ff, 0xf59f),
     ('P_HON1.MSD', 0x1526, None),
     ('P_HON1.MSD', 0x3610, None),
     ('P_HON1.MSD', 0x366c, None),
+    ('P_HON1.MSD', 0x12bd, 0xf580),
+    ('P_HON1.MSD', 0x1a71, 0xffe2),
+    ('P_HON1.MSD', 0x3133, 0xf879),   # or maybe f86c
+    ('P_HON1.MSD', 0x3980, 0xf6b7),   # or maybe f6c9
 
     ('P_HI.MSD', 0x94, None),
     ('P_HI.MSD', 0xe1, None),
@@ -677,6 +689,7 @@ POINTER_DISAMBIGUATION = [
     ('P_SUTE.MSD', 0x1164, None),
     #('P_SUTE.MSD', 0x542, 0x1b50a),  # This collides with a pointer in P_ENT. It is the other value, not 1b50a
     ('P_SUTE.MSD', 0x542, 0x1bdeb),
+    ('P_SUTE.MSD', 0xafd, None),
 
     ('ERIS.MSD', 0x4b, 0x1ef0a),
     ('ERIS.MSD', 0xe6f, None),
@@ -773,6 +786,7 @@ POINTER_DISAMBIGUATION = [
 
     ('P_SE.MSD', 0x10e0, None),
     ('P_SE.MSD', 0x22f0, None),
+    ('P_SE.MSD', 0xef8, 0x1b394),
 
     ('P_ENT.MSD', 0x683, 0x1b5f8),
     ('P_ENT.MSD', 0x542, 0x1b50a),
@@ -787,10 +801,14 @@ POINTER_DISAMBIGUATION = [
     ('P_ENT.MSD', 0x282a, None),
     ('P_ENT.MSD', 0x3f34, None),
 
-    ('P_BYO.MSD', 0x2673, None),
-    ('P_BYO.MSD', 0xfb0, None),
-    ('P_BYO.MSD', 0x60b, None),
     ('P_BYO.MSD', 0x41e, None),
+    ('P_BYO.MSD', 0x60b, None),
+    ('P_BYO.MSD', 0x83a, 0x1ae27),
+    ('P_BYO.MSD', 0xb5c, 0x1bf8f),
+    ('P_BYO.MSD', 0xfb0, None),
+    ('P_BYO.MSD', 0x1b5c, 0x1b115),
+    ('P_BYO.MSD', 0x24c2, 0x1acd8),
+    ('P_BYO.MSD', 0x2673, None),
 
 
     # NEDRA1 is missing 0x752 (ptr at 10fca), 
@@ -808,6 +826,56 @@ EXTRA_POINTERS = {
     #'AYAKA.MSD': [
     #    (0x50c, 0x216b9),
     #]
+}
+
+# Hard-coded pointers for when offset ix 0.
+# The pointer location is 2 before the line-count position, so it can be used with normal pointer tools.
+ARRIVAL_POINTERS = {
+    'P_CITY.MSD': [
+        (0x0, 0x26fa9),
+    ],
+
+    'P_SE.MSD': [
+        (0x0, 0x291fa),   # Doesn't need to be changed, but I am aware of its location
+    ],
+
+    'P_HI.MSD': [
+        (0x0, 0x13667), # Incorrect maybe? Doesn't need to change though
+    ],
+
+    'P_ENT.MSD': [
+        (0x00, 0x1c130), # Also ok (overlaps with P_JUNK, it's probably wrong)
+    ],
+
+    'P_BYO.MSD': [
+        (0x00, 0x291fa),
+    ],
+
+    'P_JUNK.MSD': [
+        (0x00, 0x286b7)  # at 44fb8  (offset is 1c901?)
+    ],
+
+    'P_ERIS.MSD': [
+        (0x00, 0x20ac2)      # 3d3c3
+    ],
+
+    'P_SYO.MSD': [
+        (0x00, 0x20c33)
+    ],
+
+    # something - 3fd43, 41636, 38ab0, 41636, (crash)
+
+    # 4181d - malformed text in Gyotei
+
+    # 35ea4 - malformed text in P_7
+
+    # 360bc - something else in P_7
+
+    # 36d71 - P_7, Meryl and Honghua get one line each
+
+    # P_ENT - 38a31
+
+    # Ayaka attack - 41176
 }
 
 # Wow, I don't know what this means anymore

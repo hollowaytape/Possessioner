@@ -6,8 +6,8 @@ from romtools.dump import BorlandPointer, DumpExcel, PointerExcel
 from romtools.disk import Gamefile
 
 from rominfo import POINTER_CONSTANT, POINTER_TABLES, POINTER_TABLE_SEPARATOR
-from rominfo import EXTRA_POINTERS,  CONTROL_CODES, POINTER_DISAMBIGUATION, SKIP_TARGET_AREAS
-from rominfo import FILE_BLOCKS, DUMP_XLS_PATH, MSD_POINTER_RANGES, FILES_TO_REINSERT
+from rominfo import EXTRA_POINTERS,  CONTROL_CODES, POINTER_DISAMBIGUATION, SKIP_TARGET_AREAS, ARRIVAL_POINTERS
+from rominfo import FILE_BLOCKS, DUMP_XLS_PATH, MSD_POINTER_RANGES, FILES_TO_REINSERT, FILES
 
 Dump = DumpExcel(DUMP_XLS_PATH)
 
@@ -52,7 +52,7 @@ PtrXl = PointerExcel('PSSR_pointer_dump.xlsx')
 
 final_target_areas = {}
 
-for gamefile in FILES_TO_REINSERT:
+for gamefile in FILES:
     print("Getting pointers for", gamefile)
     pointer_locations = OrderedDict()
     gamefile_path = os.path.join('original', gamefile)
@@ -238,18 +238,24 @@ for gamefile in FILES_TO_REINSERT:
 
     # Add those pesky manual ones that don't get found
     #print(final_target_areas.keys())
-    for gf in EXTRA_POINTERS:
-        #if gf in final_target_areas:
-        if gf == gamefile:
-            print("It's an extra pointer")
-            # TODO: What is final_target_areas for??
-            #gamefile_path = os.path.join('original', gf)
-            #GF = Gamefile(gamefile_path, pointer_constant=POINTER_CONSTANT[gf])
-            for (text_loc, pointer_loc) in EXTRA_POINTERS[gf]:
-                pointer_locations[(GF2, text_loc)] = [pointer_loc,]
-                final_target_areas[gf].append((text_loc, text_loc))
-                print(text_loc, pointer_loc)
-                print(pointer_locations[(GF2, text_loc)])
+    print(gamefile)
+    #if gamefile in ARRIVAL_POINTERS:
+    #    for (text_loc, pointer_loc) in ARRIVAL_POINTERS[gamefile]:
+    #        print("It's an arrival pointer", text_loc, pointer_loc)
+    #        pointer_locations[(GF2, text_loc)] = [pointer_loc,]
+    #        final_target_areas[gamefile].append((text_loc, text_loc))
+    #        print(pointer_locations[(GF2, text_loc)])
+
+    if gamefile in EXTRA_POINTERS:
+        print("It's an extra pointer")
+        # TODO: What is final_target_areas for??
+        #gamefile_path = os.path.join('original', gf)
+        #GF = Gamefile(gamefile_path, pointer_constant=POINTER_CONSTANT[gf])
+        for (text_loc, pointer_loc) in EXTRA_POINTERS[gamefile]:
+            pointer_locations[(GF2, text_loc)] = [pointer_loc,]
+            final_target_areas[gamefile].append((text_loc, text_loc))
+            print(text_loc, pointer_loc)
+            print(pointer_locations[(GF2, text_loc)])
 
     # Setup the worksheet for this file
     worksheet = PtrXl.add_worksheet(GF2.filename)
@@ -272,10 +278,11 @@ for gamefile in FILES_TO_REINSERT:
 
         # Restrict pointer locations to a particular area when there are dupes
         if text_location == 0x0:
-            #print(gamefile, pointer_locations)
+            continue
+
         #    # Definitely don't use these. They were useful for pointer_lines calculation,
         #    # but they have served their purpose
-            continue
+        #    continue
         #print(gamefile)
         if gamefile.filename.endswith('.MSD'):
             if not any([text_location == ta[0] for ta in final_target_areas[gamefile.filename]]):
@@ -307,8 +314,8 @@ for gamefile in FILES_TO_REINSERT:
                     # One more chance...?
                     if Gamefile('original/POS.EXE').filestring[pointer_loc-1] == 0xbe:
                         better_pointer_locations.append(pointer_loc)
-                    #else:
-                    #    print(hex(text_location), hex(pointer_loc), "is bad")
+                    else:
+                        print(hex(text_location), hex(pointer_loc), "is bad")
             pointer_locations = better_pointer_locations
             if pointer_locations == []:
                 #print("Oops, no good pointers for", hex(text_location))
@@ -330,7 +337,6 @@ for gamefile in FILES_TO_REINSERT:
         if throwaway:
             continue
 
-
         for pointer_loc in pointer_locations:
             worksheet.write(row, 0, '0x' + hex(text_location).lstrip('0x').zfill(5))
             worksheet.write(row, 1, '0x' + hex(pointer_loc).lstrip('0x').zfill(5))
@@ -339,5 +345,17 @@ for gamefile in FILES_TO_REINSERT:
             except:
                 worksheet.write(row, 2, u'')
             row += 1
+    try:
+        if gamefile.filename in ARRIVAL_POINTERS:
+            print(gamefile.filename, "has an arrival pointer")
+            for pt in ARRIVAL_POINTERS[gamefile.filename]:
+                print(pt)
+                text_location, pointer_loc = pt
+                worksheet.write(row, 0, '0x' + hex(text_location).lstrip('0x').zfill(5))
+                worksheet.write(row, 1, '0x' + hex(pointer_loc).lstrip('0x').zfill(5))
+                worksheet.write(row, 2, u'Arrival text')
+                row += 1
+    except AttributeError:
+        pass
 
 PtrXl.close()

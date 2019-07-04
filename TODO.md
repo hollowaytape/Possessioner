@@ -1,21 +1,23 @@
 # TODO
 ## Script
-* Corridor: "The only noise is a mechanical" (trails off)
-* Ward: I don't like coming here unless I'm at death's (trails off)
 * Need to revamp some of the verbs. "Behind" is really confusing in the maze
-* Meryl: "(Hmph. I thought this would happen.)(LF)*Sigh*"
-	* Where's the LF coming from?
-	* Also - "Meryl, can you hear me?<LF>..No response."
+* Strings like "Well then, please be careful out there." have the period overflow out of the window.
 
 ## Tools
 * Typesetter - what should it do about blank lines?
 	* Just setting all blank lines to [BLANK] will make it harder to find missing/unknown context lines.
 
 ## Pointers
-* Need to check pointers in 
+* Offset-zero pointers still need to be edited, for line count purposes.
+	* Corridor: "The only noise is a mechanical" (trails off)
+	* Ward: I don't like coming here unless I'm at death's (trails off)
+* Need to identify MSD pointer collisions... if there's a string at d7 in two different files, and they think it's the same pointer location, it will get edited twice and be incorrect for one.
+	* P_SW1.MSD pointer (d7, 10269) is getting edited incorrectly.
+		* Collides with a pointer in P_HON1.
 * HI.MSD - Haven't determined the pointer for 0x2ff yet, there are a lot to disambiguate.
 * Need to use check_pointers for the rest of the files.
 * Need to check for extraneous pointers too.
+* PLYM.MSD crashes on "Kiss Chest".
 
 ## Hacking
 * Look at .CGX

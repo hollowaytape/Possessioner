@@ -391,7 +391,7 @@ Images:
 
 ## Room Transition Codes
 * Need a way to modify the line-counts of "arrival" text. They are at offset 00, so they would be too hard to find with the pointer-locator. (Even by assuming hundreds of normal pointers in that format, the line-count wasn't edited at all.)
-* Setting breakpoints in the P_ENT -> P_CITY transition seems to load from the code 01 1a 00 ff.
+* Setting breakpoints in the P_ENT -> P_CITY transition seems to load from the code 01 1a 00 ff. (37c9e)
 	* Changing 01 to other values negates the room transition and does something else.
 		* 02: Load more text
 		* 03: Starts a battle
@@ -402,19 +402,107 @@ Images:
 	* Changing 1a to other values changes the target area.
 		* 00: Maintenance room
 		* 01: HQ during intro
-		* 02: Yumi battle
+		* 02: Yumi attack
 		* 03: Yumi battle (again?)
 		* 04: HQ
 		* 05: Corridor
 		* 06: Maintenance room
+		* 07: Lounge
+		* 08: Shower
+		* 09: Prim scene
+		* 0a: Ayaka scene
+		* 0b: Michass scene
+		* 0c: May scene
+		* 0d: Minsky scene
+		* 0e: Shower/Meryl scene
+		* 0f: Honghua scene
+		* 10: Nedra scene
+		* 11: Doctor scene
+		* 12: Tina scene (21? lines)
+		* 13: Junk Shop (2 lines)
+		* 14: Machine/Alisa scene
+		* 15: Operators scene (2 lines)
+		* 16: Business Zone (2 lines)
+		* 17: Old City
+		* 18: Abandoned Zone
+		* 19: Fairy scene (51 lines)
+		* 1a: Central Hub (2 lines)
 		* 1b: Abandoned building
+		* 1c: Abandoned building, corridor with 8 doors (3 lines)
+		* 1d: Abandoned building, door 802 (1 line)
+		* 1e: Abandoned building, door 804 (1 line)
+		* 1f: Abandoned building, door 803 (1 line)
 		* 20: Abandoned building, door right before Michass battle
 		* 21: Sewer grate
-		* 22: Minsky gate (GYOTEI)
-		* 30: Rashmal lab
+		* 22: Minsky gate entrance (GYOTEI)
+		* 23: Gyotei interior (3 lines)
+		* 24: Gyotei place with lots of screens (2 lines?) Place with lots of screens
+		* 25: Gyotei, Prim throne (1 line)
+		* 26: Sewer, just past grate
+		* 27: Sewer, gondola top (2 lines)
+		* 28: Sewer, on gondola
+		* 29: Sewer, still on gondola (5 lines)
+		* 2a: Sewer, on gondola
+		* 2b: Sewer, bottom of gondola (4 lines?)
+		* 2c: Sewer, bend in the road
+		* 2d: Sewer, road to freaky brain lab
+		* 2e: Brain lab entrance (5 lines)
+		* 2f: Brain lab, room with tanks
+		* 30: Brain lab core with Rasmal robot
+		* 31: Operators fly you to the tower
+		* 32: Tower - control room (3 lines)
+		* 33: Tower - maze (2 lines)
+		* 34: Tower - maze dead end (1 line)
+		* 35: Tower - maze left bend,, with fork
+		* 36: Tower - maze left bend into fog
+		* 37: Tower - maze cross section (2 lines)
+		* 38: Tower - maze L/R fork
+		* 39: Tower - maze rigth bend into fog
+		* 3a: Tower - maze dead end (capsule-looking wall)
+		* 3b: Tower - maze L/R fork ( maybe a different one??)
+		* 3c: Tower - maze exit corridor (1 line)
+		* 3d: Tower - maze exit door (4 lines)
+		* 3e: Tower - elevator bottom (4 lines)
+		* 3f: Tower - elevator middle
 		* 40: Some fuckin room in the last dungeon
-		* 48: Capsule in last dungeon
+		* 41: Tower - elevator top (blasted wall and door)
+		* 42: Tower - room with 3 doors (4 lines)
+		* 43: Tower - Fork, front/left
+		* 44: Tower - Fork, front/right
+		* 45: Tower - room with storage things
+		* 46: Tower - "02:30" room, front/right (starts a battle)
+		* 47: Tower - "02:30" room, front/right (no battle)
+		* 48: Tower - capsule room
+		* 49: Tower - escalator room
+		* 4a: Tower - Tina/tanks room (12 lines)
+		* 4b: Tower - light columns room 1
+		* 4c: Tower - light columns room 2 (2 lines)
+		* 4d: Tower - light columns room 3
+		* 4e: Tower - final door? (10 lines)
+		* 4f: Tower - Fairy room (6 lines?)
 		* 50: Medical ward
+		* 51: Entrance again?
+		* 52: Stella Boutique (3 lines)
+		* 53: Ayaka attack scene (2 lines)
+		* 54: Nedra in the box (3 lines)
+		* 55: Nedra possessioner in the archives (3 lines)
+		* 56: Yumi scene (glitched? Alisa face is visible, and all options are available instantly)
+		* 57: (freeze)
+		* 60: Cool-looking palette glitches, some lines from entrance and medical ward
+		* a9: crash?
+	* Location ID is written to 2af8a.
+		* b002 = mov al, 02 -> should I mess with this? (probably not)
+		* When it reads the loc ID again, it does shl ax, 1 shl ax,1  add ax, (the id)
+		* ax = (loc ID) * 5
+		* ax = 82 (1a)
+		* mov si, 06da; add si, ax
+		* si = 75c
+		* After copying some stuff, it jumps to si. There is a larget able of jump instructions here. Each is 5 bytes long.
+			* eaa600e831 = jmp 31e8:00a6.
+			* What are the distances between the jump landings? 136, b6, 64, 56... not consistent
+			* A bunch of possible instructions are "mov cx, 0004" b90400. How many b90200's are there that I could change?
+
+
 	* Oh, it's actually a word. So maintenance room is 00 00, etc
 	* Anything to determine line count??
 * The code that loads the line count is 2440:0897. (lodsb, mov vx, ax, etc)

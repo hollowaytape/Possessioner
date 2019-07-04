@@ -30,7 +30,7 @@ for filename in FILES:
     total_strings += string_count
 
 # Start reinserting things
-for filename in FILES_TO_REINSERT:
+for filename in FILES:
     path_in_disk = "PSSR\\"
     gamefile_path = os.path.join('original', filename)
     #print(filename)
