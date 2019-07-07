@@ -639,6 +639,9 @@ POINTER_DISAMBIGUATION = [
     ('P_SYO.MSD', 0x83c, 0x1fc6b),
     ('P_SYO.MSD', 0xa3a, 0x1f520),
     ('P_SYO.MSD', 0xc14, 0x1f850),
+    ('P_SYO.MSD', 0xb81, 0x1f761),
+    ('P_SYO.MSD', 0x12c8, None),
+    ('P_SYO.MSD', 0x1a30, 0x1f355),
 
     ('P_BYO.MSD', 0x1e7d, 0x1ad07),
 
@@ -800,6 +803,7 @@ POINTER_DISAMBIGUATION = [
     ('P_ENT.MSD', 0x22a6, None),
     ('P_ENT.MSD', 0x282a, None),
     ('P_ENT.MSD', 0x3f34, None),
+    ('P_ENT.MSD', 0xb5c, 0x1c11b),
 
     ('P_BYO.MSD', 0x41e, None),
     ('P_BYO.MSD', 0x60b, None),
@@ -809,6 +813,8 @@ POINTER_DISAMBIGUATION = [
     ('P_BYO.MSD', 0x1b5c, 0x1b115),
     ('P_BYO.MSD', 0x24c2, 0x1acd8),
     ('P_BYO.MSD', 0x2673, None),
+    ('P_BYO.MSD', 0x83a, 0x1ae27),
+    #('P_BYO.MSD', 0xb5c, 0x1ae27),   # Either 0x1bf8f or 0x1c11b
 
 
     # NEDRA1 is missing 0x752 (ptr at 10fca), 

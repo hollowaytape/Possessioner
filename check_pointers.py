@@ -11,6 +11,8 @@ TargetPssr = Disk(TARGET_ROM_PATH)
 
 #FILES = ['HONHOA.MSD', 'DOCTOR.MSD', 'MINS.MSD', 'P_GE.MSD', 'MAI.MSD',]
 
+pointer_offsets = {}
+
 for filename in [f for f in FILES if f.endswith('.MSD')]:
     GF = Gamefile('original/%s' % filename, disk=OriginalPssr, dest_disk=TargetPssr)
     important_locations = []
@@ -29,8 +31,16 @@ for filename in [f for f in FILES if f.endswith('.MSD')]:
     for p in pointers:
         if p in important_locations:
             important_locations.remove(p)
+        if p in pointer_offsets:
+            pointer_offsets[p].append(pointers[p])
+        else:
+            pointer_offsets[p] = [pointers[p]]
 
     if len(important_locations) > 0:
         print(filename, ":")
         for t in important_locations:
             print(hex(t))
+
+for p in pointer_offsets:
+    if len(pointer_offsets[p]) > 1:
+        print(hex(p), pointer_offsets[p])
