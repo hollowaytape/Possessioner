@@ -11,6 +11,8 @@ Dump = DumpExcel(DUMP_XLS_PATH)
 filenames = FILES_TO_REINSERT
 filenames.remove('POS.EXE')
 filenames.remove('POSM.EXE')
+filenames.remove('POSE.EXE')
+filenames.remove('STAFF.TXT')
 
 def typeset(text, length):
     text = text.replace("\x0a", "[LN]")

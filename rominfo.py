@@ -26,10 +26,13 @@ FILES = ['POSM.EXE', 'POS.EXE', 'POS1.MSD', 'YUMI.MSD',
          #'P_BILL.MLL', 'P_GYOTEI.MSG'
          ]
 
-FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE', 'POS1.MSD', 'YUMI.MSD', 'P_HON1.MSD',
-                     'P_ROU1.MSD', 'P_SE.MSD', 'P_ENT.MSD', 'P_BYO.MSD', 'P_SW1.MSD',
-                     'P_HI.MSD', 'MERYL.MSD', 'P_CITY.MSD', 'P_SYO.MSD', 'P_SUTE.MSD',
-                     'P_KYU.MSD', 'P_HOU.MSD'] #'P_7.MSD',
+#FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE', 'POS1.MSD', 'YUMI.MSD', 'P_HON1.MSD',
+#                     'P_SE.MSD', 'P_ENT.MSD', 'P_BYO.MSD', 'P_SW1.MSD',  'P_ROU1.MSD',
+#                       'P_HI.MSD', 'MERYL.MSD', 'P_CITY.MSD', 'P_SYO.MSD', 'P_SUTE.MSD',
+#                     'P_KYU.MSD', 'P_HOU.MSD',
+#                    'PLYM.MSD',
+
+#                     ] #'P_7.MSD',
 #                     'P_71.MSD', 'P_BILL.MSD', 'P_BOX.MSD', 'P_GE.MSD', 'P_ENT2.MSD',
 #                     'P_GYOTEI.MSD', 'P_JUNK.MSD', 'P_SIRYO.MSD',
 #                      'RASU1.MSD', 'RASU2.MSD', 'TINA.MSD', 'ARISA.MSD',
@@ -38,6 +41,8 @@ FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE', 'POS1.MSD', 'YUMI.MSD', 'P_HON1.MSD'
 #                     'END.MSD',]
 # .M files have song titles/descriptions in them, probably just internal
 # "Arisa, songs of being fucked by the machine"
+
+FILES_TO_REINSERT = FILES
 
 CONCISE_CONTROL_CODES = {
     b'[White][Alisa][P-Same][Start]': b'[Alisa-Start]',
@@ -313,19 +318,19 @@ FILE_BLOCKS = {
         (0x23eb0, 0x23ec0), # BC1
         (0x23efd, 0x23f0d), # BC2
         (0x23f4a, 0x23f5a), # BC3
-        (0x23f99, 0x23fa9), # BC4
+        (0x23f97, 0x23fa7), # BC4
         (0x23fe4, 0x23ff4), # BC5
 
         (0x2442a, 0x2443a), # Empress
         (0x24477, 0x24487), # BC3
-        (0x244c6, 0x244d6), # BC1
+        (0x244c4, 0x244d4), # BC1
         (0x24511, 0x24521), # BC2
 
         (0x24759, 0x24769), # BC1
         (0x247a6, 0x247b6), # BC2
         (0x247f3, 0x24803), # Nedra (o shit spoilers!)
 
-        (0x25749, 0x25759), # BC1
+        (0x25747, 0x25757), # BC1
         (0x25794, 0x257a4), # BC2
         (0x257e1, 0x257f1), # BC3
 
@@ -586,11 +591,13 @@ POINTER_DISAMBIGUATION = [
     ('YUMI.MSD', 0x1407, None),
 
     ('P_SW1.MSD', 0x94, 0x10272),
+    ('P_SW1.MSD', 0x1a71, 0x0ffe2),
 
     ('MERYL.MSD', 0x45f, None),
     ('MERYL.MSD', 0x6f8, None),
     ('MERYL.MSD', 0x152d, 0x1c44f),
     ('MERYL.MSD', 0x1d75, None),
+    ('MERYL.MSD', 0x01e60, 0x1c5ce),
 
     ('P_HON1.MSD', 0xd7, None),
     ('P_HON1.MSD', 0x1ff, 0xf59f),
@@ -612,8 +619,10 @@ POINTER_DISAMBIGUATION = [
     ('P_HI.MSD', 0x258a, None),
     ('P_HI.MSD', 0x320d, None),
     ('P_HI.MSD', 0x3479, None),
+    ('P_HI.MSD', 0x02d02, 0x12a30),
 
     ('P_SE.MSD', 0x94, 0x2896d),
+    ('P_SE.MSD', 0x10e0, 0x28fd2),
 
     ('P_ENT.MSD', 0x221, None),
     ('P_ENT.MSD', 0x428, None),
@@ -634,6 +643,7 @@ POINTER_DISAMBIGUATION = [
     ('P_CITY.MSD', 0x291e, 0x14178),
     ('P_CITY.MSD', 0x2b21, None),
     ('P_CITY.MSD', 0x3043, 0x13fba),
+    ('P_CITY.MSD', 0x00bc7, 0x1457b),
 
     ('P_SYO.MSD', 0x385, None),   # It's normally 385; moving it one up to avoid a text glitch
     ('P_SYO.MSD', 0x83c, 0x1fc6b),
@@ -642,6 +652,7 @@ POINTER_DISAMBIGUATION = [
     ('P_SYO.MSD', 0xb81, 0x1f761),
     ('P_SYO.MSD', 0x12c8, None),
     ('P_SYO.MSD', 0x1a30, 0x1f355),
+    ('P_SYO.MSD', 0x8ec, None),
 
     ('P_BYO.MSD', 0x1e7d, 0x1ad07),
 
@@ -656,10 +667,18 @@ POINTER_DISAMBIGUATION = [
     ('P_BILL.MSD', 0xf69, 0x14ae3),
     ('P_BILL.MSD', 0xfc0, None),
     ('P_BILL.MSD', 0x1017, None),
+    ('P_BILL.MSD', 0x1390, 0x150e1),
+    ('P_BILL.MSD', 0x1500, 0x151f1),
+
+    ('P_ENT2.MSD', 0x4ff, 0x235f6),
 
 
     ('P_7.MSD', 0x994, None),
     ('P_7.MSD', 0x4e20, 0x17299),
+    ('P_7.MSD', 0x1b5c, None),
+    ('P_7.MSD', 0x1b9b, 0x161c3),
+
+    ('P_END.MSD', 0x33f5, 0x13cb0),
 
     ('P_71.MSD', 0x742, 0x1788c),
     ('P_71.MSD', 0x8bb, None),
@@ -678,13 +697,22 @@ POINTER_DISAMBIGUATION = [
     ('P_HOU.MSD', 0x4b, None),
     ('P_HOU.MSD', 0x11f5, None),
     ('P_HOU.MSD', 0x234e, 0x208ef),
+    ('P_HOU.MSD', 0x742, 0x20297),
 
     ('P_JUNK.MSD', 0x4ec, None),
     ('P_JUNK.MSD', 0xa64, None),
 
     ('P_KYU.MSD', 0x370, 0x1fe9f),
+    ('P_KYU.MSD', 0x774, 0x2005b),
+    ('P_KYU.MSD', 0x8ec, 0x1fc6b),
+    ('P_KYU.MSD', 0x00b81, 0x1ff81),
+    ('P_KYU.MSD', 0x385, None),
     ('P_KYU.MSD', 0x1035, None),
     ('P_KYU.MSD', 0x2826, 0x201ab),
+    ('P_KYU.MSD', 0xc14, 0x20085),
+    ('P_KYU.MSD', 0xcea, 0x200a2),
+    ('P_KYU.MSD', 0xef6, 0x1fd7b),
+    ('P_KYU.MSD', 0x17e6, 0x20104),
     #('P_KYU.MSD', 0x774, 0x2005b), # not sure, this could also be 1fc29
 
     ('P_SUTE.MSD', 0xfc0, 0x1c1ae), # also not sure, could be 0x157e8
@@ -737,6 +765,7 @@ POINTER_DISAMBIGUATION = [
     ('RASU1.MSD', 0x4b, 0x25431),
     ('RASU1.MSD', 0xe2, 0x2544e),
     ('RASU1.MSD', 0x123a, 0x25ae8),
+    ('RASU1.MSD', 0x64e, 0x225f2),
 
     ('RASU2.MSD', 0x2e9, None),  # unsure; points to a Honghua line inculded somewhere already
     ('RASU2.MSD', 0x474, None),
@@ -745,6 +774,7 @@ POINTER_DISAMBIGUATION = [
     ('RASU2.MSD', 0x3117, 0x26d50),
 
     ('ARISA.MSD', 0x2c3, None),
+    ('ARISA.MSD', 0x11e, 0x1e4f1),
 
     ('TINA.MSD', 0x86a, None),
     ('TINA.MSD', 0xa64, None),
@@ -777,7 +807,11 @@ POINTER_DISAMBIGUATION = [
     ('AYAKA.MSD', 0x3021, None),
     ('AYAKA.MSD', 0x34fc, None),
 
+    ('P_GYOTEI.MSD', 0x11ab, 0x24f1b),
+    ('P_GYOTEI.MSD', 0x11f4, 0x240ef),
 
+
+    ('P_ROU1.MSD', 0x272, 0x22ac7),
     ('P_ROU1.MSD', 0x34d, None),
     ('P_ROU1.MSD', 0x479, None),
     ('P_ROU1.MSD', 0x8d3, None),
@@ -786,8 +820,15 @@ POINTER_DISAMBIGUATION = [
     ('P_ROU1.MSD', 0x2520, None),
     ('P_ROU1.MSD', 0x2730, None),
     ('P_ROU1.MSD', 0x2afc, None),
+    ('P_ROU1.MSD', 0x1127, 0x22919),
+    ('P_ROU1.MSD', 0x11ab, 0x22b7a),
+    ('P_ROU1.MSD', 0x11f4, 0x22b82),
+    ('P_ROU1.MSD', 0x14af, 0x22fb9),
+    ('P_ROU1.MSD', 0x1e0f, 0x23043),
+    ('P_ROU1.MSD', 0x216d, 0x22a19),
+    ('P_ROU1.MSD', 0x2385, 0x22c31),
 
-    ('P_SE.MSD', 0x10e0, None),
+    #('P_SE.MSD', 0x10e0, None),
     ('P_SE.MSD', 0x22f0, None),
     ('P_SE.MSD', 0xef8, 0x1b394),
 
@@ -798,12 +839,15 @@ POINTER_DISAMBIGUATION = [
     ('P_ENT.MSD', 0x02141, 0x1b7c3),
     ('P_ENT.MSD', 0x86a, None),
     ('P_ENT.MSD', 0xc64, None),
+    ('P_ENT.MSD', 0xef8, 0x1b394),
     ('P_ENT.MSD', 0x10f7, None),
     ('P_ENT.MSD', 0x1494, None),
     ('P_ENT.MSD', 0x22a6, None),
     ('P_ENT.MSD', 0x282a, None),
     ('P_ENT.MSD', 0x3f34, None),
     ('P_ENT.MSD', 0xb5c, 0x1c11b),
+    ('P_ENT.MSD', 0xf89, 0x1b4f4),
+    ('P_ENT.MSD', 0x2a92, 0x1b365),
 
     ('P_BYO.MSD', 0x41e, None),
     ('P_BYO.MSD', 0x60b, None),
@@ -814,6 +858,7 @@ POINTER_DISAMBIGUATION = [
     ('P_BYO.MSD', 0x24c2, 0x1acd8),
     ('P_BYO.MSD', 0x2673, None),
     ('P_BYO.MSD', 0x83a, 0x1ae27),
+    ('P_BYO.MSD', 0x0258a, 0x1acdd),
     #('P_BYO.MSD', 0xb5c, 0x1ae27),   # Either 0x1bf8f or 0x1c11b
 
 
@@ -954,16 +999,16 @@ ENEMY_NAME_LOCATIONS = [
     0x23eb0,
     0x23efd,
     0x23f4a,
-    0x23f99,
+    0x23f97,
     0x23fe4,
     0x2442a,
     0x24477,
-    0x244c6,
+    0x244c4,
     0x24511,
     0x24759,
     0x247a6,
     0x247f3,
-    0x25749,
+    0x25747,
     0x25794,
     0x257e1,
     0x25c0e,

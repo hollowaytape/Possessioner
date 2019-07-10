@@ -146,6 +146,10 @@ for filename in FILES:
                     assert this_diff == 0
 
                 else:
+                    # Still count things if they're just internal system things we don't want to change
+                    if t.english == t.japanese:
+                        translation_count += 1
+                        total_translations += 1
                     #print(hex(t.location), t.english, "Blank string")
                     this_diff = 0
                     #print("Diff is", diff)
@@ -154,6 +158,8 @@ for filename in FILES:
                     previous_text_offset = t.location
                     continue
             else:
+                #if t.english:
+                #    print(t.english)
                 translation_count += 1
                 total_translations += 1
 

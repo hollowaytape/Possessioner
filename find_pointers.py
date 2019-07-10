@@ -52,7 +52,7 @@ PtrXl = PointerExcel('PSSR_pointer_dump.xlsx')
 
 final_target_areas = {}
 
-for gamefile in FILES:
+for gamefile in FILES_TO_REINSERT:
     print("Getting pointers for", gamefile)
     pointer_locations = OrderedDict()
     gamefile_path = os.path.join('original', gamefile)

@@ -11,6 +11,7 @@ TargetPssr = Disk(TARGET_ROM_PATH)
 
 #FILES = ['HONHOA.MSD', 'DOCTOR.MSD', 'MINS.MSD', 'P_GE.MSD', 'MAI.MSD',]
 
+text_offsets = {}
 pointer_offsets = {}
 
 for filename in [f for f in FILES if f.endswith('.MSD')]:
@@ -31,16 +32,29 @@ for filename in [f for f in FILES if f.endswith('.MSD')]:
     for p in pointers:
         if p in important_locations:
             important_locations.remove(p)
-        if p in pointer_offsets:
-            pointer_offsets[p].append(pointers[p])
-        else:
-            pointer_offsets[p] = [pointers[p]]
+
+        #if p in pointer_offsets:
+        #    pointer_offsets[p].append(pointers[p])
+        #else:
+        #    pointer_offsets[p] = [pointers[p],]
+        for loc in pointers[p]:
+            if (filename, loc.text_location) in text_offsets:
+                text_offsets[(filename, loc.text_location)].append(loc.location)
+            else:
+                text_offsets[(filename, loc.text_location)] = [loc.location,]
+
+            if (filename, loc.location) in pointer_offsets:
+                pointer_offsets[loc.text_location].append((filename, loc.text_location))
+            else:
+                pointer_offsets[loc.text_location] = [(filename, loc.text_location),]
+
 
     if len(important_locations) > 0:
         print(filename, ":")
         for t in important_locations:
             print(hex(t))
 
-for p in pointer_offsets:
-    if len(pointer_offsets[p]) > 1:
-        print(hex(p), pointer_offsets[p])
+for p in text_offsets:
+    #print(p, text_offsets[p])
+    if len(text_offsets[p]) > 1:
+            print(p[0], hex(p[1]), text_offsets[p])

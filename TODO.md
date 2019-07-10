@@ -17,7 +17,6 @@
 * HI.MSD - Haven't determined the pointer for 0x2ff yet, there are a lot to disambiguate.
 * Need to use check_pointers for the rest of the files.
 * Need to check for extraneous pointers too.
-* PLYM.MSD crashes on "Kiss Chest".
 
 ## Hacking
 * Look at .CGX
@@ -27,6 +26,7 @@
 	* LISTP.SEL - names of possessioners. (If the spellings change, change this too)
 	* LM1.SEL-LM7.SEL - description text of possessioners. Definitely gotta translate this
 		* SEL encoder works on them, good.
+* Check if there are uncensored images in the .SEL files.
 
 ## Bugs in original version
 * You select a target for Meryl's Grenade, but it hits all enemies...
