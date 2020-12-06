@@ -17,6 +17,7 @@
 * HI.MSD - Haven't determined the pointer for 0x2ff yet, there are a lot to disambiguate.
 * Need to use check_pointers for the rest of the files.
 * Need to check for extraneous pointers too.
+* Some kind of index-out-of-range error when editing DOCTOR.MSD.
 
 ## Hacking
 * Look at .CGX
