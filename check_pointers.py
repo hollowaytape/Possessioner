@@ -1,3 +1,10 @@
+"""
+    This script checks for text locations that appear to have multiple pointers pointing to them.
+    Sometimes this is ok, like when arriving at a location at different points in the game has the same text.
+    Other times it means there's a bug.
+    (I think everything currently left is ok.)
+"""
+
 import os
 
 from rominfo import FILES, FILE_BLOCKS, ORIGINAL_ROM_PATH, TARGET_ROM_PATH, DUMP_XLS_PATH, POINTER_DUMP_XLS_PATH, inverse_CONCISE_CTRL, inverse_CTRL
@@ -57,4 +64,4 @@ for filename in [f for f in FILES if f.endswith('.MSD')]:
 for p in text_offsets:
     #print(p, text_offsets[p])
     if len(text_offsets[p]) > 1:
-            print(p[0], hex(p[1]), text_offsets[p])
+            print(p[0], hex(p[1]), [hex(x) for x in text_offsets[p]])
