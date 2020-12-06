@@ -1,4 +1,6 @@
 # TODO
+* Font/image edits are not getting written anymore
+
 ## Script
 * Need to revamp some of the verbs. "Behind" is really confusing in the maze
 * Strings like "Well then, please be careful out there." have the period overflow out of the window.
@@ -32,3 +34,6 @@
 ## Bugs in original version
 * You select a target for Meryl's Grenade, but it hits all enemies...
 	* Maybe Meryl just likes to fuck shit up
+
+## Notes
+* Battles look a lot like they're soft-locked. They are not! I just have cheats on to make all of the enemies not load. Attack once to win.
