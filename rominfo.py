@@ -865,6 +865,7 @@ POINTER_DISAMBIGUATION = [
     # NEDRA1 is missing 0x752 (ptr at 10fca), 
 ]
 
+# TODO: What are these??
 EXTRA_POINTERS = {
     'END.MSD': [
         (0x3b84, 0x13d5a),

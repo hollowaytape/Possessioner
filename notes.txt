@@ -508,9 +508,102 @@ Images:
 * The code that loads the line count is 2440:0897. (lodsb, mov vx, ax, etc)
 	*...Doesn't run at all when the arrival text loads.
 
+## Determining what text shows up where
+* I have been marking which text appears by playing through the game and noting the circumstances. Is there any way to just look at the code surrounding the pointers and determine what flags it's checking, etc.?
+	* Save file: DATA*.SLD. Probably has event flags that get read 
+		* Location in memory: 2af8:000a
+			* Yep, these flags get edited when you talk to or examine various things.
+				* MAIN DISCOVERY: Flag to check for a flag bit is "ff (flagID) (flagBitIndex) 00", right before the text pointer in question. 
+				* Examine Princess (1) - 0x2b007 changes from 01 to 21
+					* 2440:1928 test cs:[si], al
+						* cs: 2440, si: 6c07, al: 0020 (Is this literally 2440:6c07, or 2440:the location it's at?)
+					* jz 1930
+					* stc
+					* pop si
+					* Probably a push si is before this
+				* Examine Vicinity: 21 -> 61 (al is 40)
+				* 09 = 0000 0011
+				* 21 = 0010 0001
+				* 61 = 0110 0001
+				* One bit per action.
+					* (01) 0000 0001: Arrive in room
+					* (02) 0000 0010: Talk Empress
+					* (04) 0000 0100: Look Empress
+					* (08) 0000 1000: Look Vicinity
+					* (10) 0001 0000: Talk Party
+					* (20) 0010 0000: Examine Empress
+					* (40) 0100 0000: Examine Vicinity
+					* (80) 1000 0000: ??
+				* Think never seems to change flags. (Makes sense.) But it does check them.
+			* Is there anything revealing about these in the pointers?
+				* Pointer to Look Vicinity (0x17ff) is at 0x242bb. Looking for "04" somewhere
+				* In memory it's at 40bba
+					* lodsw 40bb2 (A while before the actual pointer) (067b), see if it's 0e64
+					* dx = 67b (ax)
+					* si = 2d52
+					* ax = 0
+					* ...
+					* 27152 + "06" = offset of the flag it needs to check!
+					* ff 7b 06 means "check the 6th flag (02)".
+						* But not very many ff 7bs in the file. 7b probably means something specific too
+						* The 7b gets added to si (6b8c)
+						* 7b is the flag offset, plus 2. (7d in save file)
+					* Load something from cs:si into ah (02)
+						* There's a byte sequence "80 40 20 10 08 04 02 01" at 27152. That's where the 02 comes from below
+						* si gets set above, it's the "06" offset in the command
+					* Check if flag is equal to 02
+					* lodsb at 40bbf (01)
+					* lodsb at 40bc2 (00)
+					* lodsb at 40bba (02) - pointer begins
+					* lodsw at 40bbb, 41 19 (pointer offset)
+					* lodsb at 40bbd, 40bbe (02 ff)
+				* Look for ff (flag_offset) (00-07) values maybe?
+					* How does it know when it's going to load text, and when it's going to check a flag?
+					* There's the "test al, al" on the 0e7b that gets loaded - if 00 it will go somewhere else
+				* 02 4d 20 02 ff 7b 01 00 02
+				* 02 6a 1f 02 ff 7b 02 00 02 c1 1f
+				* 02 f1 18 02 ff 7b 05 00 02 26 19
+				* 02 34 18 02 ff 7b 06 00 02 6b 18
+				* So I can probably extend the pointer-dumper to look at 4 bytes before (for flag ID) and 3 bytes before (for flag bit).
+				* What is the 20/1f/18/18 byte? I was hoping it would be some sort of string ID, but 18 got repeated
+					* This is one of the "byte_before" values that is one of many possible values in that ugly list I have. Not totally sure what it means or what it does
+				* Looks like there's an additional check on what options are possible when clicking "Look".
+					* ax and si are e35 (is 35 0e somewhere? There are similar things around)
+					* lodsw 40b85 (a4 0d)
+					* There are a few things like this:
+						* 00 00 dc 0d 00 00 35 0e ff
+						* 00 00 e6 0d 00 00 9b 0e ff
+						* 00 00 f0 0d 00 00 0a 0f ff
+
+
+		* 0x13c characters long
+		* Character stats: 100 20 210 90, 70 35 200 80, 50 20 160 70, 120 30 130 100
+			* Hex version: 64 14 d2 5a, 46 23 c8 50, 32 14 a0 46, 78 1e 82 64
+		* 0x100 - 126 is probably character stats.
+			* 0x102: ?? - sometimes 02, sometimes 04
+			* 0x103: d2 00 d2 00
+			* 0x107: Alisa Special
+			* 0x108: Alisa AG
+			* 0x109: Alisa DEF
+			* 0x10a: Alisa Current HP?
+			* 0x10b: Alisa Max HP?
+			* (end Alisa stuff)
+			* 0x10c-10f: a0 00 a0 00 
+			* ...
+			* And so on for other characters.
+
+* Stuff I know now:
+	* How game progress is tracked and saved
+	* How the progress is checked when determining whether to display a string
+* Stuff I still don't know:
+	* How is the condition acted upon? What happens if the flag is false?
+	* How does it get to that line of code in the first place? When I execute "look" (or "look vicinity"), does it have a predefined starting place where it begins to run the checks?
+	* How do the flags get set? Currently I'm assuming they just set whatever flag they checked
+
 ## Other
 
 * There's apparently extra line drawings of this game's art in 「ぷるぷる」（あまとりあ社／１９９４年） Volume 3. Might be worth tracking down.
+* https://www.suruga-ya.jp/product/detail/ZHAN212
 
 02 ff ff 02 be 0f 03 ff
              loc  ct
