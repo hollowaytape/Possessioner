@@ -26,19 +26,28 @@ for filename in FILES:
     gamefile_path = os.path.join('original', filename)
     #print(filename)
     gamefile = Gamefile(gamefile_path, disk=OriginalPssr, dest_disk=TargetPssr)
-    string_count = len(Dump.get_translations(gamefile, include_blank=True))
-    total_strings += string_count
+    if not filename.endswith(".SEL"):
+        string_count = len(Dump.get_translations(gamefile, include_blank=True))
+        total_strings += string_count
 
 # Start reinserting things
 for filename in FILES:
     path_in_disk = "PSSR\\"
-    gamefile_path = os.path.join('original', filename)
-    #print(filename)
-    gamefile = Gamefile(gamefile_path, disk=OriginalPssr, dest_disk=TargetPssr)
 
-    string_count = len(Dump.get_translations(gamefile, include_blank=True))
-    #print(string_count)
-    translation_count = 0
+    if filename.endswith(".SEL") or filename.endswith(".CGX"):
+        print("Static image file - reinsert the one from /patched")
+        gamefile_path = os.path.join('patched', filename)
+        gamefile = Gamefile(gamefile_path, dest_disk=TargetPssr)
+        gamefile.write(path_in_disk=path_in_disk)
+        continue
+
+    else:
+        gamefile_path = os.path.join('original', filename)
+        gamefile = Gamefile(gamefile_path, disk=OriginalPssr, dest_disk=TargetPssr)
+
+        string_count = len(Dump.get_translations(gamefile, include_blank=True))
+        #print(string_count)
+        translation_count = 0
 
     # .MSD files have their pointers in 
     if filename.endswith('.MSD'):

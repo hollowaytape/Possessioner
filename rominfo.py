@@ -23,6 +23,7 @@ FILES = ['POSM.EXE', 'POS.EXE', 'POS1.MSD', 'YUMI.MSD',
          'RASU2.MSD', 'MAI.MSD', 'ARISA.MSD', 'P_SIRYO.MSD', 'NEDRA1.MSD',
          'NEDRA2.MSD', 'P_7.MSD', 'P_71.MSD', 'TINA.MSD', 'END.MSD',
          'POSE.EXE', "STAFF.TXT",
+         'FONT.SEL', 'FONT2.SEL', 'P4.SEL', 'P5.SEL',
          #'P_BILL.MLL', 'P_GYOTEI.MSG'
          ]
 
@@ -40,7 +41,6 @@ FILES_TO_REINSERT = ['POS.EXE', 'POSM.EXE', 'POS1.MSD', 'YUMI.MSD', 'P_HON1.MSD'
 #                     'MISHA.MSD', 'NEDRA1.MSD', "NEDRA2.MSD", 'DOCTOR.MSD', 'PLYM.MSD',
 #                     'END.MSD',]
 # .M files have song titles/descriptions in them, probably just internal
-# "Arisa, songs of being fucked by the machine"
 
 FILES_TO_REINSERT = FILES
 
