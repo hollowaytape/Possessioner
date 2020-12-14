@@ -513,7 +513,7 @@ Images:
 	* Save file: DATA*.SLD. Probably has event flags that get read 
 		* Location in memory: 2af8:000a
 			* Yep, these flags get edited when you talk to or examine various things.
-				* MAIN DISCOVERY: Flag to check for a flag bit is "ff (flagID) (flagBitIndex) 00", right before the text pointer in question. 
+				* MAIN DISCOVERY: Flag to check for a flag bit is "02 ff (flagID) (flagBitIndex) 00", right before the text pointer in question. 
 				* Examine Princess (1) - 0x2b007 changes from 01 to 21
 					* 2440:1928 test cs:[si], al
 						* cs: 2440, si: 6c07, al: 0020 (Is this literally 2440:6c07, or 2440:the location it's at?)
@@ -571,9 +571,24 @@ Images:
 					* ax and si are e35 (is 35 0e somewhere? There are similar things around)
 					* lodsw 40b85 (a4 0d)
 					* There are a few things like this:
+						* Pointers to each of those:
+							* ff ff ff 01 cc 0d d6 0d e0 0d ea 0d f4 0d 00 00 d2 0d 00 00 00 
+							*                   ^Look
+							* "Look": dd6 (d6 0d)
+							* Going back to the menu reads 40b10 (the third ff), compares it to ff
+						* 00 00 d2 0d 00 00 00 1b 0e ff
 						* 00 00 dc 0d 00 00 35 0e ff
+							* dc 0d, 35 0e get checked on "Look"
 						* 00 00 e6 0d 00 00 9b 0e ff
+							* e6 0d, 9b 0e get checekd on "Examine"
 						* 00 00 f0 0d 00 00 0a 0f ff
+					* ff ff ff 01 4b 0e 73 0e 06 0e 5d 0e 00 00 62 0e 65 0e 00 00 00 00 6a 0e 6f 0e02 75 19 02 ff 7b 06 00
+					*                                           ^ Offset 
+					* It looks at this string before showing Vicinity/Empress. Starts at third ff
+					* When checking Vicinity, it reads 4b 0e, then 06 0e, 5d 0e, then 00 00, 62 0e. Last one satisfies some condition maybe? So it starts reading/executing control codes there
+		* How do the flags get set? Currently I'm assuming they just set whatever flag they checked.
+			* This is not the case - changing the 06 to 05, it still sets the 6th bit.
+			* Oh, looks like the command to SET a flag is 02 ff 01 7b 05.
 
 
 		* 0x13c characters long
@@ -595,10 +610,17 @@ Images:
 * Stuff I know now:
 	* How game progress is tracked and saved
 	* How the progress is checked when determining whether to display a string
+	* How flags get set
 * Stuff I still don't know:
 	* How is the condition acted upon? What happens if the flag is false?
+		* Checks the flag
+			* If true, it continues reading. 40bb5 -> 40bb9
+			* If false, it reads 40bbf next (01 7b 06 00, "set flag 6"), then 40bba (02 41 19 02 ff)
+				* It gets the new esi value (e64) from ebp. Wonder where that comes from
+			* How does it know where to end? Each of these ends with a "ff", but I'm confused about reading 40bbf but then 40bba
 	* How does it get to that line of code in the first place? When I execute "look" (or "look vicinity"), does it have a predefined starting place where it begins to run the checks?
-	* How do the flags get set? Currently I'm assuming they just set whatever flag they checked
+		* Looks like there are some offset tables earlier on. Need to check these later - 00 00 ab cd 00 00 ef gh ff
+	* How are multiple-conditions handled? Just more conditions in a row, with branching logic and offsets?
 
 ## Other
 
