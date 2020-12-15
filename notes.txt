@@ -577,7 +577,7 @@ Images:
 							* "Look": dd6 (d6 0d)
 							* Going back to the menu reads 40b10 (the third ff), compares it to ff
 						* 00 00 d2 0d 00 00 00 1b 0e ff
-						* 00 00 dc 0d 00 00 35 0e ff
+						* 00 00 dc 0dl 00 00 35 0e ff
 							* dc 0d, 35 0e get checked on "Look"
 						* 00 00 e6 0d 00 00 9b 0e ff
 							* e6 0d, 9b 0e get checekd on "Examine"
@@ -586,6 +586,30 @@ Images:
 					*                                           ^ Offset 
 					* It looks at this string before showing Vicinity/Empress. Starts at third ff
 					* When checking Vicinity, it reads 4b 0e, then 06 0e, 5d 0e, then 00 00, 62 0e. Last one satisfies some condition maybe? So it starts reading/executing control codes there
+			* Checking on POS1.MSD. Flag is 13, but not sure where that's coming from
+				* ESI value is 6b9f. Need to figure out where that's coming from
+				* (00 01 05 00) 13 07 (00 02 e6 00 0e ff...)
+				* That doesn't look like the other contexts.
+				* Maybe it's just FF that's the beginning byte, or some sort of divider byte? I see a "set variable" later that's 03 FF 01 13 07 00. (not 02 FF 01 (flag) (bit)).
+					* If it reads the byte ff, xor ax ax, mov cs[2d42], al (00), mov cs[2d2a], 00, mov si, cs[2d20] (00), jmp 013f.
+					* Then lodsw a bunch of times into locations cs[2d22], cs[2d24], etc.
+					* 03 is the number of lines that get read. Oops, forgot that
+					* 01 ff) 02 8c 00 03 ff 01 13 07 00 (e8 00 fd 00
+					*           ^loc  ^ct      ^Flag
+					*                             ^Bit
+					*                                ^End?
+					* Starts reading at 02. There's a pointer to that 02 just a line above: (00 00 00 00) c7 00 (cc 00 01...)
+						* Yes, the 02 does mean something - changing it to other values gives mostly different kinds of crashes
+							* The 02 is used as an index for a table somewhere (cs:[0b16+(ax*2)], which gives a value to jump to. (ff does something else)
+							* The function it jumps to does a lodsw (text location), and lodsb (line count), as expected.
+						* It's probably worth taking a look at those 00 00 00 etc tables to see where they point to. Wonder if I could segment out these things somehow.
+							* 00b7: points to 01 05 00 (another flag check?)
+							* 00ba: points to 13 07 00 02 e6 00 03 ff
+								* So it points directly to a flag check. This means there is no "identifying prefix" for a flag check. I'd need to look at the 00 tables.
+							* 00c2: points to 02 47 01 01 ff
+							* 00c7: points to 02 8c 00 03 ff
+							* 00cc: points to 01 13 07 00
+
 		* How do the flags get set? Currently I'm assuming they just set whatever flag they checked.
 			* This is not the case - changing the 06 to 05, it still sets the 6th bit.
 			* Oh, looks like the command to SET a flag is 02 ff 01 7b 05.

@@ -54,6 +54,11 @@ final_target_areas = {}
 
 for gamefile in FILES_TO_REINSERT:
     print("Getting pointers for", gamefile)
+
+    if gamefile.endswith(".SEL") or gamefile.endswith(".CGX"):
+        print("No pointers for static image files")
+        continue
+
     pointer_locations = OrderedDict()
     gamefile_path = os.path.join('original', gamefile)
 
@@ -195,6 +200,12 @@ for gamefile in FILES_TO_REINSERT:
                         #print(pointer_location)
                         #print("length: " + int(p.group(3), 16))
 
+                        if byte_before == 0x00:
+                            if (bs[p.start()//4 - 5] == 0x02 and bs[p.start()//4 - 4] == 0xff):
+                                flag_id = bs[p.start()//4 - 3]
+                                flag_bit = bs[p.start()//4 - 2]
+                                print("Flag condition: ", hex(flag_id), flag_bit)
+
                         ranges = MSD_POINTER_RANGES[gamefile]
 
                         # Don't do this removal if there are multiple pointers to one text location.
@@ -315,7 +326,8 @@ for gamefile in FILES_TO_REINSERT:
                     if Gamefile('original/POS.EXE').filestring[pointer_loc-1] == 0xbe:
                         better_pointer_locations.append(pointer_loc)
                     else:
-                        print(hex(text_location), hex(pointer_loc), "is bad")
+                        #print(hex(text_location), hex(pointer_loc), "is bad")
+                        pass
             pointer_locations = better_pointer_locations
             if pointer_locations == []:
                 #print("Oops, no good pointers for", hex(text_location))

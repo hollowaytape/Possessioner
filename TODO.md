@@ -1,9 +1,9 @@
 # TODO
-* Font/image edits are not getting written anymore
 
 ## Script
 * Need to revamp some of the verbs. "Behind" is really confusing in the maze
 * Strings like "Well then, please be careful out there." have the period overflow out of the window.
+* Clbuttic problem - "there" got replaced with "crotch", which is hilarious
 
 ## Tools
 * Typesetter - what should it do about blank lines?
