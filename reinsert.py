@@ -232,7 +232,7 @@ for filename in FILES:
             if block_diff < 0:
                 block.blockstring += (-1)*block_diff*b'\x00'
             block_diff = len(block.blockstring) - len(block.original_blockstring)
-            print(block)
+            #print(block)
             assert block_diff == 0, block_diff
 
         block.incorporate()

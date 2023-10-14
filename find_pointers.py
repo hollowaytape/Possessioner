@@ -200,6 +200,7 @@ for gamefile in FILES_TO_REINSERT:
                         #print(pointer_location)
                         #print("length: " + int(p.group(3), 16))
 
+                        # TODO: This probably isn't reliable
                         if byte_before == 0x00:
                             if (bs[p.start()//4 - 5] == 0x02 and bs[p.start()//4 - 4] == 0xff):
                                 flag_id = bs[p.start()//4 - 3]

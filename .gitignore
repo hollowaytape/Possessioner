@@ -115,8 +115,12 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-original/
-patched/
+original/*
+!original/dummy.txt
+
+patched/*
+!patched/dummy.txt
+
 PSSR/
 MLD/
 cgx/
@@ -128,3 +132,4 @@ screens/
 *.zip
 *.pdf
 *.png
+*.xlsx

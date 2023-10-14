@@ -1,5 +1,12 @@
 # TODO
 
+## Re-setting up in 2023
+* "cannot import name 'NDC' from 'ndc'
+	* Install ndcpy not ndc
+	* Need to do a pip freeze > requirements.txt - 
+* Check the current state of the game - what works? what doesn't? can text be added?
+	* Document the current understanding of the game
+
 ## Script
 * Need to revamp some of the verbs. "Behind" is really confusing in the maze
 * Strings like "Well then, please be careful out there." have the period overflow out of the window.
@@ -26,7 +33,6 @@
 	* Yep, looks hard.
 * More .SEL images to edit
 	* A_AR6.SEL - top secret thing that belongs to Nedra?
-	* LISTP.SEL - names of possessioners. (If the spellings change, change this too)
 	* LM1.SEL-LM7.SEL - description text of possessioners. Definitely gotta translate this
 		* SEL encoder works on them, good.
 * Check if there are uncensored images in the .SEL files.
