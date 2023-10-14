@@ -24,6 +24,7 @@ FILES = ['POSM.EXE', 'POS.EXE', 'POS1.MSD', 'YUMI.MSD',
          'NEDRA2.MSD', 'P_7.MSD', 'P_71.MSD', 'TINA.MSD', 'END.MSD',
          'POSE.EXE', "STAFF.TXT",
          'FONT.SEL', 'FONT2.SEL', 'P4.SEL', 'P5.SEL',
+         'LM2.SEL',
          #'P_BILL.MLL', 'P_GYOTEI.MSG'
          ]
 
@@ -570,9 +571,10 @@ POINTER_TABLE_SEPARATOR = {
     'POSE.EXE': '\\\\xa8\\\\x08',
 }
 
-# This is a better idea
-POINTER_DISAMBIGUATION = [
 
+POINTER_DISAMBIGUATION = [
+    # Some text locations have hundreds of possible locations - disambiguate them here
+    # (filename, text_location, true_pointer_location)
     ('POS1.MSD', 0xe13, 0xed59),
     ('POS1.MSD', 0xdf2, 0x1da35),
     ('POS1.MSD', 0x354, None),
@@ -633,6 +635,7 @@ POINTER_DISAMBIGUATION = [
     ('P_ENT.MSD', 0x1c81, 0x1ba8e),
     ('P_ENT.MSD', 0x2fff, None),
     ('P_ENT.MSD', 0x2eff, None),
+    ('P_ENT.MSD', 0x1b5c, None), # Collision with a pointer to the same location in BYO
 
     ('P_CITY.MSD', 0x4cf, None),
     ('P_CITY.MSD', 0x204, None),
@@ -873,7 +876,12 @@ EXTRA_POINTERS = {
 
     'P_SYO.MSD': [
         (0x386, 0x1f788),
-    ]
+    ],
+
+    'P_BYO.MSD': [
+        # Added this in 2023, might be wrong)
+        (0x1f2f, 0x12e4c), 
+    ],
 
     #'AYAKA.MSD': [
     #    (0x50c, 0x216b9),
