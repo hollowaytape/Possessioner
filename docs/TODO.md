@@ -13,7 +13,7 @@
 	* Just setting all blank lines to [BLANK] will make it harder to find missing/unknown context lines.
 
 ## Pointers
-* Offset-zero pointers still need to be edited, for line count purposes.
+* (?status unknown) Text at offset zero still needs to have its pointers edited, for line count purposes.
 	* Corridor: "The only noise is a mechanical" (trails off)
 	* Ward: I don't like coming here unless I'm at death's (trails off)
 * Need to identify MSD pointer collisions... if there's a string at d7 in two different files, and they think it's the same pointer location, it will get edited twice and be incorrect for one.
@@ -35,7 +35,10 @@
 	* Could use some documentation - what is this actually checking?
 	* Finds text that multiple pointers are pointing to.
 * Need to check for extraneous pointers too.
-* Some kind of index-out-of-range error when editing DOCTOR.MSD (editing the first line, specifically)
+* (fixed) Some kind of index-out-of-range error when editing DOCTOR.MSD (editing the first line, specifically)
+	* Problem occurs when a string is added at 115 or earlier. (text loc 0xf53)
+	* There's a pointer in POINTER_DISAMBIGUATION that's greater than the length of the file.
+		* Fixed that and added a condition in find_pointers.py to throw an error if so.
 
 ## Hacking
 * Look at .CGX

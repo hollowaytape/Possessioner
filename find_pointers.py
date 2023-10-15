@@ -21,7 +21,6 @@ msd_pointer_regex = r'\\x02\\x([0-f][0-f])\\x([0-f][0-f])\\x([0-f][0-f])'
 msd_pointer_regex_2 = r'\\xbe\\x([0-f][0-f])\\x([0-f][0-f])\\xb9'
 table_pointer_regex = r'\\x([0-f][0-f])\\x([0-f][0-f])sep'
 
-
 def capture_pointers_from_function(hx, regex): 
     return re.compile(regex).finditer(hx, overlapped=True)
 
@@ -345,6 +344,9 @@ for gamefile in FILES_TO_REINSERT:
                 #print("Using pointer disambiguation for %s, %s" % (dis_file, dis_text_loc))
                 if dis_pointer_loc is None:
                     throwaway = True
+                else:
+                    if dis_pointer_loc > len(GF.original_filestring):
+                        raise Exception("Bad pointer location defined in POINTER_DISAMBIGUATION: (%s, ..., %s) (greater than length of pointer file)" % (dis_file, hex(dis_pointer_loc)))
                 pointer_locations = [dis_pointer_loc,]
 
         if throwaway:

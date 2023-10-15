@@ -575,6 +575,7 @@ POINTER_TABLE_SEPARATOR = {
 POINTER_DISAMBIGUATION = [
     # Some text locations have hundreds of possible locations - disambiguate them here
     # (filename, text_location, true_pointer_location)
+    # TODO: Would be useful to make sure pointer_location is either none or less than the length of the file (0x2966)
     ('POS1.MSD', 0xe13, 0xed59),
     ('POS1.MSD', 0xdf2, 0x1da35),
     ('POS1.MSD', 0x354, None),
@@ -761,7 +762,7 @@ POINTER_DISAMBIGUATION = [
 
     ('DOCTOR.MSD', 0x29, 0x118d8),
     ('DOCTOR.MSD', 0xcea, None),
-    ('DOCTOR.MSD', 0xf71, 0x11aa33),
+    ('DOCTOR.MSD', 0xf71, 0x11a33),
     ('DOCTOR.MSD', 0x21ad, None),
     ('DOCTOR.MSD', 0x3610, 0x1349b),   # or maybe None
 
