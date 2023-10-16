@@ -19,6 +19,7 @@ TargetPssr = Disk(TARGET_ROM_PATH)
 
 text_offsets = {}
 pointer_offsets = {}
+problem_count = 0
 
 print("Text locations with an assigned command but no pointers:")
 for filename in [f for f in FILES if f.endswith('.MSD')]:
@@ -62,6 +63,7 @@ for filename in [f for f in FILES if f.endswith('.MSD')]:
         print(filename, ":")
         for t in important_locations:
             print(hex(t))
+            problem_count += 1
 
 print("")
 print("Text locations with multiple pointer locations:")
@@ -69,9 +71,15 @@ for p in text_offsets:
     #print(p, text_offsets[p])
     if len(text_offsets[p]) > 1:
         print(p[0], hex(p[1]), [hex(x) for x in text_offsets[p]])
+        problem_count += 1
 
+print("")
 print("Pointer locations referenced in multiple files:")
 for p in pointer_offsets:
     if len(pointer_offsets[p]) > 1:
         print(hex(p), [x[0] + " " + hex(x[1]) for x in pointer_offsets[p]])
+        problem_count += 1
         # TODO: can we predict which one is correct based on that file's pointer locations?
+
+print("")
+print(problem_count, "potential problems detected")

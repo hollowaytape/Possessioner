@@ -592,6 +592,7 @@ POINTER_DISAMBIGUATION = [
     ('YUMI.MSD', 0x11e8, 0x27931),
     ('YUMI.MSD', 0x1d7a, None),
     ('YUMI.MSD', 0x1407, None),
+    ('YUMI.MSD', 0x1ee9, None),
 
     ('P_SW1.MSD', 0x94, 0x10272),
     ('P_SW1.MSD', 0x1a71, 0x0ffe2),
@@ -604,6 +605,7 @@ POINTER_DISAMBIGUATION = [
 
     ('P_HON1.MSD', 0xd7, None),
     ('P_HON1.MSD', 0x1ff, 0xf59f),
+    ('P_HON1.MSD', 0xd2b, None),
     ('P_HON1.MSD', 0x1526, None),
     ('P_HON1.MSD', 0x3610, None),
     ('P_HON1.MSD', 0x366c, None),
@@ -640,7 +642,9 @@ POINTER_DISAMBIGUATION = [
 
     ('P_CITY.MSD', 0x4cf, None),
     ('P_CITY.MSD', 0x204, None),
+    ('P_CITY.MSD', 0x3f5, None),
     ('P_CITY.MSD', 0x647, None),
+    ('P_CITY.MSD', 0xee7, None),
     ('P_CITY.MSD', 0xf0f, None),
     ('P_CITY.MSD', 0x856, 0x144ed),
     ('P_CITY.MSD', 0x1b9b, None),
@@ -649,6 +653,7 @@ POINTER_DISAMBIGUATION = [
     ('P_CITY.MSD', 0x3043, 0x13fba),
     ('P_CITY.MSD', 0x00bc7, 0x1457b),
 
+    ('P_SYO.MSD', 0x162, None),
     ('P_SYO.MSD', 0x385, None),   # It's normally 385; moving it one up to avoid a text glitch
     ('P_SYO.MSD', 0x83c, 0x1fc6b),
     ('P_SYO.MSD', 0xa3a, 0x1f520),
@@ -663,6 +668,7 @@ POINTER_DISAMBIGUATION = [
     ('P_BILL.MSD', 0x94, 0x157bd),   # This might just be None
     ('P_BILL.MSD', 0xfd, None),
     ('P_BILL.MSD', 0x25b, 0x157bd),
+    ('P_BILL.MSD', 0x536, None),
     ('P_BILL.MSD', 0x585, None),
     ('P_BILL.MSD', 0x6f8, None),
     ('P_BILL.MSD', 0x8c8, None),
@@ -673,10 +679,12 @@ POINTER_DISAMBIGUATION = [
     ('P_BILL.MSD', 0x1017, None),
     ('P_BILL.MSD', 0x1390, 0x150e1),
     ('P_BILL.MSD', 0x1500, 0x151f1),
+    ('P_BILL.MSD', 0x193c, None),
 
     ('P_ENT2.MSD', 0x4ff, 0x235f6),
 
 
+    ('P_7.MSD', 0x30a, None),
     ('P_7.MSD', 0x994, None),
     ('P_7.MSD', 0x4e20, 0x17299),
     ('P_7.MSD', 0x1b5c, None),
@@ -690,6 +698,7 @@ POINTER_DISAMBIGUATION = [
     ('P_71.MSD', 0x2673, 0x1a318),
     ('P_71.MSD', 0x33f5, None),
     ('P_71.MSD', 0x3610, 0x1a5ac),
+    ('P_71.MSD', 0x3ff7, None),
 
     ('P_BOX.MSD', 0x609, None),
     ('P_BOX.MSD', 0x9f4, None),
@@ -705,18 +714,21 @@ POINTER_DISAMBIGUATION = [
 
     ('P_JUNK.MSD', 0x4ec, None),
     ('P_JUNK.MSD', 0xa64, None),
+    ('P_JUNK.MSD', 0x1874, None),
 
     ('P_KYU.MSD', 0x370, 0x1fe9f),
+    ('P_KYU.MSD', 0x385, None),
+    ('P_KYU.MSD', 0x69e, None),
     ('P_KYU.MSD', 0x774, 0x2005b),
     ('P_KYU.MSD', 0x8ec, 0x1fc6b),
-    ('P_KYU.MSD', 0x00b81, 0x1ff81),
-    ('P_KYU.MSD', 0x385, None),
-    ('P_KYU.MSD', 0x1035, None),
-    ('P_KYU.MSD', 0x2826, 0x201ab),
+    ('P_KYU.MSD', 0xb81, 0x1ff81),
     ('P_KYU.MSD', 0xc14, 0x20085),
     ('P_KYU.MSD', 0xcea, 0x200a2),
     ('P_KYU.MSD', 0xef6, 0x1fd7b),
+    ('P_KYU.MSD', 0x1035, None),
+    ('P_KYU.MSD', 0x1390, None),
     ('P_KYU.MSD', 0x17e6, 0x20104),
+    ('P_KYU.MSD', 0x2826, 0x201ab),
     #('P_KYU.MSD', 0x774, 0x2005b), # not sure, this could also be 1fc29
 
     ('P_SUTE.MSD', 0xfc0, 0x1c1ae), # also not sure, could be 0x157e8
@@ -727,6 +739,7 @@ POINTER_DISAMBIGUATION = [
     ('P_SUTE.MSD', 0xafd, None),
 
     ('ERIS.MSD', 0x4b, 0x1ef0a),
+    ('ERIS.MSD', 0x2b3, None),
     ('ERIS.MSD', 0xe6f, None),
     ('ERIS.MSD', 0x10e0, 0x1ec52),
     ('ERIS.MSD', 0x11e8, None),
@@ -768,8 +781,9 @@ POINTER_DISAMBIGUATION = [
 
     ('RASU1.MSD', 0x4b, 0x25431),
     ('RASU1.MSD', 0xe2, 0x2544e),
-    ('RASU1.MSD', 0x123a, 0x25ae8),
+    ('RASU1.MSD', 0x2e9, None),
     ('RASU1.MSD', 0x64e, 0x225f2),
+    ('RASU1.MSD', 0x123a, 0x25ae8),
 
     ('RASU2.MSD', 0x2e9, None),  # unsure; points to a Honghua line inculded somewhere already
     ('RASU2.MSD', 0x474, None),
@@ -795,7 +809,9 @@ POINTER_DISAMBIGUATION = [
 
     ('PLYM.MSD', 0x8bb, None),
     ('PLYM.MSD', 0x14de, None),
+    ('PLYM.MSD', 0x1e51, None),
 
+    ('NEDRA1.MSD', 0x29, None),
     ('NEDRA1.MSD', 0x752, 0x10fca),
     ('NEDRA1.MSD', 0x781, None),
     ('NEDRA1.MSD', 0xc56, None),
@@ -804,6 +820,7 @@ POINTER_DISAMBIGUATION = [
 
     ('NEDRA2.MSD', 0x6dd, None),
     ('NEDRA2.MSD', 0x742, None),
+    ('NEDRA2.MSD', 0xee8, None),
     ('NEDRA2.MSD', 0x1390, None),
     ('NEDRA2.MSD', 0x15e4, None),
     ('NEDRA2.MSD', 0x2ca7, None),
