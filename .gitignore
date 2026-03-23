@@ -133,3 +133,5 @@ screens/
 *.pdf
 *.png
 *.xlsx
+PSSR_dump.xlsx
+script_viewer/viewer-data.js

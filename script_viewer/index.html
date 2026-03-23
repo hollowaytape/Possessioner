@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Possessioner Script Viewer</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1>Possessioner Script Viewer</h1>
+        <p>Browse workbook lines in a mock ADV window with parser context.</p>
+      </div>
+
+      <div class="filters">
+        <label>
+          <span>File</span>
+          <select id="fileFilter"></select>
+        </label>
+        <label>
+          <span>Search</span>
+          <input id="searchInput" type="search" placeholder="Search JP / EN / comments">
+        </label>
+      </div>
+
+      <section class="progress-panel">
+        <div class="progress-header">
+          <strong>Translation progress</strong>
+          <span id="progressLabel"></span>
+        </div>
+        <div class="progress-track" aria-hidden="true">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+      </section>
+
+      <div class="nav-row">
+        <button id="prevButton" type="button">Prev</button>
+        <div id="recordCounter" class="counter"></div>
+        <button id="nextButton" type="button">Next</button>
+      </div>
+
+      <div class="record-list-header">
+        <strong>Matching lines</strong>
+        <span id="matchCount"></span>
+      </div>
+      <div id="recordList" class="record-list"></div>
+    </aside>
+
+    <main class="main-panel">
+      <section class="toolbar">
+        <label>
+          <span>Preview mode</span>
+          <select id="previewMode">
+            <option value="typeset">English (Typeset)</option>
+            <option value="english">English</option>
+            <option value="japanese">Japanese</option>
+          </select>
+        </label>
+        <button id="copyJsonButton" type="button">Copy record JSON</button>
+      </section>
+
+      <section class="preview-area">
+        <div class="game-screen">
+          <div class="game-stage" aria-label="Mock Possessioner UI">
+            <div class="scene-panel">
+              <div class="placeholder-label">Scene</div>
+            </div>
+
+            <div id="sceneLip" class="scene-lip"></div>
+
+            <div class="command-panel" aria-hidden="true">
+              <div class="command-slot"></div>
+              <div class="command-slot"></div>
+              <div class="command-slot"></div>
+              <div class="command-slot"></div>
+              <div class="command-slot"></div>
+              <div class="command-slot"></div>
+            </div>
+
+            <div class="system-panel" aria-hidden="true"></div>
+
+            <div class="portrait-panel">
+              <div class="placeholder-label">Portrait</div>
+            </div>
+
+            <div class="dialog-panel">
+              <div class="preview-frame">
+                <div id="previewText" class="preview-text"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inspector-grid">
+          <section class="panel">
+            <h2>Workbook + parser context</h2>
+            <dl id="recordMeta" class="meta-list"></dl>
+          </section>
+
+          <section class="panel">
+            <h2>Pointer contexts</h2>
+            <div id="pointerContexts" class="pointer-contexts"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="viewer-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
