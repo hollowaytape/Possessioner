@@ -6,7 +6,16 @@
 import sys
 import os
 import xlsxwriter
+from analyze_dispatch_contexts import scan_dispatch_context_lookup
+from analyze_handoff_contexts import scan_handoff_context_lookup, summarize_handoff_details
 from rominfo import FILE_BLOCKS, FILES, ORIGINAL_ROM_DIR, DUMP_XLS_PATH, CONTROL_CODES, CONCISE_CONTROL_CODES, POINTER_CONSTANT
+from command_groups import (
+    find_arrival_groups,
+    find_command_groups,
+    find_direct_range_groups,
+    format_offset,
+    load_pos_exe_bytes,
+)
 
 COMPILER_MESSAGES = [b'Turbo', b'Borland', b'C++', b'Library', b'Copyright']
 
@@ -17,7 +26,52 @@ ASCII_MODE = 2
 
 THRESHOLD = 2
 
+
+def summarize_dispatch_details(dispatch_contexts):
+    grouped = {}
+
+    for context in dispatch_contexts:
+        action = str(context.get("action") or "").strip()
+        target = str(context.get("target") or "").strip()
+        command_label = str(context.get("command") or "").strip()
+        header_location = context.get("header_location")
+        key = (header_location, action, target, command_label)
+        entry = grouped.setdefault(key, {"inline": False, "via_locations": []})
+        via_target_location = context.get("via_target_location")
+        if isinstance(via_target_location, int):
+            if via_target_location not in entry["via_locations"]:
+                entry["via_locations"].append(via_target_location)
+        else:
+            entry["inline"] = True
+
+    details = []
+    for (header_location, action, target, command_label), entry in grouped.items():
+        route_bits = []
+        if action:
+            route_bits.append(action)
+        if target:
+            route_bits.append(target)
+        route_text = " / ".join(route_bits) if route_bits else "dispatch context"
+        if command_label:
+            route_text += f" -> {command_label}"
+
+        qualifier_bits = []
+        if isinstance(header_location, int):
+            qualifier_bits.append(f"header {format_offset(header_location)}")
+        if entry["inline"]:
+            qualifier_bits.append("inline")
+        if entry["via_locations"]:
+            qualifier_bits.append("via " + ", ".join(format_offset(location) for location in entry["via_locations"]))
+
+        if qualifier_bits:
+            route_text += " [" + "; ".join(qualifier_bits) + "]"
+        details.append(route_text)
+
+    return details
+
 def dump(files):
+    pos_exe_bytes = load_pos_exe_bytes()
+
     for filename in FILES:
         print(filename)
         worksheet = workbook.add_worksheet(filename)
@@ -31,6 +85,18 @@ def dump(files):
             EN_COLUMN = 5
             EN_LEN_COLUMN = 6
             COMMENT_COLUMN = 7
+            GROUP_LABEL_COLUMN = 8
+            GROUP_START_COLUMN = 9
+            GROUP_SIZE_COLUMN = 10
+            DISPLAY_TYPE_COLUMN = 11
+            DISPLAY_DETAIL_COLUMN = 12
+            DISPATCH_ACTION_COLUMN = 13
+            DISPATCH_TARGET_COLUMN = 14
+            DISPATCH_HEADER_COLUMN = 15
+            DISPATCH_DETAIL_COLUMN = 16
+            HANDOFF_TYPE_COLUMN = 17
+            HANDOFF_DESTINATION_COLUMN = 18
+            HANDOFF_DETAIL_COLUMN = 19
         else:
             JP_COLUMN = 1
             JP_LEN_COLUMN = 2
@@ -49,6 +115,18 @@ def dump(files):
         if filename.endswith('.MSD'):
             worksheet.write(0, COMMAND_COLUMN, 'Command', header)
             worksheet.write(0, CODES_COLUMN, 'Ctrl Codes', header)
+            worksheet.write(0, GROUP_LABEL_COLUMN, 'Command Group Label', header)
+            worksheet.write(0, GROUP_START_COLUMN, 'Command Group Start', header)
+            worksheet.write(0, GROUP_SIZE_COLUMN, 'Command Group Size', header)
+            worksheet.write(0, DISPLAY_TYPE_COLUMN, 'Command Display Type', header)
+            worksheet.write(0, DISPLAY_DETAIL_COLUMN, 'Command Display Detail', header)
+            worksheet.write(0, DISPATCH_ACTION_COLUMN, 'Command Dispatch Action', header)
+            worksheet.write(0, DISPATCH_TARGET_COLUMN, 'Command Dispatch Target', header)
+            worksheet.write(0, DISPATCH_HEADER_COLUMN, 'Command Dispatch Header', header)
+            worksheet.write(0, DISPATCH_DETAIL_COLUMN, 'Command Dispatch Detail', header)
+            worksheet.write(0, HANDOFF_TYPE_COLUMN, 'Command Handoff Type', header)
+            worksheet.write(0, HANDOFF_DESTINATION_COLUMN, 'Command Handoff Destination', header)
+            worksheet.write(0, HANDOFF_DETAIL_COLUMN, 'Command Handoff Detail', header)
 
             worksheet.set_column('B:B', 20)
             worksheet.set_column('D:D', 50)
@@ -56,6 +134,18 @@ def dump(files):
             worksheet.set_column('F:F', 50)
             worksheet.set_column('G:G', 5)
             worksheet.set_column('H:H', 50)
+            worksheet.set_column('I:I', 30)
+            worksheet.set_column('J:J', 12)
+            worksheet.set_column('K:K', 8)
+            worksheet.set_column('L:L', 22)
+            worksheet.set_column('M:M', 50)
+            worksheet.set_column('N:N', 18)
+            worksheet.set_column('O:O', 18)
+            worksheet.set_column('P:P', 16)
+            worksheet.set_column('Q:Q', 60)
+            worksheet.set_column('R:R', 22)
+            worksheet.set_column('S:S', 32)
+            worksheet.set_column('T:T', 60)
             JP_COLUMN_LETTER = 'D'
             EN_COLUMN_LETTER = 'F'
         else:
@@ -146,6 +236,8 @@ def dump(files):
             if len(sjis_strings) == 0:
                 continue
 
+            sheet_rows = []
+
             for s in sjis_strings:
                 # Remove leading U's
                 #while s[1].startswith(b'U'):
@@ -180,7 +272,7 @@ def dump(files):
                 #if b'[Start]' in codes:
                 #    command = b'?'
 
-                loc = '0x' + hex(s[0]).lstrip('0x').zfill(5)
+                loc = format_offset(s[0])
                 try:
                     jp = s[1].decode('shift-jis')
                 except UnicodeDecodeError:
@@ -193,12 +285,194 @@ def dump(files):
                     continue
                 #print(loc, jp)
 
-                worksheet.write(row, 0, loc)
-                worksheet.write(row, JP_COLUMN, jp)
+                row_data = {
+                    "offset": s[0],
+                    "loc": loc,
+                    "jp": jp,
+                    "codes": codes.decode('shift-jis') if filename.endswith('.MSD') else '',
+                    "command": command.decode('shift-jis') if filename.endswith('.MSD') else '',
+                    "group_label": '',
+                    "group_start": '',
+                    "group_size": '',
+                    "display_type": '',
+                    "display_detail": '',
+                    "dispatch_action": '',
+                    "dispatch_target": '',
+                    "dispatch_header": '',
+                    "dispatch_detail": '',
+                    "handoff_type": '',
+                    "handoff_destination": '',
+                    "handoff_detail": '',
+                }
+                sheet_rows.append(row_data)
+
+            if filename.endswith('.MSD'):
+                current_block_command = ''
+                for row_data in sheet_rows:
+                    if row_data["command"]:
+                        current_block_command = row_data["command"]
+                    row_data["block_command"] = current_block_command
+
+                row_offsets = [row_data["offset"] for row_data in sheet_rows]
+                _, grouped_rows = find_command_groups(filename, row_offsets, pos_exe_bytes)
+                arrival_rows = find_arrival_groups(filename, row_offsets, pos_exe_bytes)
+                direct_range_rows = find_direct_range_groups(filename, row_offsets, pos_exe_bytes)
+                dispatch_context_lookup = scan_dispatch_context_lookup(
+                    filename,
+                    pos_exe_bytes,
+                    [
+                        {
+                            "file": filename,
+                            "offset": row_data["offset"],
+                            "command": row_data["command"],
+                            "block_command": row_data["block_command"],
+                            "english": row_data["jp"],
+                        }
+                        for row_data in sheet_rows
+                    ],
+                )
+                handoff_context_lookup = scan_handoff_context_lookup(
+                    filename,
+                    pos_exe_bytes,
+                    [
+                        {
+                            "file": filename,
+                            "offset": row_data["offset"],
+                            "command": row_data["command"],
+                            "block_command": row_data["block_command"],
+                            "english": row_data["jp"],
+                        }
+                        for row_data in sheet_rows
+                    ],
+                )
+                for row_data in sheet_rows:
+                    groups = grouped_rows.get(row_data["offset"], [])
+                    if groups:
+                        row_data["group_label"] = "; ".join(format_offset(start) for start, _size in groups)
+                        row_data["group_start"] = "; ".join(format_offset(start) for start, _size in groups)
+                        row_data["group_size"] = "; ".join(str(size) for _start, size in groups)
+
+                    display_types = []
+                    display_details = []
+                    for start, size in groups:
+                        display_types.append('0x02 text command')
+                        display_details.append(f'0x02 group {format_offset(start)} size {size}')
+                    for start, size, pointer_loc in arrival_rows.get(row_data["offset"], []):
+                        display_types.append('arrival text')
+                        display_details.append(f'arrival {format_offset(start)} size {size} via {format_offset(pointer_loc)}')
+                    for start, size, call_loc in direct_range_rows.get(row_data["offset"], []):
+                        display_types.append('direct range call')
+                        display_details.append(f'direct range {format_offset(start)} size {size} via {format_offset(call_loc)}')
+                    if not display_types and row_data["offset"] == 0 and row_data["command"] == '(Arrive)':
+                        display_types.append('arrival text')
+                        display_details.append('arrival offset 0 (no pointer override known)')
+
+                    row_data["display_type"] = "; ".join(display_types)
+                    row_data["display_detail"] = "; ".join(display_details)
+
+                    dispatch_contexts: list[dict[str, object]] = []
+                    seen_dispatch_keys: set[tuple[object, ...]] = set()
+                    dispatch_start_offsets = {row_data["offset"]}
+                    dispatch_start_offsets.update(start_offset for start_offset, _size in groups)
+                    dispatch_start_offsets.update(
+                        start_offset for start_offset, _size, _pointer_location in arrival_rows.get(row_data["offset"], [])
+                    )
+                    dispatch_start_offsets.update(
+                        start_offset for start_offset, _size, _call_location in direct_range_rows.get(row_data["offset"], [])
+                    )
+
+                    for start_offset in sorted(dispatch_start_offsets):
+                        for context in dispatch_context_lookup.get(start_offset, []):
+                            key = (
+                                context["header_location"],
+                                context["via_target_location"],
+                                context["action"],
+                                context["target"],
+                                context["command"],
+                            )
+                            if key in seen_dispatch_keys:
+                                continue
+                            seen_dispatch_keys.add(key)
+                            dispatch_contexts.append(context)
+
+                    dispatch_actions = []
+                    dispatch_targets = []
+                    dispatch_headers = []
+                    dispatch_details = []
+                    for context in dispatch_contexts:
+                        action = str(context.get("action") or "").strip()
+                        target = str(context.get("target") or "").strip()
+                        header_location = context.get("header_location")
+
+                        if action and action not in dispatch_actions:
+                            dispatch_actions.append(action)
+                        if target and target not in dispatch_targets:
+                            dispatch_targets.append(target)
+
+                        if isinstance(header_location, int):
+                            header_text = format_offset(header_location)
+                            if header_text not in dispatch_headers:
+                                dispatch_headers.append(header_text)
+
+                    dispatch_details = summarize_dispatch_details(dispatch_contexts)
+
+                    row_data["dispatch_action"] = "; ".join(dispatch_actions)
+                    row_data["dispatch_target"] = "; ".join(dispatch_targets)
+                    row_data["dispatch_header"] = "; ".join(dispatch_headers)
+                    row_data["dispatch_detail"] = "; ".join(dispatch_details)
+
+                    handoff_contexts = []
+                    seen_handoff_keys = set()
+                    handoff_start_offsets = {row_data["offset"]}
+                    handoff_start_offsets.update(start_offset for start_offset, _size in groups)
+                    handoff_start_offsets.update(
+                        start_offset for start_offset, _size, _pointer_location in arrival_rows.get(row_data["offset"], [])
+                    )
+                    handoff_start_offsets.update(
+                        start_offset for start_offset, _size, _call_location in direct_range_rows.get(row_data["offset"], [])
+                    )
+
+                    for start_offset in sorted(handoff_start_offsets):
+                        for context in handoff_context_lookup.get(start_offset, []):
+                            key = (context["location"], context["arg1"], context["destination_name"], context["handoff_type"])
+                            if key in seen_handoff_keys:
+                                continue
+                            seen_handoff_keys.add(key)
+                            handoff_contexts.append(context)
+
+                    handoff_types = []
+                    handoff_destinations = []
+                    for context in handoff_contexts:
+                        handoff_type = str(context.get("handoff_type") or "").strip()
+                        destination_name = str(context.get("destination_label") or "").strip()
+                        if handoff_type and handoff_type not in handoff_types:
+                            handoff_types.append(handoff_type)
+                        if destination_name and destination_name not in handoff_destinations:
+                            handoff_destinations.append(destination_name)
+
+                    row_data["handoff_type"] = "; ".join(handoff_types)
+                    row_data["handoff_destination"] = "; ".join(handoff_destinations)
+                    row_data["handoff_detail"] = "; ".join(summarize_handoff_details(handoff_contexts))
+
+            for row_data in sheet_rows:
+                worksheet.write(row, 0, row_data["loc"])
+                worksheet.write(row, JP_COLUMN, row_data["jp"])
 
                 if filename.endswith('.MSD'):
-                    worksheet.write(row, CODES_COLUMN, codes.decode('shift-jis'))
-                    worksheet.write(row, COMMAND_COLUMN, command.decode('shift-jis'))
+                    worksheet.write(row, CODES_COLUMN, row_data["codes"])
+                    worksheet.write(row, COMMAND_COLUMN, row_data["command"])
+                    worksheet.write(row, GROUP_LABEL_COLUMN, row_data["group_label"])
+                    worksheet.write(row, GROUP_START_COLUMN, row_data["group_start"])
+                    worksheet.write(row, GROUP_SIZE_COLUMN, row_data["group_size"])
+                    worksheet.write(row, DISPLAY_TYPE_COLUMN, row_data["display_type"])
+                    worksheet.write(row, DISPLAY_DETAIL_COLUMN, row_data["display_detail"])
+                    worksheet.write(row, DISPATCH_ACTION_COLUMN, row_data["dispatch_action"])
+                    worksheet.write(row, DISPATCH_TARGET_COLUMN, row_data["dispatch_target"])
+                    worksheet.write(row, DISPATCH_HEADER_COLUMN, row_data["dispatch_header"])
+                    worksheet.write(row, DISPATCH_DETAIL_COLUMN, row_data["dispatch_detail"])
+                    worksheet.write(row, HANDOFF_TYPE_COLUMN, row_data["handoff_type"])
+                    worksheet.write(row, HANDOFF_DESTINATION_COLUMN, row_data["handoff_destination"])
+                    worksheet.write(row, HANDOFF_DETAIL_COLUMN, row_data["handoff_detail"])
 
                 worksheet.write(row, JP_LEN_COLUMN, "=LEN(%s%s)*2" % (JP_COLUMN_LETTER, row+1))
                 worksheet.write(row, EN_LEN_COLUMN, "=LEN(%s%s)" % (EN_COLUMN_LETTER, row+1))

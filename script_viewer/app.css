@@ -77,6 +77,10 @@ textarea {
   gap: 10px;
 }
 
+.hidden {
+  display: none !important;
+}
+
 .progress-panel {
   display: grid;
   gap: 8px;
@@ -201,11 +205,44 @@ button:hover {
 }
 
 .toolbar {
-  grid-template-columns: minmax(220px, 1fr) minmax(180px, 1fr);
-  align-items: end;
+  grid-template-columns: 1fr;
   padding: 14px;
   min-width: 0;
   width: 100%;
+}
+
+.toolbar-top,
+.toolbar-bottom {
+  display: grid;
+  gap: 10px;
+}
+
+.toolbar-bottom {
+  grid-template-columns: minmax(220px, 1fr) minmax(180px, 1fr);
+  align-items: end;
+}
+
+.tab-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tab-button {
+  padding: 8px 12px;
+}
+
+.tab-button.active {
+  border-color: var(--accent);
+  background: #25324d;
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: grid;
 }
 
 .preview-area {
@@ -411,6 +448,179 @@ button:hover {
   min-width: 0;
 }
 
+.form-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin-bottom: 12px;
+}
+
+.button-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.summary-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  margin-bottom: 14px;
+}
+
+.summary-card {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.summary-card span {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.summary-card strong {
+  font-size: 1.05rem;
+}
+
+.summary-strong {
+  border-color: #3ea86e;
+}
+
+.summary-partial {
+  border-color: #b58a33;
+}
+
+.summary-weak {
+  border-color: #b14f63;
+}
+
+.card-grid,
+.heatmap-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.card-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.card-stack.compact {
+  margin-top: 10px;
+}
+
+.info-card,
+.heatmap-cell {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.info-card.readiness-strong,
+.heatmap-cell.readiness-strong {
+  border-color: rgba(62, 168, 110, 0.7);
+}
+
+.info-card.readiness-partial,
+.heatmap-cell.readiness-partial {
+  border-color: rgba(181, 138, 51, 0.75);
+}
+
+.info-card.readiness-weak,
+.heatmap-cell.readiness-weak {
+  border-color: rgba(177, 79, 99, 0.8);
+}
+
+.heatmap-cell {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)),
+    linear-gradient(90deg, rgba(135, 180, 255, calc(var(--heat, 0) * 0.12)), rgba(255, 140, 120, calc(var(--heat, 0) * 0.22)));
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: start;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.76rem;
+  color: var(--text);
+  background: rgba(78, 97, 132, 0.5);
+  border: 1px solid rgba(152, 193, 255, 0.28);
+}
+
+.mini-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.section-block {
+  display: grid;
+  gap: 6px;
+}
+
+.graph-svg {
+  width: 100%;
+  min-height: 720px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(20, 28, 44, 0.9);
+}
+
+.graph-node rect {
+  fill: #20304b;
+  stroke: #41557a;
+  stroke-width: 1.5;
+}
+
+.graph-node.graph-node-special rect {
+  stroke: #91b8ff;
+}
+
+.graph-node.graph-node-flagged rect {
+  fill: #2a2744;
+}
+
+.graph-node.graph-node-selected rect {
+  stroke: #6fe6ff;
+  stroke-width: 2.5;
+}
+
+.graph-node-title {
+  fill: #edf3ff;
+  font-size: 14px;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  font-weight: 600;
+}
+
+.graph-node-subtitle,
+.graph-node-badges {
+  fill: #aab7d3;
+  font-size: 12px;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+.graph-node {
+  cursor: pointer;
+}
+
 .panel h2 {
   margin-top: 0;
   margin-bottom: 12px;
@@ -479,6 +689,10 @@ button:hover {
   }
 
   .toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar-bottom {
     grid-template-columns: 1fr;
   }
 }

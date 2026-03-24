@@ -473,9 +473,9 @@ Images:
 		* 46: Tower - "02:30" room, front/right (starts a battle)
 		* 47: Tower - "02:30" room, front/right (no battle)
 		* 48: Tower - capsule room
-		* 49: Tower - escalator room
-		* 4a: Tower - Tina/tanks room (12 lines)
-		* 4b: Tower - light columns room 1
+* 49: Tower - escalator room
+* 4a: Tower - Tina/tanks room (12 lines)
+* 4b: Tower - light columns room 1
 		* 4c: Tower - light columns room 2 (2 lines)
 		* 4d: Tower - light columns room 3
 		* 4e: Tower - final door? (10 lines)
@@ -505,6 +505,16 @@ Images:
 
 	* Oh, it's actually a word. So maintenance room is 00 00, etc
 	* Anything to determine line count??
+* The inline post-text family `03 xx 00 01` appears to reuse that same destination-byte convention.
+	* `xx` lines up well with the save-format map/scene list.
+	* Examples:
+		* `03 1c 00 01` follows `POS1.MSD` `Move - Appearance Site`, which points at area `1c`.
+		* `03 1a 00 01` follows `P_71.MSD` `Talk Tina`, which points at area `1a`.
+		* `03 1b 00 01` shows up in the late `P_71` / scene-end block, which points at area `1b`.
+	* Current best guess:
+		* first byte = handoff type (`01` normal move, `03` battle/scene-style handoff)
+		* second byte = destination area / scene index
+		* trailing `ff` vs `01` is structural/contextual, not the destination selector itself
 * The code that loads the line count is 2440:0897. (lodsb, mov vx, ax, etc)
 	*...Doesn't run at all when the arrival text loads.
 

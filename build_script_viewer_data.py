@@ -4,8 +4,37 @@ import json
 from pathlib import Path
 from typing import Any
 
+from analyze_dispatch_contexts import (
+    json_ready as dispatch_json_ready,
+    load_dump_rows as load_dispatch_dump_rows,
+    scan_dispatch_headers,
+)
+from analyze_flag_contexts import (
+    json_ready as flag_json_ready,
+    load_dump_rows as load_flag_dump_rows,
+    scan_file_flags,
+)
+from analyze_handoff_contexts import (
+    SAVE_FORMAT_PATH,
+    build_offset_to_rows,
+    json_ready as handoff_json_ready,
+    load_dump_rows as load_handoff_dump_rows,
+    load_map_names,
+    scan_handoffs,
+)
 from analyze_msd_context import build_records, load_dump_rows, load_pointer_rows
-from rominfo import DUMP_XLS_PATH, ORIGINAL_ROM_DIR, POINTER_DUMP_XLS_PATH
+from analyze_transition_contexts import json_ready as transition_json_ready, scan_transitions
+from build_command_matrix import build_command_matrix
+from build_state_graph import build_graph
+from build_trigger_model import (
+    build_dispatch_lookup,
+    build_flag_lookup,
+    build_model,
+    build_target_lookup,
+    load_workbook_rows,
+)
+from build_walkthrough_acceptance import build_acceptance_outline
+from rominfo import DUMP_XLS_PATH, MSD_POINTER_RANGES, ORIGINAL_ROM_DIR, POINTER_DUMP_XLS_PATH
 
 
 def normalize_preview_text(text: str) -> str:
@@ -204,6 +233,51 @@ def build_viewer_payload(root: Path) -> dict[str, Any]:
             },
         },
         "records": viewer_records,
+        "graph": build_graph_payload(root, pos_exe_bytes),
+    }
+
+
+def build_graph_payload(root: Path, pos_exe_bytes: bytes) -> dict[str, Any]:
+    dump_path = root / DUMP_XLS_PATH
+    file_filter = set(MSD_POINTER_RANGES.keys())
+
+    dispatch_dump_rows = load_dispatch_dump_rows(dump_path, file_filter)
+    dispatch_results = {
+        filename: scan_dispatch_headers(filename, pos_exe_bytes, dispatch_dump_rows.get(filename, []))
+        for filename in sorted(file_filter)
+    }
+    dispatch_payload = dispatch_json_ready(dispatch_results)
+
+    flag_dump_rows = load_flag_dump_rows(dump_path, file_filter)
+    flag_results = {
+        filename: scan_file_flags(filename, pos_exe_bytes, flag_dump_rows.get(filename, []))
+        for filename in sorted(file_filter)
+    }
+    flag_payload = flag_json_ready(flag_results)
+
+    handoff_rows_by_file_offset = load_handoff_dump_rows(dump_path)
+    offset_to_rows = build_offset_to_rows(handoff_rows_by_file_offset)
+    map_names = load_map_names(SAVE_FORMAT_PATH)
+    handoff_payload = handoff_json_ready(scan_handoffs(pos_exe_bytes, offset_to_rows, map_names))
+    transition_payload = transition_json_ready(scan_transitions(pos_exe_bytes, offset_to_rows, map_names))
+
+    workbook_rows = load_workbook_rows(dump_path)
+    trigger_model = build_model(
+        workbook_rows,
+        build_dispatch_lookup(dispatch_payload),
+        build_target_lookup(handoff_payload, location_key="location", extra_keys=["arg1"]),
+        build_target_lookup(transition_payload, location_key="location", extra_keys=["arg1"]),
+        build_flag_lookup(flag_payload),
+        True,
+    )
+    state_graph = build_graph(trigger_model)
+    acceptance = build_acceptance_outline(state_graph)
+    command_matrix = build_command_matrix(state_graph)
+
+    return {
+        "stateGraph": state_graph,
+        "walkthroughAcceptance": acceptance,
+        "commandMatrix": command_matrix,
     }
 
 

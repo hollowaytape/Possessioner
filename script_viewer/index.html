@@ -11,7 +11,7 @@
     <aside class="sidebar">
       <div class="sidebar-header">
         <h1>Possessioner Script Viewer</h1>
-        <p>Browse workbook lines in a mock ADV window with parser context.</p>
+        <p>Browse workbook lines, trigger graphs, route hypotheses, and coverage heatmaps.</p>
       </div>
 
       <div class="filters">
@@ -50,18 +50,31 @@
 
     <main class="main-panel">
       <section class="toolbar">
-        <label>
-          <span>Preview mode</span>
-          <select id="previewMode">
-            <option value="typeset">English (Typeset)</option>
-            <option value="english">English</option>
-            <option value="japanese">Japanese</option>
-          </select>
-        </label>
-        <button id="copyJsonButton" type="button">Copy record JSON</button>
+        <div class="toolbar-top">
+          <div class="tab-row">
+            <button class="tab-button active" data-tab="script" type="button">Script viewer</button>
+            <button class="tab-button" data-tab="map" type="button">File map</button>
+            <button class="tab-button" data-tab="action" type="button">Action/target explorer</button>
+            <button class="tab-button" data-tab="heatmap" type="button">Readiness heatmap</button>
+            <button class="tab-button" data-tab="graph" type="button">Block graph</button>
+            <button class="tab-button" data-tab="flags" type="button">Flag inspector</button>
+            <button class="tab-button" data-tab="route" type="button">Route builder</button>
+          </div>
+        </div>
+        <div id="scriptToolbar" class="toolbar-bottom">
+          <label>
+            <span>Preview mode</span>
+            <select id="previewMode">
+              <option value="typeset">English (Typeset)</option>
+              <option value="english">English</option>
+              <option value="japanese">Japanese</option>
+            </select>
+          </label>
+          <button id="copyJsonButton" type="button">Copy record JSON</button>
+        </div>
       </section>
 
-      <section class="preview-area">
+      <section id="tab-script" class="tab-panel active preview-area">
         <div class="game-screen">
           <div class="game-stage" aria-label="Mock Possessioner UI">
             <div class="scene-panel">
@@ -102,6 +115,126 @@
           <section class="panel">
             <h2>Pointer contexts</h2>
             <div id="pointerContexts" class="pointer-contexts"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="tab-map" class="tab-panel">
+        <div class="panel">
+          <h2>File-level navigation map</h2>
+          <p class="panel-note">High-level per-file summary of actions, edges, destinations, readiness, and hotspot counts.</p>
+          <div id="fileMapSummary" class="summary-grid"></div>
+          <div id="fileMapCards" class="card-grid"></div>
+        </div>
+      </section>
+
+      <section id="tab-action" class="tab-panel">
+        <div class="inspector-grid">
+          <section class="panel">
+            <h2>Action / target explorer</h2>
+            <div class="form-grid">
+              <label>
+                <span>File</span>
+                <select id="actionFileSelect"></select>
+              </label>
+              <label>
+                <span>Action</span>
+                <select id="actionSelect"></select>
+              </label>
+              <label>
+                <span>Target</span>
+                <select id="targetSelect"></select>
+              </label>
+            </div>
+            <div id="actionSummary" class="summary-grid"></div>
+          </section>
+          <section class="panel">
+            <h2>Matching nodes</h2>
+            <div id="actionNodes" class="card-stack"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="tab-heatmap" class="tab-panel">
+        <div class="panel">
+          <h2>Walkthrough readiness heatmap</h2>
+          <p class="panel-note">Color-coded coverage ranking from `walkthrough_acceptance` with flag-heavy unattached hotspots.</p>
+          <div id="heatmapSummary" class="summary-grid"></div>
+          <div id="heatmapGrid" class="heatmap-grid"></div>
+        </div>
+      </section>
+
+      <section id="tab-graph" class="tab-panel">
+        <div class="inspector-grid">
+          <section class="panel">
+            <h2>Block graph</h2>
+            <div class="form-grid">
+              <label>
+                <span>File</span>
+                <select id="graphFileSelect"></select>
+              </label>
+            </div>
+            <div id="graphSummary" class="summary-grid"></div>
+            <svg id="graphSvg" class="graph-svg" viewBox="0 0 1200 720" preserveAspectRatio="xMidYMin meet"></svg>
+          </section>
+          <section class="panel">
+            <h2>Selected block</h2>
+            <div id="graphInspector" class="card-stack"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="tab-flags" class="tab-panel">
+        <div class="inspector-grid">
+          <section class="panel">
+            <h2>Flag-gate inspector</h2>
+            <div class="form-grid">
+              <label>
+                <span>File</span>
+                <select id="flagFileSelect"></select>
+              </label>
+              <label>
+                <span>Search</span>
+                <input id="flagSearchInput" type="search" placeholder="Search command / preview / flag kind">
+              </label>
+            </div>
+            <div id="flagSummary" class="summary-grid"></div>
+          </section>
+          <section class="panel">
+            <h2>Flagged blocks</h2>
+            <div id="flagList" class="card-stack"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="tab-route" class="tab-panel">
+        <div class="inspector-grid">
+          <section class="panel">
+            <h2>Route builder</h2>
+            <p class="panel-note">Build route hypotheses from known `action -> target -> block` links and inspect outgoing transitions/handoffs.</p>
+            <div class="form-grid">
+              <label>
+                <span>File</span>
+                <select id="routeFileSelect"></select>
+              </label>
+              <label>
+                <span>Action</span>
+                <select id="routeActionSelect"></select>
+              </label>
+              <label>
+                <span>Target</span>
+                <select id="routeTargetSelect"></select>
+              </label>
+            </div>
+            <div class="button-row">
+              <button id="routeAddStepButton" type="button">Add step</button>
+              <button id="routeResetButton" type="button">Reset</button>
+            </div>
+            <div id="routeSummary" class="summary-grid"></div>
+          </section>
+          <section class="panel">
+            <h2>Current hypothesis</h2>
+            <div id="routeTimeline" class="card-stack"></div>
           </section>
         </div>
       </section>

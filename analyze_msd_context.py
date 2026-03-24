@@ -53,6 +53,36 @@ def parse_dialogue_metadata(ctrl_codes: str | None) -> dict[str, Any]:
     color_tokens = {"Black", "Blue", "Red", "Purple", "Green", "Cyan", "Yellow", "White"}
     portrait_states = {"Neutral", "Energetic", "Upset", "Surprised", "Happy", "Sad", "Excited"}
     flow_tokens = {"Start", "Continue", "Narration"}
+    default_speaker_colors = {
+        "Alisa": "White",
+        "Honghua": "Cyan",
+        "Meryl": "Green",
+        "Nedra": "Purple",
+        "Kumiko": "Yellow",
+        "Yumi": "Yellow",
+        "Ayaka": "Yellow",
+        "Misha": "Yellow",
+        "Prim": "Yellow",
+        "Doctor": "Yellow",
+        "Doc": "Yellow",
+        "Eris": "Green",
+        "Deal": "Cyan",
+        "Mechanic1": "Cyan",
+        "Mechanic2": "Cyan",
+        "Mechanic3": "Cyan",
+        "Carmine": "Cyan",
+        "Rashmar": "Cyan",
+        "Clerk": "White",
+        "Owner": "Cyan",
+        "Master": "Cyan",
+        "Assistant": "Cyan",
+        "Person": "Cyan",
+        "Tina": "Yellow",
+        "May": "Yellow",
+        "Iris": "Yellow",
+        "Fairy": "Yellow",
+        "Possessioner": "White",
+    }
 
     for token in tokens:
         if token in color_tokens and metadata["text_color"] is None:
@@ -79,6 +109,11 @@ def parse_dialogue_metadata(ctrl_codes: str | None) -> dict[str, Any]:
                 metadata["speaker"] = left
                 metadata["flow"] = right
                 continue
+        if metadata["speaker"] is None:
+            metadata["speaker"] = token
+
+    if metadata["speaker"] and metadata["text_color"] is None:
+        metadata["text_color"] = default_speaker_colors.get(metadata["speaker"])
 
     return metadata
 
