@@ -4,6 +4,12 @@ from collections import OrderedDict
 import regex as re
 from romtools.dump import BorlandPointer, DumpExcel, PointerExcel
 from romtools.disk import Gamefile
+from msd_utils import normalize_msd_row_offset
+from pointer_selection import (
+    ALLOWED_MSD_PRECEDING_BYTES,
+    add_candidate,
+    choose_best_pointer_location,
+)
 
 from rominfo import POINTER_CONSTANT, POINTER_TABLES, POINTER_TABLE_SEPARATOR
 from rominfo import EXTRA_POINTERS,  CONTROL_CODES, POINTER_DISAMBIGUATION, SKIP_TARGET_AREAS, ARRIVAL_POINTERS
@@ -20,6 +26,18 @@ pointer_regex_2 = r'\\xbe\\x([0-f][0-f])\\x([0-f][0-f])\\xbf'  # that one combat
 msd_pointer_regex = r'\\x02\\x([0-f][0-f])\\x([0-f][0-f])\\x([0-f][0-f])'
 msd_pointer_regex_2 = r'\\xbe\\x([0-f][0-f])\\x([0-f][0-f])\\xb9'
 table_pointer_regex = r'\\x([0-f][0-f])\\x([0-f][0-f])sep'
+
+
+def build_disambiguation_maps():
+    allowed = {}
+    blocked = set()
+    for filename, text_location, pointer_location in POINTER_DISAMBIGUATION:
+        key = (filename, text_location)
+        if pointer_location is None:
+            blocked.add(key)
+        else:
+            allowed[key] = pointer_location
+    return allowed, blocked
 
 def capture_pointers_from_function(hx, regex): 
     return re.compile(regex).finditer(hx, overlapped=True)
@@ -50,6 +68,7 @@ except FileNotFoundError:
 PtrXl = PointerExcel('PSSR_pointer_dump.xlsx')
 
 final_target_areas = {}
+allowed_disambiguation, blocked_disambiguation = build_disambiguation_maps()
 
 for gamefile in FILES_TO_REINSERT:
     print("Getting pointers for", gamefile)
@@ -59,6 +78,7 @@ for gamefile in FILES_TO_REINSERT:
         continue
 
     pointer_locations = OrderedDict()
+    candidate_map = OrderedDict()
     gamefile_path = os.path.join('original', gamefile)
 
     # MSD files have their pointers in POS.EXE.
@@ -76,6 +96,7 @@ for gamefile in FILES_TO_REINSERT:
     with open(gamefile_path, 'rb') as f:
         bs = f.read()
         target_areas = FILE_BLOCKS[gamefile]
+        normalized_targets = None
 
         if gamefile.endswith('.MSD'):
             target_areas = []
@@ -92,6 +113,7 @@ for gamefile in FILES_TO_REINSERT:
                 for sta in SKIP_TARGET_AREAS[gamefile]:
                     target_areas.remove((sta, sta))
                     assert sta not in target_areas
+            normalized_targets = {start for start, _stop in target_areas}
 
 
         # target_area = (GF.pointer_constant, len(bs))
@@ -119,6 +141,19 @@ for gamefile in FILES_TO_REINSERT:
                     if all([not t[0] <= text_location<= t[1] for t in target_areas]):
                         #print("Skipping")
                         continue
+
+                    add_candidate(
+                        candidate_map,
+                        text_location=text_location,
+                        pointer_location=int(pointer_location, 16),
+                        family='plain-table',
+                        chain_length=None,
+                        within_targets=True,
+                        in_msd_range=None,
+                        before_be_prefix=False,
+                        preceding_byte=None,
+                        preceding_byte_allowed=None,
+                    )
 
                     all_locations = [int(pointer_location, 16),]
 
@@ -178,6 +213,8 @@ for gamefile in FILES_TO_REINSERT:
                     raise Exception
 
                 text_location = int(location_from_pointer((p.group(1), p.group(2)), GF.pointer_constant), 16)
+                if normalized_targets is not None:
+                    text_location = normalize_msd_row_offset(text_location, normalized_targets, GF2.filestring)
 
                 if all([not t[0] <= text_location<= t[1] for t in target_areas]):
                     #for t in target_areas:
@@ -185,17 +222,20 @@ for gamefile in FILES_TO_REINSERT:
                     #print("Skipping")
                     continue
 
-                if (gamefile, text_location, None) in POINTER_DISAMBIGUATION:
+                if (gamefile, text_location) in blocked_disambiguation:
                     #print("Really bad pointer, skipping that one")
                     continue
 
                 throwaway = False
+                preceding_byte = bs[p.start()//4 - 1] if p.start()//4 > 0 else None
+                in_msd_range = None
+                preceding_byte_allowed = None
+                before_be_prefix = preceding_byte == 0xbe
                 if regex == msd_pointer_regex and gamefile in MSD_POINTER_RANGES:
-                    byte_before = bs[p.start()//4 - 1]
+                    byte_before = preceding_byte
                     # This started out as a reasonable list. Oops
-                    if byte_before in (0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 
-                                       0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 
-                                       0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f, 0x20, 0x21, 0x22, 0x23, 0x24, 0x2b, 0x39, 0xff):
+                    preceding_byte_allowed = byte_before in ALLOWED_MSD_PRECEDING_BYTES
+                    if preceding_byte_allowed:
                         #print(pointer_location)
                         #print("length: " + int(p.group(3), 16))
 
@@ -207,11 +247,12 @@ for gamefile in FILES_TO_REINSERT:
                                 print("Flag condition: ", hex(flag_id), flag_bit)
 
                         ranges = MSD_POINTER_RANGES[gamefile]
+                        in_msd_range = any([r[0] <= pointer_location <= r[1] for r in ranges])
 
                         # Don't do this removal if there are multiple pointers to one text location.
                         # That would skip areas unnecessarily
                         if (GF2, text_location) not in pointer_locations.keys():
-                            if any([r[0] <= pointer_location <= r[1] for r in ranges]):
+                            if in_msd_range:
                                 pointer_lines = int(p.group(3), 16)
                                 #print(hex(pointer_location), hex(text_location), pointer_lines)
                                 i = target_areas.index((text_location, text_location))
@@ -232,6 +273,28 @@ for gamefile in FILES_TO_REINSERT:
 
                 if throwaway:
                     continue
+
+                chain_length = int(p.group(3), 16) if regex == msd_pointer_regex else None
+                family = {
+                    pointer_regex: 'borland-e8',
+                    pointer_regex_2: 'borland-bf',
+                    msd_pointer_regex: 'msd-regex',
+                    msd_pointer_regex_2: 'msd-be-b9',
+                    table_regex: 'separated-table',
+                }[regex]
+
+                add_candidate(
+                    candidate_map,
+                    text_location=text_location,
+                    pointer_location=pointer_location,
+                    family=family,
+                    chain_length=chain_length,
+                    within_targets=True,
+                    in_msd_range=in_msd_range,
+                    before_be_prefix=before_be_prefix,
+                    preceding_byte=preceding_byte,
+                    preceding_byte_allowed=preceding_byte_allowed,
+                )
 
                 pointer_location = '0x%05x' % pointer_location
 
@@ -333,24 +396,25 @@ for gamefile in FILES_TO_REINSERT:
                 #print("Oops, no good pointers for", hex(text_location))
                 continue
 
+        dis_key = (gamefile.filename, text_location)
+        if dis_key in allowed_disambiguation:
+            dis_pointer_loc = allowed_disambiguation[dis_key]
+            if dis_pointer_loc > len(GF.original_filestring):
+                raise Exception("Bad pointer location defined in POINTER_DISAMBIGUATION: (%s, ..., %s) (greater than length of pointer file)" % (gamefile.filename, hex(dis_pointer_loc)))
+            pointer_locations = [dis_pointer_loc,]
+        elif dis_key in blocked_disambiguation:
+            continue
+        elif gamefile.filename.endswith('.MSD') and len(pointer_locations) > 1:
+            auto_pointer_loc, _score_entries = choose_best_pointer_location(
+                text_location,
+                candidate_map,
+                allowed_pointer_locations=set(pointer_locations),
+            )
+            if auto_pointer_loc is not None:
+                pointer_locations = [auto_pointer_loc,]
 
         # TODO: Could I do something like throw out all MSD pointers below 0x10000?
         # Might work...
-
-        # Use pointer disambiguation to remove pointers with hundreds of locs
-        throwaway = False
-        for (dis_file, dis_text_loc, dis_pointer_loc) in POINTER_DISAMBIGUATION:
-            if dis_file == gamefile.filename and dis_text_loc == text_location:
-                #print("Using pointer disambiguation for %s, %s" % (dis_file, dis_text_loc))
-                if dis_pointer_loc is None:
-                    throwaway = True
-                else:
-                    if dis_pointer_loc > len(GF.original_filestring):
-                        raise Exception("Bad pointer location defined in POINTER_DISAMBIGUATION: (%s, ..., %s) (greater than length of pointer file)" % (dis_file, hex(dis_pointer_loc)))
-                pointer_locations = [dis_pointer_loc,]
-
-        if throwaway:
-            continue
 
         for pointer_loc in pointer_locations:
             worksheet.write(row, 0, '0x' + hex(text_location).lstrip('0x').zfill(5))

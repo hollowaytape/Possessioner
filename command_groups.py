@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections import defaultdict
 from pathlib import Path
 
+from msd_utils import normalize_msd_row_offset
 from rominfo import ARRIVAL_POINTERS, MSD_POINTER_RANGES, ORIGINAL_ROM_DIR
 
 ALLOWED_PRECEDING_BYTES = {
@@ -45,6 +46,7 @@ def find_command_groups(
         return groups_by_start, {}
 
     offset_to_index = {offset: index for index, offset in enumerate(row_offsets)}
+    text_bytes = (Path(ORIGINAL_ROM_DIR) / filename).read_bytes()
 
     for range_start, range_stop in MSD_POINTER_RANGES[filename]:
         scan_start = max(1, range_start)
@@ -63,7 +65,8 @@ def find_command_groups(
             text_offset = pos_exe_bytes[pointer_location] | (pos_exe_bytes[pointer_location + 1] << 8)
             group_size = pos_exe_bytes[pointer_location + 2]
 
-            start_index = offset_to_index.get(text_offset)
+            normalized_offset = normalize_msd_row_offset(text_offset, offset_to_index, text_bytes)
+            start_index = offset_to_index.get(normalized_offset)
             if text_offset <= 0 or start_index is None or group_size <= 0:
                 continue
 
@@ -71,12 +74,12 @@ def find_command_groups(
             if len(group_rows) != group_size:
                 continue
 
-            existing_size = groups_by_start.get(text_offset)
+            existing_size = groups_by_start.get(normalized_offset)
             if existing_size is None or group_size > existing_size:
-                groups_by_start[text_offset] = group_size
+                groups_by_start[normalized_offset] = group_size
 
             for row_offset in group_rows:
-                grouped_rows[row_offset][text_offset] = group_size
+                grouped_rows[row_offset][normalized_offset] = group_size
 
     normalized_groups = {
         row_offset: sorted(group_map.items(), key=lambda item: item[0])
@@ -125,6 +128,7 @@ def find_direct_range_groups(
         return {}
 
     offset_to_index = {offset: index for index, offset in enumerate(row_offsets)}
+    text_bytes = (Path(ORIGINAL_ROM_DIR) / filename).read_bytes()
 
     for range_start, range_stop in MSD_POINTER_RANGES[filename]:
         scan_start = max(0, range_start)
@@ -143,7 +147,8 @@ def find_direct_range_groups(
             text_offset = pos_exe_bytes[cursor + 1] | (pos_exe_bytes[cursor + 2] << 8)
             group_size = pos_exe_bytes[cursor + 4] | (pos_exe_bytes[cursor + 5] << 8)
 
-            start_index = offset_to_index.get(text_offset)
+            normalized_offset = normalize_msd_row_offset(text_offset, offset_to_index, text_bytes)
+            start_index = offset_to_index.get(normalized_offset)
             if start_index is None or group_size <= 0:
                 continue
 
@@ -152,7 +157,7 @@ def find_direct_range_groups(
                 continue
 
             for row_offset in group_rows:
-                grouped_rows[row_offset][(text_offset, group_size, cursor)] = None
+                grouped_rows[row_offset][(normalized_offset, group_size, cursor)] = None
 
     return {
         row_offset: sorted(group_map.keys(), key=lambda item: (item[0], item[2]))

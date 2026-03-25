@@ -78,7 +78,8 @@
         <div class="game-screen">
           <div class="game-stage" aria-label="Mock Possessioner UI">
             <div class="scene-panel">
-              <div class="placeholder-label">Scene</div>
+              <img id="sceneImage" class="scene-image hidden" alt="">
+              <div id="scenePlaceholder" class="placeholder-label">Scene</div>
             </div>
 
             <div id="sceneLip" class="scene-lip"></div>
@@ -158,30 +159,26 @@
       <section id="tab-heatmap" class="tab-panel">
         <div class="panel">
           <h2>Walkthrough readiness heatmap</h2>
-          <p class="panel-note">Color-coded coverage ranking from `walkthrough_acceptance` with flag-heavy unattached hotspots.</p>
+          <p class="panel-note">Color-coded coverage ranking from `walkthrough_acceptance` with route-known, conditional, and trigger-unknown counts.</p>
           <div id="heatmapSummary" class="summary-grid"></div>
           <div id="heatmapGrid" class="heatmap-grid"></div>
         </div>
       </section>
 
       <section id="tab-graph" class="tab-panel">
-        <div class="inspector-grid">
-          <section class="panel">
-            <h2>Block graph</h2>
-            <div class="form-grid">
-              <label>
-                <span>File</span>
-                <select id="graphFileSelect"></select>
-              </label>
-            </div>
-            <div id="graphSummary" class="summary-grid"></div>
-            <svg id="graphSvg" class="graph-svg" viewBox="0 0 1200 720" preserveAspectRatio="xMidYMin meet"></svg>
-          </section>
-          <section class="panel">
-            <h2>Selected block</h2>
-            <div id="graphInspector" class="card-stack"></div>
-          </section>
-        </div>
+        <section class="panel">
+          <h2>Block graph</h2>
+          <div class="form-grid">
+            <label>
+              <span>File</span>
+              <select id="graphFileSelect"></select>
+            </label>
+          </div>
+          <div id="graphSummary" class="summary-grid"></div>
+          <div class="graph-scroll">
+            <svg id="graphSvg" class="graph-svg" viewBox="0 0 1200 720" preserveAspectRatio="xMinYMin meet"></svg>
+          </div>
+        </section>
       </section>
 
       <section id="tab-flags" class="tab-panel">
@@ -211,7 +208,7 @@
         <div class="inspector-grid">
           <section class="panel">
             <h2>Route builder</h2>
-            <p class="panel-note">Build route hypotheses from known `action -> target -> block` links and inspect outgoing transitions/handoffs.</p>
+            <p class="panel-note">Build route hypotheses from known `action -> target -> block` links and inspect outgoing room transitions / event transitions.</p>
             <div class="form-grid">
               <label>
                 <span>File</span>

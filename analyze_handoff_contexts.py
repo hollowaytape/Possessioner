@@ -130,7 +130,7 @@ def infer_handoff_type(arg1: int, destination_name: str | None, command_label: s
 
 def format_destination_label(arg1: int, destination_name: str | None) -> str:
     if destination_name:
-        return f"0x{arg1:02x} (save-format: {destination_name})"
+        return f'0x{arg1:02x} "{destination_name}"'
     return f"0x{arg1:02x}"
 
 

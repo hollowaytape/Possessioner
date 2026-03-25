@@ -4,6 +4,7 @@ import argparse
 import ctypes
 import subprocess
 import time
+from collections.abc import Callable
 from pathlib import Path
 
 import win32con
@@ -14,6 +15,7 @@ from PIL import Image, ImageChops, ImageGrab
 LOAD_STATE_COMMAND_BASE = 40251
 DEFAULT_EMULATOR_PATH = Path(r"D:\Code\roms\romtools\np2debug\np21debug_x64.exe")
 DEFAULT_HDI_PATH = Path("patched") / "Possessioner.hdi"
+PREFERRED_PROCESS_ID: int | None = None
 
 
 VK_BY_NAME = {
@@ -33,7 +35,13 @@ def post_key(hwnd: int, vk: int, hold: float = 0.05) -> None:
     win32gui.PostMessage(hwnd, win32con.WM_KEYUP, vk, 0)
 
 
-def find_emulator_windows() -> list[int]:
+def window_process_id(hwnd: int) -> int:
+    process_id = ctypes.c_ulong()
+    ctypes.windll.user32.GetWindowThreadProcessId(hwnd, ctypes.byref(process_id))
+    return int(process_id.value)
+
+
+def find_emulator_windows(*, process_id: int | None = None) -> list[int]:
     matches: list[int] = []
 
     def callback(hwnd: int, _extra: object) -> None:
@@ -41,26 +49,28 @@ def find_emulator_windows() -> list[int]:
             return
         title = win32gui.GetWindowText(hwnd).strip()
         if "Neko Project 21" in title:
+            if process_id is not None and window_process_id(hwnd) != process_id:
+                return
             matches.append(hwnd)
 
     win32gui.EnumWindows(callback, None)
     return matches
 
 
-def find_main_window(timeout: float = 20.0) -> int:
+def find_main_window(timeout: float = 40.0, *, process_id: int | None = None) -> int:
     deadline = time.time() + timeout
     while time.time() < deadline:
-        matches = find_emulator_windows()
+        matches = find_emulator_windows(process_id=process_id)
         if matches:
             return matches[0]
         time.sleep(0.25)
     raise SystemExit("Timed out waiting for an emulator window")
 
 
-def ensure_valid_window(hwnd: int, timeout: float = 5.0) -> int:
+def ensure_valid_window(hwnd: int, timeout: float = 60.0) -> int:
     if win32gui.IsWindow(hwnd):
         return hwnd
-    return find_main_window(timeout=timeout)
+    return find_main_window(timeout=timeout, process_id=PREFERRED_PROCESS_ID)
 
 
 def close_existing_emulator_windows() -> None:
@@ -282,11 +292,15 @@ def screenshot_window(hwnd: int, output_path: Path) -> Path:
 def load_file_from_main_menu(hwnd: int, file_index: int = 0) -> None:
     if file_index < 0:
         raise SystemExit("--file-index must be 0 or greater")
-    press_and_wait(hwnd, VK_BY_NAME["DOWN"], change_timeout=3.0, wait_for_stable=False)
-    press_and_wait(hwnd, VK_BY_NAME["ENTER"], change_timeout=5.0, stable_timeout=8.0, stable_period=0.5)
+    send_foreground_key(hwnd, VK_BY_NAME["DOWN"])
+    time.sleep(1.0)
+    send_foreground_key(hwnd, VK_BY_NAME["ENTER"])
+    time.sleep(1.5)
     for _ in range(file_index + 1):
-        press_and_wait(hwnd, VK_BY_NAME["DOWN"], change_timeout=3.0, wait_for_stable=False)
-    press_and_wait(hwnd, VK_BY_NAME["ENTER"], change_timeout=10.0, stable_timeout=16.0, stable_period=1.0)
+        send_foreground_key(hwnd, VK_BY_NAME["DOWN"])
+        time.sleep(0.5)
+    send_foreground_key(hwnd, VK_BY_NAME["ENTER"])
+    time.sleep(6.0)
     wait_for_content_stable(hwnd, timeout=20.0, stable_period=1.5)
 
 
@@ -335,8 +349,9 @@ def run_menu_target_route(
     post_enter_count: int = 0,
     post_space_count: int = 0,
     post_focus_left_click_count: int = 0,
+    startup_delay: float = 4.0,
 ) -> None:
-    time.sleep(4.0)
+    time.sleep(startup_delay)
     if load_state is not None:
         load_state_direct(hwnd, load_state)
         wait_for_content_stable(hwnd, timeout=8.0, stable_period=0.5)
@@ -394,6 +409,90 @@ def run_menu_target_route(
         frame_index += 1
 
 
+def run_load_only_route(
+    hwnd: int,
+    load_state: int | None,
+    file_index: int = 0,
+    trace_dir: Path | None = None,
+    post_enter_count: int = 0,
+    post_space_count: int = 0,
+    post_focus_left_click_count: int = 0,
+    startup_delay: float = 4.0,
+) -> None:
+    time.sleep(startup_delay)
+    if load_state is not None:
+        load_state_direct(hwnd, load_state)
+        wait_for_content_stable(hwnd, timeout=8.0, stable_period=0.5)
+    save_trace_frame(trace_dir, "00-after-load-state.png", hwnd)
+
+    load_file_from_main_menu(hwnd, file_index=file_index)
+    save_trace_frame(trace_dir, "01-after-file-load.png", hwnd)
+
+    frame_index = 2
+    for enter_index in range(post_enter_count):
+        press_and_wait_with_fallback(hwnd, VK_BY_NAME["ENTER"], change_timeout=12.0, stable_timeout=20.0, stable_period=1.5)
+        save_trace_frame(trace_dir, f"{frame_index:02d}-after-enter-{enter_index + 1}.png", hwnd)
+        frame_index += 1
+
+    for space_index in range(post_space_count):
+        press_and_wait_with_fallback(
+            hwnd,
+            VK_BY_NAME["SPACE"],
+            change_timeout=12.0,
+            stable_timeout=20.0,
+            stable_period=1.5,
+        )
+        save_trace_frame(trace_dir, f"{frame_index:02d}-after-space-{space_index + 1}.png", hwnd)
+        frame_index += 1
+
+    for click_index in range(post_focus_left_click_count):
+        middle_click_window_point(hwnd, 320, 220)
+        time.sleep(0.2)
+        baseline = capture_window_image(hwnd)
+        click_window_point(hwnd, 320, 220)
+        changed = wait_for_content_change(hwnd, baseline, timeout=12.0)
+        if images_different(baseline, changed):
+            wait_for_content_stable(hwnd, timeout=20.0, stable_period=1.5)
+        save_trace_frame(trace_dir, f"{frame_index:02d}-after-focus-left-{click_index + 1}.png", hwnd)
+        frame_index += 1
+
+
+def advance_to_menu(
+    hwnd: int,
+    classify_fn: Callable[[Image.Image], str],
+    max_presses: int = 100,
+    space_change_timeout: float = 3.0,
+    stable_timeout: float = 12.0,
+    stable_period: float = 1.0,
+) -> str:
+    """Press SPACE until the screen reaches the action_menu state (or gives up).
+
+    Uses *classify_fn* (a callable matching screen_state.classify_screen_state's
+    signature) to decide whether to keep advancing or stop.
+
+    Returns the final classified state.
+    """
+    for _ in range(max_presses):
+        image = capture_window_image(hwnd)
+        state = classify_fn(image)
+        if state == "action_menu":
+            return state
+        if state in ("loading", "battle"):
+            # Wait for things to settle rather than mashing SPACE
+            wait_for_content_stable(hwnd, timeout=stable_timeout, stable_period=stable_period)
+            continue
+        # dialogue, cutscene, or unknown — try pressing SPACE
+        baseline = image
+        post_key(hwnd, VK_BY_NAME["SPACE"])
+        changed = wait_for_content_change(hwnd, baseline, timeout=space_change_timeout)
+        if not images_different(baseline, changed):
+            # SPACE had no effect — likely already at menu or fully stable
+            state = classify_fn(changed)
+            return state
+        wait_for_content_stable(hwnd, timeout=stable_timeout, stable_period=stable_period)
+    return classify_fn(capture_window_image(hwnd))
+
+
 def compare_images(first: Path, second: Path) -> tuple[bool, tuple[int, int, int, int] | None]:
     img1 = Image.open(first)
     img2 = Image.open(second)
@@ -403,6 +502,7 @@ def compare_images(first: Path, second: Path) -> tuple[bool, tuple[int, int, int
 
 
 def main() -> None:
+    global PREFERRED_PROCESS_ID
     parser = argparse.ArgumentParser(description="Launch np2debug, run a scripted route, and capture the window.")
     parser.add_argument(
         "--emulator",
@@ -417,7 +517,7 @@ def main() -> None:
         help=f"Path to HDI image to boot (default: {DEFAULT_HDI_PATH})",
     )
     parser.add_argument("--output", type=Path, required=True, help="Output screenshot path")
-    parser.add_argument("--route", choices=["menu-target"], default="menu-target")
+    parser.add_argument("--route", choices=["menu-target", "load-only"], default="menu-target")
     parser.add_argument("--file-index", type=int, default=0, help="Zero-based save file index on the load-game menu")
     parser.add_argument("--action-index", type=int, default=0, help="Zero-based main action index after loading File 1")
     parser.add_argument("--target-index", type=int, default=0, help="Zero-based submenu target index for the chosen action")
@@ -438,13 +538,15 @@ def main() -> None:
     parser.add_argument("--close", action="store_true", help="Close the emulator after capture")
     parser.add_argument("--close-existing", action="store_true", help="Close any existing emulator windows before launch")
     parser.add_argument("--load-state", type=int, help="Load state slot 0-9 via emulator menu command before the route")
+    parser.add_argument("--startup-delay", type=float, default=4.0, help="Seconds to wait after emulator launch before routing")
     args = parser.parse_args()
 
     if args.close_existing:
         close_existing_emulator_windows()
 
     process = subprocess.Popen([str(args.emulator), str(args.hdi)], cwd=str(args.emulator.parent))
-    hwnd = find_main_window()
+    PREFERRED_PROCESS_ID = process.pid
+    hwnd = find_main_window(process_id=process.pid)
     print(f"PID={process.pid} HWND=0x{hwnd:08x}")
 
     if args.route == "menu-target":
@@ -460,6 +562,18 @@ def main() -> None:
             post_enter_count=args.post_enter_count,
             post_space_count=args.post_space_count,
             post_focus_left_click_count=args.post_focus_left_click_count,
+            startup_delay=args.startup_delay,
+        )
+    elif args.route == "load-only":
+        run_load_only_route(
+            hwnd,
+            args.load_state,
+            file_index=args.file_index,
+            trace_dir=args.trace_dir,
+            post_enter_count=args.post_enter_count,
+            post_space_count=args.post_space_count,
+            post_focus_left_click_count=args.post_focus_left_click_count,
+            startup_delay=args.startup_delay,
         )
 
     screenshot_path = screenshot_window(hwnd, args.output)

@@ -1,0 +1,2174 @@
+{
+  "POS1.MSD": [
+    {
+      "header_location": "0x0eb19",
+      "range_start": "0x0eaf6",
+      "range_stop": "0x0ee2f",
+      "next_header": "0x0ec25",
+      "dominant_action": "Look",
+      "dominant_target": "Nedra",
+      "inline_displays": [
+        {
+          "kind": "text",
+          "opcode_location": "0x0eb3d",
+          "text_offset": "0x000d9",
+          "arg": 2,
+          "row_count": null,
+          "command": "Look Room (after attack)",
+          "block_command": "Look Room (after attack)",
+          "english": "Everyone's getting ready for combat.",
+          "action": "Look",
+          "target": "Room"
+        },
+        {
+          "kind": "text",
+          "opcode_location": "0x0eb47",
+          "text_offset": "0x0008a",
+          "arg": 2,
+          "row_count": null,
+          "command": "Look - Room (1)",
+          "block_command": "Look - Room (1)",
+          "english": "This is Slit's HQ. It's home base for me and the 3 other members of our group.",
+          "action": "Look",
+          "target": "Room"
+        }
+      ],
+      "candidate_targets": [
+        {
+          "table_location": "0x0eb1d",
+          "relative_offset": "0x000a5",
+          "target_location": "0x0ebbe",
+          "inferred_action": "Look",
+          "inferred_target": "Meryl",
+          "flags": [],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0ebbe",
+              "text_offset": "0x002d3",
+              "arg": 1,
+              "row_count": null,
+              "command": "Look Meryl (after attack)",
+              "block_command": "Look Meryl (after attack)",
+              "english": "She's already halfway out the door.",
+              "action": "Look",
+              "target": "Meryl"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ebc3",
+              "text_offset": "0x002fc",
+              "arg": 3,
+              "row_count": null,
+              "command": "Look Meryl (3)",
+              "block_command": "Look Meryl (3)",
+              "english": "Meryl is our resident weapons expert, but she has a bad habit of carrying concealed weapons.",
+              "action": "Look",
+              "target": "Meryl"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ebc8",
+              "text_offset": "0x00390",
+              "arg": 3,
+              "row_count": null,
+              "command": "Look Meryl 2",
+              "block_command": "Look Meryl 2",
+              "english": "Meryl joined Slit because of her expertise with weapons, but she has a bad habit of carrying concealed weapons.",
+              "action": "Look",
+              "target": "Meryl"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ebcd",
+              "text_offset": "0x0028e",
+              "arg": 2,
+              "row_count": null,
+              "command": "Look - Meryl (1)",
+              "block_command": "Look - Meryl (1)",
+              "english": "She's an energetic, happy-go-lucky girl. I think she has a little crush on me.",
+              "action": "Look",
+              "target": "Meryl"
+            }
+          ]
+        },
+        {
+          "table_location": "0x0eb1f",
+          "relative_offset": "0x000d0",
+          "target_location": "0x0ebe9",
+          "inferred_action": "Look",
+          "inferred_target": "Nedra",
+          "flags": [
+            {
+              "location": "0x0ec07",
+              "kind": "check_flag",
+              "arg1": "0x34",
+              "arg2": "0x5",
+              "extra": null
+            },
+            {
+              "location": "0x0ec0c",
+              "kind": "check_flag",
+              "arg1": "0xd",
+              "arg2": "0x4",
+              "extra": null
+            }
+          ],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0ebff",
+              "text_offset": "0x004ca",
+              "arg": 1,
+              "row_count": null,
+              "command": "Look Nedra (after attack)",
+              "block_command": "Look Nedra (after attack)",
+              "english": "She's checking her computer link.",
+              "action": "Look",
+              "target": "Nedra"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ec04",
+              "text_offset": "0x004f9",
+              "arg": 2,
+              "row_count": null,
+              "command": "Look Nedra 2",
+              "block_command": "Look Nedra 2",
+              "english": "She's younger than me, but she has an air of mystery about her.",
+              "action": "Look",
+              "target": "Nedra"
+            }
+          ]
+        },
+        {
+          "table_location": "0x0eb21",
+          "relative_offset": "0x00111",
+          "target_location": "0x0ec2a",
+          "inferred_action": "Talk",
+          "inferred_target": "Honghua",
+          "flags": [],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0ec32",
+              "text_offset": "0x00000",
+              "arg": 208,
+              "row_count": null,
+              "command": "(Unused intro text)",
+              "block_command": "(Unused intro text)",
+              "english": "You look totally spaced. You okay?",
+              "action": "",
+              "target": ""
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ec6f",
+              "text_offset": "0x0142c",
+              "arg": 3,
+              "row_count": null,
+              "command": "Talk - Honghua (1)",
+              "block_command": "Talk - Honghua (1)",
+              "english": "You're in early today, Alisa. What's the occasion?",
+              "action": "Talk",
+              "target": "Honghua"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ec74",
+              "text_offset": "0x006df",
+              "arg": 2,
+              "row_count": null,
+              "command": "Talk - Honghua (2)",
+              "block_command": "Talk - Honghua (2)",
+              "english": "You make it sound like I'm always running late!",
+              "action": "Talk",
+              "target": "Honghua"
+            }
+          ]
+        },
+        {
+          "table_location": "0x0eb23",
+          "relative_offset": "0x00152",
+          "target_location": "0x0ec6b",
+          "inferred_action": "Talk",
+          "inferred_target": "Honghua",
+          "flags": [
+            {
+              "location": "0x0ec77",
+              "kind": "check_flag",
+              "arg1": "0x76",
+              "arg2": "0x13",
+              "extra": null
+            }
+          ],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0ec6f",
+              "text_offset": "0x0142c",
+              "arg": 3,
+              "row_count": null,
+              "command": "Talk - Honghua (1)",
+              "block_command": "Talk - Honghua (1)",
+              "english": "You're in early today, Alisa. What's the occasion?",
+              "action": "Talk",
+              "target": "Honghua"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ec74",
+              "text_offset": "0x006df",
+              "arg": 2,
+              "row_count": null,
+              "command": "Talk - Honghua (2)",
+              "block_command": "Talk - Honghua (2)",
+              "english": "You make it sound like I'm always running late!",
+              "action": "Talk",
+              "target": "Honghua"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ec7e",
+              "text_offset": "0x005fc",
+              "arg": 3,
+              "row_count": null,
+              "command": "Talk - Honghua (3)",
+              "block_command": "Talk - Honghua (3)",
+              "english": "Hey, Honghua, you smell nice.",
+              "action": "Talk",
+              "target": "Honghua"
+            }
+          ]
+        },
+        {
+          "table_location": "0x0eb25",
+          "relative_offset": "0x000b7",
+          "target_location": "0x0ebd0",
+          "inferred_action": "Look",
+          "inferred_target": "Nedra",
+          "flags": [],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0ebff",
+              "text_offset": "0x004ca",
+              "arg": 1,
+              "row_count": null,
+              "command": "Look Nedra (after attack)",
+              "block_command": "Look Nedra (after attack)",
+              "english": "She's checking her computer link.",
+              "action": "Look",
+              "target": "Nedra"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ec04",
+              "text_offset": "0x004f9",
+              "arg": 2,
+              "row_count": null,
+              "command": "Look Nedra 2",
+              "block_command": "Look Nedra 2",
+              "english": "She's younger than me, but she has an air of mystery about her.",
+              "action": "Look",
+              "target": "Nedra"
+            }
+          ]
+        },
+        {
+          "table_location": "0x0eb27",
+          "relative_offset": "0x000bd",
+          "target_location": "0x0ebd6",
+          "inferred_action": "Look",
+          "inferred_target": "Nedra",
+          "flags": [],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0ebff",
+              "text_offset": "0x004ca",
+              "arg": 1,
+              "row_count": null,
+              "command": "Look Nedra (after attack)",
+              "block_command": "Look Nedra (after attack)",
+              "english": "She's checking her computer link.",
+              "action": "Look",
+              "target": "Nedra"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ec04",
+              "text_offset": "0x004f9",
+              "arg": 2,
+              "row_count": null,
+              "command": "Look Nedra 2",
+              "block_command": "Look Nedra 2",
+              "english": "She's younger than me, but she has an air of mystery about her.",
+              "action": "Look",
+              "target": "Nedra"
+            }
+          ]
+        },
+        {
+          "table_location": "0x0eb2b",
+          "relative_offset": "0x000ba",
+          "target_location": "0x0ebd3",
+          "inferred_action": "Look",
+          "inferred_target": "Nedra",
+          "flags": [],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0ebff",
+              "text_offset": "0x004ca",
+              "arg": 1,
+              "row_count": null,
+              "command": "Look Nedra (after attack)",
+              "block_command": "Look Nedra (after attack)",
+              "english": "She's checking her computer link.",
+              "action": "Look",
+              "target": "Nedra"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ec04",
+              "text_offset": "0x004f9",
+              "arg": 2,
+              "row_count": null,
+              "command": "Look Nedra 2",
+              "block_command": "Look Nedra 2",
+              "english": "She's younger than me, but she has an air of mystery about her.",
+              "action": "Look",
+              "target": "Nedra"
+            }
+          ]
+        },
+        {
+          "table_location": "0x0eb2d",
+          "relative_offset": "0x000c2",
+          "target_location": "0x0ebdb",
+          "inferred_action": "Look",
+          "inferred_target": "Nedra",
+          "flags": [
+            {
+              "location": "0x0ec07",
+              "kind": "check_flag",
+              "arg1": "0x34",
+              "arg2": "0x5",
+              "extra": null
+            }
+          ],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0ebff",
+              "text_offset": "0x004ca",
+              "arg": 1,
+              "row_count": null,
+              "command": "Look Nedra (after attack)",
+              "block_command": "Look Nedra (after attack)",
+              "english": "She's checking her computer link.",
+              "action": "Look",
+              "target": "Nedra"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ec04",
+              "text_offset": "0x004f9",
+              "arg": 2,
+              "row_count": null,
+              "command": "Look Nedra 2",
+              "block_command": "Look Nedra 2",
+              "english": "She's younger than me, but she has an air of mystery about her.",
+              "action": "Look",
+              "target": "Nedra"
+            }
+          ]
+        },
+        {
+          "table_location": "0x0eb33",
+          "relative_offset": "0x000c7",
+          "target_location": "0x0ebe0",
+          "inferred_action": "Look",
+          "inferred_target": "Nedra",
+          "flags": [
+            {
+              "location": "0x0ec07",
+              "kind": "check_flag",
+              "arg1": "0x34",
+              "arg2": "0x5",
+              "extra": null
+            },
+            {
+              "location": "0x0ec0c",
+              "kind": "check_flag",
+              "arg1": "0xd",
+              "arg2": "0x4",
+              "extra": null
+            }
+          ],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0ebff",
+              "text_offset": "0x004ca",
+              "arg": 1,
+              "row_count": null,
+              "command": "Look Nedra (after attack)",
+              "block_command": "Look Nedra (after attack)",
+              "english": "She's checking her computer link.",
+              "action": "Look",
+              "target": "Nedra"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ec04",
+              "text_offset": "0x004f9",
+              "arg": 2,
+              "row_count": null,
+              "command": "Look Nedra 2",
+              "block_command": "Look Nedra 2",
+              "english": "She's younger than me, but she has an air of mystery about her.",
+              "action": "Look",
+              "target": "Nedra"
+            }
+          ]
+        },
+        {
+          "table_location": "0x0eb35",
+          "relative_offset": "0x000cc",
+          "target_location": "0x0ebe5",
+          "inferred_action": "Look",
+          "inferred_target": "Nedra",
+          "flags": [
+            {
+              "location": "0x0ec07",
+              "kind": "check_flag",
+              "arg1": "0x34",
+              "arg2": "0x5",
+              "extra": null
+            },
+            {
+              "location": "0x0ec0c",
+              "kind": "check_flag",
+              "arg1": "0xd",
+              "arg2": "0x4",
+              "extra": null
+            }
+          ],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0ebff",
+              "text_offset": "0x004ca",
+              "arg": 1,
+              "row_count": null,
+              "command": "Look Nedra (after attack)",
+              "block_command": "Look Nedra (after attack)",
+              "english": "She's checking her computer link.",
+              "action": "Look",
+              "target": "Nedra"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ec04",
+              "text_offset": "0x004f9",
+              "arg": 2,
+              "row_count": null,
+              "command": "Look Nedra 2",
+              "block_command": "Look Nedra 2",
+              "english": "She's younger than me, but she has an air of mystery about her.",
+              "action": "Look",
+              "target": "Nedra"
+            }
+          ]
+        },
+        {
+          "table_location": "0x0eb3b",
+          "relative_offset": "0x00007",
+          "target_location": "0x0eb20",
+          "inferred_action": "Look",
+          "inferred_target": "Room",
+          "flags": [
+            {
+              "location": "0x0eb40",
+              "kind": "check_flag",
+              "arg1": "0x27",
+              "arg2": "0x1",
+              "extra": null
+            },
+            {
+              "location": "0x0eb4a",
+              "kind": "set_flag",
+              "arg1": "0x13",
+              "arg2": "0x7",
+              "extra": null
+            }
+          ],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0eb3d",
+              "text_offset": "0x000d9",
+              "arg": 2,
+              "row_count": null,
+              "command": "Look Room (after attack)",
+              "block_command": "Look Room (after attack)",
+              "english": "Everyone's getting ready for combat.",
+              "action": "Look",
+              "target": "Room"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0eb47",
+              "text_offset": "0x0008a",
+              "arg": 2,
+              "row_count": null,
+              "command": "Look - Room (1)",
+              "block_command": "Look - Room (1)",
+              "english": "This is Slit's HQ. It's home base for me and the 3 other members of our group.",
+              "action": "Look",
+              "target": "Room"
+            }
+          ]
+        }
+      ],
+      "text_contexts": [
+        {
+          "text_offset": "0x002d3",
+          "opcode_location": "0x0ebbe",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ebbe",
+          "action": "Look",
+          "target": "Meryl",
+          "command": "Look Meryl (after attack)"
+        },
+        {
+          "text_offset": "0x002fc",
+          "opcode_location": "0x0ebc3",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ebbe",
+          "action": "Look",
+          "target": "Meryl",
+          "command": "Look Meryl (3)"
+        },
+        {
+          "text_offset": "0x00390",
+          "opcode_location": "0x0ebc8",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ebbe",
+          "action": "Look",
+          "target": "Meryl",
+          "command": "Look Meryl 2"
+        },
+        {
+          "text_offset": "0x0028e",
+          "opcode_location": "0x0ebcd",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ebbe",
+          "action": "Look",
+          "target": "Meryl",
+          "command": "Look - Meryl (1)"
+        },
+        {
+          "text_offset": "0x004ca",
+          "opcode_location": "0x0ebff",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ebe9",
+          "action": "Look",
+          "target": "Nedra",
+          "command": "Look Nedra (after attack)"
+        },
+        {
+          "text_offset": "0x004f9",
+          "opcode_location": "0x0ec04",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ebe9",
+          "action": "Look",
+          "target": "Nedra",
+          "command": "Look Nedra 2"
+        },
+        {
+          "text_offset": "0x00000",
+          "opcode_location": "0x0ec32",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ec2a",
+          "action": "Talk",
+          "target": "Honghua",
+          "command": "(Unused intro text)"
+        },
+        {
+          "text_offset": "0x0142c",
+          "opcode_location": "0x0ec6f",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ec2a",
+          "action": "Talk",
+          "target": "Honghua",
+          "command": "Talk - Honghua (1)"
+        },
+        {
+          "text_offset": "0x006df",
+          "opcode_location": "0x0ec74",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ec2a",
+          "action": "Talk",
+          "target": "Honghua",
+          "command": "Talk - Honghua (2)"
+        },
+        {
+          "text_offset": "0x0142c",
+          "opcode_location": "0x0ec6f",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ec6b",
+          "action": "Talk",
+          "target": "Honghua",
+          "command": "Talk - Honghua (1)"
+        },
+        {
+          "text_offset": "0x006df",
+          "opcode_location": "0x0ec74",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ec6b",
+          "action": "Talk",
+          "target": "Honghua",
+          "command": "Talk - Honghua (2)"
+        },
+        {
+          "text_offset": "0x005fc",
+          "opcode_location": "0x0ec7e",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ec6b",
+          "action": "Talk",
+          "target": "Honghua",
+          "command": "Talk - Honghua (3)"
+        },
+        {
+          "text_offset": "0x004ca",
+          "opcode_location": "0x0ebff",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ebd0",
+          "action": "Look",
+          "target": "Nedra",
+          "command": "Look Nedra (after attack)"
+        },
+        {
+          "text_offset": "0x004f9",
+          "opcode_location": "0x0ec04",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ebd0",
+          "action": "Look",
+          "target": "Nedra",
+          "command": "Look Nedra 2"
+        },
+        {
+          "text_offset": "0x004ca",
+          "opcode_location": "0x0ebff",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ebd6",
+          "action": "Look",
+          "target": "Nedra",
+          "command": "Look Nedra (after attack)"
+        },
+        {
+          "text_offset": "0x004f9",
+          "opcode_location": "0x0ec04",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ebd6",
+          "action": "Look",
+          "target": "Nedra",
+          "command": "Look Nedra 2"
+        },
+        {
+          "text_offset": "0x004ca",
+          "opcode_location": "0x0ebff",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ebd3",
+          "action": "Look",
+          "target": "Nedra",
+          "command": "Look Nedra (after attack)"
+        },
+        {
+          "text_offset": "0x004f9",
+          "opcode_location": "0x0ec04",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ebd3",
+          "action": "Look",
+          "target": "Nedra",
+          "command": "Look Nedra 2"
+        },
+        {
+          "text_offset": "0x004ca",
+          "opcode_location": "0x0ebff",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ebdb",
+          "action": "Look",
+          "target": "Nedra",
+          "command": "Look Nedra (after attack)"
+        },
+        {
+          "text_offset": "0x004f9",
+          "opcode_location": "0x0ec04",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ebdb",
+          "action": "Look",
+          "target": "Nedra",
+          "command": "Look Nedra 2"
+        },
+        {
+          "text_offset": "0x004ca",
+          "opcode_location": "0x0ebff",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ebe0",
+          "action": "Look",
+          "target": "Nedra",
+          "command": "Look Nedra (after attack)"
+        },
+        {
+          "text_offset": "0x004f9",
+          "opcode_location": "0x0ec04",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ebe0",
+          "action": "Look",
+          "target": "Nedra",
+          "command": "Look Nedra 2"
+        },
+        {
+          "text_offset": "0x004ca",
+          "opcode_location": "0x0ebff",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ebe5",
+          "action": "Look",
+          "target": "Nedra",
+          "command": "Look Nedra (after attack)"
+        },
+        {
+          "text_offset": "0x004f9",
+          "opcode_location": "0x0ec04",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0ebe5",
+          "action": "Look",
+          "target": "Nedra",
+          "command": "Look Nedra 2"
+        },
+        {
+          "text_offset": "0x000d9",
+          "opcode_location": "0x0eb3d",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0eb20",
+          "action": "Look",
+          "target": "Room",
+          "command": "Look Room (after attack)"
+        },
+        {
+          "text_offset": "0x0008a",
+          "opcode_location": "0x0eb47",
+          "header_location": "0x0eb19",
+          "via_target_location": "0x0eb20",
+          "action": "Look",
+          "target": "Room",
+          "command": "Look - Room (1)"
+        },
+        {
+          "text_offset": "0x000d9",
+          "opcode_location": "0x0eb3d",
+          "header_location": "0x0eb19",
+          "via_target_location": null,
+          "action": "Look",
+          "target": "Room",
+          "command": "Look Room (after attack)"
+        },
+        {
+          "text_offset": "0x0008a",
+          "opcode_location": "0x0eb47",
+          "header_location": "0x0eb19",
+          "via_target_location": null,
+          "action": "Look",
+          "target": "Room",
+          "command": "Look - Room (1)"
+        }
+      ]
+    },
+    {
+      "header_location": "0x0ec25",
+      "range_start": "0x0eaf6",
+      "range_stop": "0x0ee2f",
+      "next_header": "0x0ed36",
+      "dominant_action": "Think",
+      "dominant_target": "Bio",
+      "inline_displays": [
+        {
+          "kind": "text",
+          "opcode_location": "0x0ec32",
+          "text_offset": "0x00000",
+          "arg": 208,
+          "row_count": null,
+          "command": "(Unused intro text)",
+          "block_command": "(Unused intro text)",
+          "english": "You look totally spaced. You okay?",
+          "action": "",
+          "target": ""
+        },
+        {
+          "kind": "text",
+          "opcode_location": "0x0ec6f",
+          "text_offset": "0x0142c",
+          "arg": 3,
+          "row_count": null,
+          "command": "Talk - Honghua (1)",
+          "block_command": "Talk - Honghua (1)",
+          "english": "You're in early today, Alisa. What's the occasion?",
+          "action": "Talk",
+          "target": "Honghua"
+        },
+        {
+          "kind": "text",
+          "opcode_location": "0x0ec74",
+          "text_offset": "0x006df",
+          "arg": 2,
+          "row_count": null,
+          "command": "Talk - Honghua (2)",
+          "block_command": "Talk - Honghua (2)",
+          "english": "You make it sound like I'm always running late!",
+          "action": "Talk",
+          "target": "Honghua"
+        },
+        {
+          "kind": "text",
+          "opcode_location": "0x0ec7e",
+          "text_offset": "0x005fc",
+          "arg": 3,
+          "row_count": null,
+          "command": "Talk - Honghua (3)",
+          "block_command": "Talk - Honghua (3)",
+          "english": "Hey, Honghua, you smell nice.",
+          "action": "Talk",
+          "target": "Honghua"
+        }
+      ],
+      "candidate_targets": [
+        {
+          "table_location": "0x0ec29",
+          "relative_offset": "0x001af",
+          "target_location": "0x0edd4",
+          "inferred_action": "Think",
+          "inferred_target": "Hyperlink",
+          "flags": [],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0eddc",
+              "text_offset": "0x0103a",
+              "arg": 3,
+              "row_count": null,
+              "command": "Think Hyperlink",
+              "block_command": "Think Hyperlink",
+              "english": "A Hyperlink is someone who can operate computers directly via an implant in their body.",
+              "action": "Think",
+              "target": "Hyperlink"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ede1",
+              "text_offset": "0x01106",
+              "arg": 4,
+              "row_count": null,
+              "command": "Think Hyperlink 2",
+              "block_command": "Think Hyperlink 2",
+              "english": "Nedra is supposedly a fairly high-level Hyperlink, but all Hyperlinks are amazing to me.",
+              "action": "Think",
+              "target": "Hyperlink"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ede6",
+              "text_offset": "0x010b1",
+              "arg": 2,
+              "row_count": null,
+              "command": "Think Hyperlink (after attack)",
+              "block_command": "Think Hyperlink (after attack)",
+              "english": "I don't have time to think about Hyperlinks right now! I have to get to the target location!",
+              "action": "Think",
+              "target": "Hyperlink"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ee07",
+              "text_offset": "0x011e2",
+              "arg": 3,
+              "row_count": null,
+              "command": "Think Bio Cluster",
+              "block_command": "Think Bio Cluster",
+              "english": "Bioclusters are dangerous creatures controlled by Class A Possessioners. However, a lot of them wander around on their own and pop up unexpectedly.",
+              "action": "Think",
+              "target": "Bio"
+            }
+          ]
+        },
+        {
+          "table_location": "0x0ec2f",
+          "relative_offset": "0x001cd",
+          "target_location": "0x0edf2",
+          "inferred_action": "Think",
+          "inferred_target": "Bio",
+          "flags": [],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0ee07",
+              "text_offset": "0x011e2",
+              "arg": 3,
+              "row_count": null,
+              "command": "Think Bio Cluster",
+              "block_command": "Think Bio Cluster",
+              "english": "Bioclusters are dangerous creatures controlled by Class A Possessioners. However, a lot of them wander around on their own and pop up unexpectedly.",
+              "action": "Think",
+              "target": "Bio"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ee0c",
+              "text_offset": "0x01251",
+              "arg": 4,
+              "row_count": null,
+              "command": "Think Bio Cluster 2",
+              "block_command": "Think Bio Cluster 2",
+              "english": "Possessioners were bad enough on their own, then Bioclusters started appearing two or three years ago. Who knows what the future will bring...",
+              "action": "Think",
+              "target": "Bio"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ee11",
+              "text_offset": "0x0118d",
+              "arg": 2,
+              "row_count": null,
+              "command": "Think Bio Cluster (after attack)",
+              "block_command": "Think Bio Cluster (after attack)",
+              "english": "One Class A Possessioner and three Bioclusters? This is gonna be tough.",
+              "action": "Think",
+              "target": "Bio"
+            }
+          ]
+        },
+        {
+          "table_location": "0x0ec35",
+          "relative_offset": "0x001d0",
+          "target_location": "0x0edf5",
+          "inferred_action": "Think",
+          "inferred_target": "Bio",
+          "flags": [],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0ee07",
+              "text_offset": "0x011e2",
+              "arg": 3,
+              "row_count": null,
+              "command": "Think Bio Cluster",
+              "block_command": "Think Bio Cluster",
+              "english": "Bioclusters are dangerous creatures controlled by Class A Possessioners. However, a lot of them wander around on their own and pop up unexpectedly.",
+              "action": "Think",
+              "target": "Bio"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ee0c",
+              "text_offset": "0x01251",
+              "arg": 4,
+              "row_count": null,
+              "command": "Think Bio Cluster 2",
+              "block_command": "Think Bio Cluster 2",
+              "english": "Possessioners were bad enough on their own, then Bioclusters started appearing two or three years ago. Who knows what the future will bring...",
+              "action": "Think",
+              "target": "Bio"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ee11",
+              "text_offset": "0x0118d",
+              "arg": 2,
+              "row_count": null,
+              "command": "Think Bio Cluster (after attack)",
+              "block_command": "Think Bio Cluster (after attack)",
+              "english": "One Class A Possessioner and three Bioclusters? This is gonna be tough.",
+              "action": "Think",
+              "target": "Bio"
+            }
+          ]
+        },
+        {
+          "table_location": "0x0ec37",
+          "relative_offset": "0x001fe",
+          "target_location": "0x0ee23",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [],
+          "displays": []
+        },
+        {
+          "table_location": "0x0ec3b",
+          "relative_offset": "0x001d3",
+          "target_location": "0x0edf8",
+          "inferred_action": "Think",
+          "inferred_target": "Bio",
+          "flags": [],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0ee07",
+              "text_offset": "0x011e2",
+              "arg": 3,
+              "row_count": null,
+              "command": "Think Bio Cluster",
+              "block_command": "Think Bio Cluster",
+              "english": "Bioclusters are dangerous creatures controlled by Class A Possessioners. However, a lot of them wander around on their own and pop up unexpectedly.",
+              "action": "Think",
+              "target": "Bio"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ee0c",
+              "text_offset": "0x01251",
+              "arg": 4,
+              "row_count": null,
+              "command": "Think Bio Cluster 2",
+              "block_command": "Think Bio Cluster 2",
+              "english": "Possessioners were bad enough on their own, then Bioclusters started appearing two or three years ago. Who knows what the future will bring...",
+              "action": "Think",
+              "target": "Bio"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ee11",
+              "text_offset": "0x0118d",
+              "arg": 2,
+              "row_count": null,
+              "command": "Think Bio Cluster (after attack)",
+              "block_command": "Think Bio Cluster (after attack)",
+              "english": "One Class A Possessioner and three Bioclusters? This is gonna be tough.",
+              "action": "Think",
+              "target": "Bio"
+            }
+          ]
+        },
+        {
+          "table_location": "0x0ec3d",
+          "relative_offset": "0x001f9",
+          "target_location": "0x0ee1e",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [],
+          "displays": []
+        },
+        {
+          "table_location": "0x0ec3f",
+          "relative_offset": "0x001dd",
+          "target_location": "0x0ee02",
+          "inferred_action": "Think",
+          "inferred_target": "Bio",
+          "flags": [],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0ee07",
+              "text_offset": "0x011e2",
+              "arg": 3,
+              "row_count": null,
+              "command": "Think Bio Cluster",
+              "block_command": "Think Bio Cluster",
+              "english": "Bioclusters are dangerous creatures controlled by Class A Possessioners. However, a lot of them wander around on their own and pop up unexpectedly.",
+              "action": "Think",
+              "target": "Bio"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ee0c",
+              "text_offset": "0x01251",
+              "arg": 4,
+              "row_count": null,
+              "command": "Think Bio Cluster 2",
+              "block_command": "Think Bio Cluster 2",
+              "english": "Possessioners were bad enough on their own, then Bioclusters started appearing two or three years ago. Who knows what the future will bring...",
+              "action": "Think",
+              "target": "Bio"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ee11",
+              "text_offset": "0x0118d",
+              "arg": 2,
+              "row_count": null,
+              "command": "Think Bio Cluster (after attack)",
+              "block_command": "Think Bio Cluster (after attack)",
+              "english": "One Class A Possessioner and three Bioclusters? This is gonna be tough.",
+              "action": "Think",
+              "target": "Bio"
+            }
+          ]
+        },
+        {
+          "table_location": "0x0ec41",
+          "relative_offset": "0x001da",
+          "target_location": "0x0edff",
+          "inferred_action": "Think",
+          "inferred_target": "Bio",
+          "flags": [],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0ee07",
+              "text_offset": "0x011e2",
+              "arg": 3,
+              "row_count": null,
+              "command": "Think Bio Cluster",
+              "block_command": "Think Bio Cluster",
+              "english": "Bioclusters are dangerous creatures controlled by Class A Possessioners. However, a lot of them wander around on their own and pop up unexpectedly.",
+              "action": "Think",
+              "target": "Bio"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ee0c",
+              "text_offset": "0x01251",
+              "arg": 4,
+              "row_count": null,
+              "command": "Think Bio Cluster 2",
+              "block_command": "Think Bio Cluster 2",
+              "english": "Possessioners were bad enough on their own, then Bioclusters started appearing two or three years ago. Who knows what the future will bring...",
+              "action": "Think",
+              "target": "Bio"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x0ee11",
+              "text_offset": "0x0118d",
+              "arg": 2,
+              "row_count": null,
+              "command": "Think Bio Cluster (after attack)",
+              "block_command": "Think Bio Cluster (after attack)",
+              "english": "One Class A Possessioner and three Bioclusters? This is gonna be tough.",
+              "action": "Think",
+              "target": "Bio"
+            }
+          ]
+        },
+        {
+          "table_location": "0x0ec43",
+          "relative_offset": "0x001f4",
+          "target_location": "0x0ee19",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [],
+          "displays": []
+        },
+        {
+          "table_location": "0x0ec49",
+          "relative_offset": "0x001ef",
+          "target_location": "0x0ee14",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [],
+          "displays": []
+        },
+        {
+          "table_location": "0x0ec4b",
+          "relative_offset": "0x001eb",
+          "target_location": "0x0ee10",
+          "inferred_action": "Think",
+          "inferred_target": "Bio",
+          "flags": [],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0ee11",
+              "text_offset": "0x0118d",
+              "arg": 2,
+              "row_count": null,
+              "command": "Think Bio Cluster (after attack)",
+              "block_command": "Think Bio Cluster (after attack)",
+              "english": "One Class A Possessioner and three Bioclusters? This is gonna be tough.",
+              "action": "Think",
+              "target": "Bio"
+            }
+          ]
+        }
+      ],
+      "text_contexts": [
+        {
+          "text_offset": "0x0103a",
+          "opcode_location": "0x0eddc",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0edd4",
+          "action": "Think",
+          "target": "Hyperlink",
+          "command": "Think Hyperlink"
+        },
+        {
+          "text_offset": "0x01106",
+          "opcode_location": "0x0ede1",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0edd4",
+          "action": "Think",
+          "target": "Hyperlink",
+          "command": "Think Hyperlink 2"
+        },
+        {
+          "text_offset": "0x010b1",
+          "opcode_location": "0x0ede6",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0edd4",
+          "action": "Think",
+          "target": "Hyperlink",
+          "command": "Think Hyperlink (after attack)"
+        },
+        {
+          "text_offset": "0x011e2",
+          "opcode_location": "0x0ee07",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0edd4",
+          "action": "Think",
+          "target": "Hyperlink",
+          "command": "Think Bio Cluster"
+        },
+        {
+          "text_offset": "0x011e2",
+          "opcode_location": "0x0ee07",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0edf2",
+          "action": "Think",
+          "target": "Bio",
+          "command": "Think Bio Cluster"
+        },
+        {
+          "text_offset": "0x01251",
+          "opcode_location": "0x0ee0c",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0edf2",
+          "action": "Think",
+          "target": "Bio",
+          "command": "Think Bio Cluster 2"
+        },
+        {
+          "text_offset": "0x0118d",
+          "opcode_location": "0x0ee11",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0edf2",
+          "action": "Think",
+          "target": "Bio",
+          "command": "Think Bio Cluster (after attack)"
+        },
+        {
+          "text_offset": "0x011e2",
+          "opcode_location": "0x0ee07",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0edf5",
+          "action": "Think",
+          "target": "Bio",
+          "command": "Think Bio Cluster"
+        },
+        {
+          "text_offset": "0x01251",
+          "opcode_location": "0x0ee0c",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0edf5",
+          "action": "Think",
+          "target": "Bio",
+          "command": "Think Bio Cluster 2"
+        },
+        {
+          "text_offset": "0x0118d",
+          "opcode_location": "0x0ee11",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0edf5",
+          "action": "Think",
+          "target": "Bio",
+          "command": "Think Bio Cluster (after attack)"
+        },
+        {
+          "text_offset": "0x011e2",
+          "opcode_location": "0x0ee07",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0edf8",
+          "action": "Think",
+          "target": "Bio",
+          "command": "Think Bio Cluster"
+        },
+        {
+          "text_offset": "0x01251",
+          "opcode_location": "0x0ee0c",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0edf8",
+          "action": "Think",
+          "target": "Bio",
+          "command": "Think Bio Cluster 2"
+        },
+        {
+          "text_offset": "0x0118d",
+          "opcode_location": "0x0ee11",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0edf8",
+          "action": "Think",
+          "target": "Bio",
+          "command": "Think Bio Cluster (after attack)"
+        },
+        {
+          "text_offset": "0x011e2",
+          "opcode_location": "0x0ee07",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0ee02",
+          "action": "Think",
+          "target": "Bio",
+          "command": "Think Bio Cluster"
+        },
+        {
+          "text_offset": "0x01251",
+          "opcode_location": "0x0ee0c",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0ee02",
+          "action": "Think",
+          "target": "Bio",
+          "command": "Think Bio Cluster 2"
+        },
+        {
+          "text_offset": "0x0118d",
+          "opcode_location": "0x0ee11",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0ee02",
+          "action": "Think",
+          "target": "Bio",
+          "command": "Think Bio Cluster (after attack)"
+        },
+        {
+          "text_offset": "0x011e2",
+          "opcode_location": "0x0ee07",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0edff",
+          "action": "Think",
+          "target": "Bio",
+          "command": "Think Bio Cluster"
+        },
+        {
+          "text_offset": "0x01251",
+          "opcode_location": "0x0ee0c",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0edff",
+          "action": "Think",
+          "target": "Bio",
+          "command": "Think Bio Cluster 2"
+        },
+        {
+          "text_offset": "0x0118d",
+          "opcode_location": "0x0ee11",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0edff",
+          "action": "Think",
+          "target": "Bio",
+          "command": "Think Bio Cluster (after attack)"
+        },
+        {
+          "text_offset": "0x0118d",
+          "opcode_location": "0x0ee11",
+          "header_location": "0x0ec25",
+          "via_target_location": "0x0ee10",
+          "action": "Think",
+          "target": "Bio",
+          "command": "Think Bio Cluster (after attack)"
+        },
+        {
+          "text_offset": "0x00000",
+          "opcode_location": "0x0ec32",
+          "header_location": "0x0ec25",
+          "via_target_location": null,
+          "action": "",
+          "target": "",
+          "command": "(Unused intro text)"
+        },
+        {
+          "text_offset": "0x0142c",
+          "opcode_location": "0x0ec6f",
+          "header_location": "0x0ec25",
+          "via_target_location": null,
+          "action": "Talk",
+          "target": "Honghua",
+          "command": "Talk - Honghua (1)"
+        },
+        {
+          "text_offset": "0x006df",
+          "opcode_location": "0x0ec74",
+          "header_location": "0x0ec25",
+          "via_target_location": null,
+          "action": "Talk",
+          "target": "Honghua",
+          "command": "Talk - Honghua (2)"
+        },
+        {
+          "text_offset": "0x005fc",
+          "opcode_location": "0x0ec7e",
+          "header_location": "0x0ec25",
+          "via_target_location": null,
+          "action": "Talk",
+          "target": "Honghua",
+          "command": "Talk - Honghua (3)"
+        }
+      ]
+    },
+    {
+      "header_location": "0x0ed36",
+      "range_start": "0x0eaf6",
+      "range_stop": "0x0ee2f",
+      "next_header": "0x0ed7d",
+      "dominant_action": "Examine",
+      "dominant_target": "Room",
+      "inline_displays": [
+        {
+          "kind": "text",
+          "opcode_location": "0x0ed3f",
+          "text_offset": "0x00000",
+          "arg": 209,
+          "row_count": null,
+          "command": "(Unused intro text)",
+          "block_command": "(Unused intro text)",
+          "english": "You look totally spaced. You okay?",
+          "action": "",
+          "target": ""
+        },
+        {
+          "kind": "text",
+          "opcode_location": "0x0ed58",
+          "text_offset": "0x00e13",
+          "arg": 2,
+          "row_count": null,
+          "command": "Examine - Room (1)",
+          "block_command": "Examine - Room (1)",
+          "english": "It's a sparsely-furnished room with walls covered in mechanical panels and wiring.",
+          "action": "Examine",
+          "target": "Room"
+        }
+      ],
+      "candidate_targets": [
+        {
+          "table_location": "0x0ed52",
+          "relative_offset": "0x00006",
+          "target_location": "0x0ed3c",
+          "inferred_action": "Examine",
+          "inferred_target": "Room",
+          "flags": [
+            {
+              "location": "0x0ed5b",
+              "kind": "check_flag",
+              "arg1": "0x58",
+              "arg2": "0xe",
+              "extra": null
+            },
+            {
+              "location": "0x0ed60",
+              "kind": "check_flag",
+              "arg1": "0xb1",
+              "arg2": "0xd",
+              "extra": null
+            }
+          ],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x0ed58",
+              "text_offset": "0x00e13",
+              "arg": 2,
+              "row_count": null,
+              "command": "Examine - Room (1)",
+              "block_command": "Examine - Room (1)",
+              "english": "It's a sparsely-furnished room with walls covered in mechanical panels and wiring.",
+              "action": "Examine",
+              "target": "Room"
+            }
+          ]
+        }
+      ],
+      "text_contexts": [
+        {
+          "text_offset": "0x00e13",
+          "opcode_location": "0x0ed58",
+          "header_location": "0x0ed36",
+          "via_target_location": "0x0ed3c",
+          "action": "Examine",
+          "target": "Room",
+          "command": "Examine - Room (1)"
+        },
+        {
+          "text_offset": "0x00000",
+          "opcode_location": "0x0ed3f",
+          "header_location": "0x0ed36",
+          "via_target_location": null,
+          "action": "",
+          "target": "",
+          "command": "(Unused intro text)"
+        },
+        {
+          "text_offset": "0x00e13",
+          "opcode_location": "0x0ed58",
+          "header_location": "0x0ed36",
+          "via_target_location": null,
+          "action": "Examine",
+          "target": "Room",
+          "command": "Examine - Room (1)"
+        }
+      ]
+    },
+    {
+      "header_location": "0x0ed7d",
+      "range_start": "0x0eaf6",
+      "range_stop": "0x0ee2f",
+      "next_header": null,
+      "dominant_action": "Think",
+      "dominant_target": "Slit",
+      "inline_displays": [
+        {
+          "kind": "text",
+          "opcode_location": "0x0edb1",
+          "text_offset": "0x00ea7",
+          "arg": 6,
+          "row_count": null,
+          "command": "Think - Slit",
+          "block_command": "Think - Slit",
+          "english": "We're a team that fights Class A Possessioners. We haven't encountered many Class As as of late, though. We've mainly been in skirmishes with Class Bs and Bioclusters.",
+          "action": "Think",
+          "target": "Slit"
+        },
+        {
+          "kind": "text",
+          "opcode_location": "0x0edb6",
+          "text_offset": "0x00fc5",
+          "arg": 3,
+          "row_count": null,
+          "command": "Think - Slit (2)",
+          "block_command": "Think - Slit (2)",
+          "english": "We're the only people who can safely and successfully drive Class A Possessioners from their host bodies.",
+          "action": "Think",
+          "target": "Slit"
+        },
+        {
+          "kind": "text",
+          "opcode_location": "0x0edbb",
+          "text_offset": "0x00f80",
+          "arg": 2,
+          "row_count": null,
+          "command": "Think Slit (after attack)",
+          "block_command": "Think Slit (after attack)",
+          "english": "This is why Slit was formed!",
+          "action": "Think",
+          "target": "Slit"
+        },
+        {
+          "kind": "text",
+          "opcode_location": "0x0eddc",
+          "text_offset": "0x0103a",
+          "arg": 3,
+          "row_count": null,
+          "command": "Think Hyperlink",
+          "block_command": "Think Hyperlink",
+          "english": "A Hyperlink is someone who can operate computers directly via an implant in their body.",
+          "action": "Think",
+          "target": "Hyperlink"
+        }
+      ],
+      "candidate_targets": [],
+      "text_contexts": [
+        {
+          "text_offset": "0x00ea7",
+          "opcode_location": "0x0edb1",
+          "header_location": "0x0ed7d",
+          "via_target_location": null,
+          "action": "Think",
+          "target": "Slit",
+          "command": "Think - Slit"
+        },
+        {
+          "text_offset": "0x00fc5",
+          "opcode_location": "0x0edb6",
+          "header_location": "0x0ed7d",
+          "via_target_location": null,
+          "action": "Think",
+          "target": "Slit",
+          "command": "Think - Slit (2)"
+        },
+        {
+          "text_offset": "0x00f80",
+          "opcode_location": "0x0edbb",
+          "header_location": "0x0ed7d",
+          "via_target_location": null,
+          "action": "Think",
+          "target": "Slit",
+          "command": "Think Slit (after attack)"
+        },
+        {
+          "text_offset": "0x0103a",
+          "opcode_location": "0x0eddc",
+          "header_location": "0x0ed7d",
+          "via_target_location": null,
+          "action": "Think",
+          "target": "Hyperlink",
+          "command": "Think Hyperlink"
+        }
+      ]
+    }
+  ],
+  "YUMI.MSD": [
+    {
+      "header_location": "0x27723",
+      "range_start": "0x27670",
+      "range_stop": "0x28aac",
+      "next_header": "0x27e1f",
+      "dominant_action": "",
+      "dominant_target": "",
+      "inline_displays": [
+        {
+          "kind": "text",
+          "opcode_location": "0x2776d",
+          "text_offset": "0x006f5",
+          "arg": 2,
+          "row_count": null,
+          "command": "Touch Hair",
+          "block_command": "Touch Hair",
+          "english": "Your hair is so silky...",
+          "action": "",
+          "target": ""
+        },
+        {
+          "kind": "text",
+          "opcode_location": "0x27777",
+          "text_offset": "0x00769",
+          "arg": 4,
+          "row_count": null,
+          "command": "Touch Hair (2+)",
+          "block_command": "Touch Hair (2+)",
+          "english": "I love running my fingers through your chestnut-colored hair. It's so silky.",
+          "action": "",
+          "target": ""
+        }
+      ],
+      "candidate_targets": [
+        {
+          "table_location": "0x27739",
+          "relative_offset": "0x00001",
+          "target_location": "0x27724",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x2776d",
+              "text_offset": "0x006f5",
+              "arg": 2,
+              "row_count": null,
+              "command": "Touch Hair",
+              "block_command": "Touch Hair",
+              "english": "Your hair is so silky...",
+              "action": "",
+              "target": ""
+            }
+          ]
+        }
+      ],
+      "text_contexts": [
+        {
+          "text_offset": "0x006f5",
+          "opcode_location": "0x2776d",
+          "header_location": "0x27723",
+          "via_target_location": "0x27724",
+          "action": "",
+          "target": "",
+          "command": "Touch Hair"
+        },
+        {
+          "text_offset": "0x006f5",
+          "opcode_location": "0x2776d",
+          "header_location": "0x27723",
+          "via_target_location": null,
+          "action": "",
+          "target": "",
+          "command": "Touch Hair"
+        },
+        {
+          "text_offset": "0x00769",
+          "opcode_location": "0x27777",
+          "header_location": "0x27723",
+          "via_target_location": null,
+          "action": "",
+          "target": "",
+          "command": "Touch Hair (2+)"
+        }
+      ]
+    },
+    {
+      "header_location": "0x27e1f",
+      "range_start": "0x27670",
+      "range_stop": "0x28aac",
+      "next_header": "0x27ef8",
+      "dominant_action": "",
+      "dominant_target": "",
+      "inline_displays": [
+        {
+          "kind": "text",
+          "opcode_location": "0x27e67",
+          "text_offset": "0x01d7a",
+          "arg": 4,
+          "row_count": null,
+          "command": "",
+          "block_command": "Lick Breast (CG4)",
+          "english": null,
+          "action": "",
+          "target": ""
+        }
+      ],
+      "candidate_targets": [
+        {
+          "table_location": "0x27e2f",
+          "relative_offset": "0x00008",
+          "target_location": "0x27e27",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x27e67",
+              "text_offset": "0x01d7a",
+              "arg": 4,
+              "row_count": null,
+              "command": "",
+              "block_command": "Lick Breast (CG4)",
+              "english": null,
+              "action": "",
+              "target": ""
+            }
+          ]
+        }
+      ],
+      "text_contexts": [
+        {
+          "text_offset": "0x01d7a",
+          "opcode_location": "0x27e67",
+          "header_location": "0x27e1f",
+          "via_target_location": "0x27e27",
+          "action": "",
+          "target": "",
+          "command": "Lick Breast (CG4)"
+        },
+        {
+          "text_offset": "0x01d7a",
+          "opcode_location": "0x27e67",
+          "header_location": "0x27e1f",
+          "via_target_location": null,
+          "action": "",
+          "target": "",
+          "command": "Lick Breast (CG4)"
+        }
+      ]
+    },
+    {
+      "header_location": "0x27ef8",
+      "range_start": "0x27670",
+      "range_stop": "0x28aac",
+      "next_header": "0x280d0",
+      "dominant_action": "",
+      "dominant_target": "",
+      "inline_displays": [],
+      "candidate_targets": [
+        {
+          "table_location": "0x27f12",
+          "relative_offset": "0x00100",
+          "target_location": "0x27ff8",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [],
+          "displays": []
+        },
+        {
+          "table_location": "0x27f1a",
+          "relative_offset": "0x001ff",
+          "target_location": "0x280f7",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [],
+          "displays": []
+        }
+      ],
+      "text_contexts": []
+    },
+    {
+      "header_location": "0x280d0",
+      "range_start": "0x27670",
+      "range_stop": "0x28aac",
+      "next_header": "0x2816f",
+      "dominant_action": "",
+      "dominant_target": "",
+      "inline_displays": [],
+      "candidate_targets": [],
+      "text_contexts": []
+    },
+    {
+      "header_location": "0x2816f",
+      "range_start": "0x27670",
+      "range_stop": "0x28aac",
+      "next_header": "0x286f2",
+      "dominant_action": "",
+      "dominant_target": "",
+      "inline_displays": [],
+      "candidate_targets": [
+        {
+          "table_location": "0x28189",
+          "relative_offset": "0x00055",
+          "target_location": "0x281c4",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [
+            {
+              "location": "0x281c4",
+              "kind": "check_flag",
+              "arg1": "0xbe",
+              "arg2": "0x0",
+              "extra": null
+            },
+            {
+              "location": "0x281c9",
+              "kind": "check_flag",
+              "arg1": "0xfd",
+              "arg2": "0x0",
+              "extra": null
+            },
+            {
+              "location": "0x281d6",
+              "kind": "check_flag",
+              "arg1": "0x40",
+              "arg2": "0x0",
+              "extra": null
+            },
+            {
+              "location": "0x281db",
+              "kind": "set_flag",
+              "arg1": "0x59",
+              "arg2": "0x7",
+              "extra": null
+            },
+            {
+              "location": "0x281f3",
+              "kind": "check_flag",
+              "arg1": "0x5c",
+              "arg2": "0x16",
+              "extra": null
+            }
+          ],
+          "displays": []
+        }
+      ],
+      "text_contexts": []
+    },
+    {
+      "header_location": "0x286f2",
+      "range_start": "0x27670",
+      "range_stop": "0x28aac",
+      "next_header": "0x28878",
+      "dominant_action": "",
+      "dominant_target": "",
+      "inline_displays": [],
+      "candidate_targets": [
+        {
+          "table_location": "0x286fa",
+          "relative_offset": "0x00002",
+          "target_location": "0x286f4",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [],
+          "displays": []
+        },
+        {
+          "table_location": "0x286fc",
+          "relative_offset": "0x001ff",
+          "target_location": "0x288f1",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [],
+          "displays": []
+        },
+        {
+          "table_location": "0x28704",
+          "relative_offset": "0x00003",
+          "target_location": "0x286f5",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [],
+          "displays": []
+        }
+      ],
+      "text_contexts": []
+    },
+    {
+      "header_location": "0x28878",
+      "range_start": "0x27670",
+      "range_stop": "0x28aac",
+      "next_header": null,
+      "dominant_action": "Arrive",
+      "dominant_target": "Arrive",
+      "inline_displays": [],
+      "candidate_targets": [
+        {
+          "table_location": "0x2887c",
+          "relative_offset": "0x001ae",
+          "target_location": "0x28a26",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [
+            {
+              "location": "0x28a28",
+              "kind": "check_flag",
+              "arg1": "0xc0",
+              "arg2": "0x22",
+              "extra": null
+            },
+            {
+              "location": "0x28a3a",
+              "kind": "clear_flag",
+              "arg1": "0xa9",
+              "arg2": "0x7",
+              "extra": "0x0"
+            },
+            {
+              "location": "0x28a46",
+              "kind": "check_flag",
+              "arg1": "0x87",
+              "arg2": "0x7",
+              "extra": null
+            },
+            {
+              "location": "0x28a4f",
+              "kind": "set_flag",
+              "arg1": "0x87",
+              "arg2": "0x7",
+              "extra": null
+            }
+          ],
+          "displays": []
+        },
+        {
+          "table_location": "0x28880",
+          "relative_offset": "0x001b4",
+          "target_location": "0x28a2c",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [
+            {
+              "location": "0x28a3a",
+              "kind": "clear_flag",
+              "arg1": "0xa9",
+              "arg2": "0x7",
+              "extra": "0x0"
+            },
+            {
+              "location": "0x28a46",
+              "kind": "check_flag",
+              "arg1": "0x87",
+              "arg2": "0x7",
+              "extra": null
+            },
+            {
+              "location": "0x28a4f",
+              "kind": "set_flag",
+              "arg1": "0x87",
+              "arg2": "0x7",
+              "extra": null
+            },
+            {
+              "location": "0x28a5b",
+              "kind": "check_flag",
+              "arg1": "0x57",
+              "arg2": "0x17",
+              "extra": null
+            }
+          ],
+          "displays": []
+        },
+        {
+          "table_location": "0x2888a",
+          "relative_offset": "0x001be",
+          "target_location": "0x28a36",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [
+            {
+              "location": "0x28a3a",
+              "kind": "clear_flag",
+              "arg1": "0xa9",
+              "arg2": "0x7",
+              "extra": "0x0"
+            },
+            {
+              "location": "0x28a46",
+              "kind": "check_flag",
+              "arg1": "0x87",
+              "arg2": "0x7",
+              "extra": null
+            },
+            {
+              "location": "0x28a4f",
+              "kind": "set_flag",
+              "arg1": "0x87",
+              "arg2": "0x7",
+              "extra": null
+            },
+            {
+              "location": "0x28a5b",
+              "kind": "check_flag",
+              "arg1": "0x57",
+              "arg2": "0x17",
+              "extra": null
+            }
+          ],
+          "displays": []
+        },
+        {
+          "table_location": "0x2888e",
+          "relative_offset": "0x0002c",
+          "target_location": "0x288a4",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [],
+          "displays": []
+        },
+        {
+          "table_location": "0x28890",
+          "relative_offset": "0x001d8",
+          "target_location": "0x28a50",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [
+            {
+              "location": "0x28a5b",
+              "kind": "check_flag",
+              "arg1": "0x57",
+              "arg2": "0x17",
+              "extra": null
+            }
+          ],
+          "displays": []
+        },
+        {
+          "table_location": "0x28892",
+          "relative_offset": "0x00031",
+          "target_location": "0x288a9",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [],
+          "displays": []
+        },
+        {
+          "table_location": "0x28894",
+          "relative_offset": "0x001dd",
+          "target_location": "0x28a55",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [
+            {
+              "location": "0x28a5b",
+              "kind": "check_flag",
+              "arg1": "0x57",
+              "arg2": "0x17",
+              "extra": null
+            }
+          ],
+          "displays": []
+        },
+        {
+          "table_location": "0x28896",
+          "relative_offset": "0x00010",
+          "target_location": "0x28888",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [],
+          "displays": []
+        },
+        {
+          "table_location": "0x28898",
+          "relative_offset": "0x001e8",
+          "target_location": "0x28a60",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [],
+          "displays": []
+        },
+        {
+          "table_location": "0x2889a",
+          "relative_offset": "0x00049",
+          "target_location": "0x288c1",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [],
+          "displays": []
+        },
+        {
+          "table_location": "0x2889c",
+          "relative_offset": "0x001f3",
+          "target_location": "0x28a6b",
+          "inferred_action": "",
+          "inferred_target": "",
+          "flags": [],
+          "displays": []
+        },
+        {
+          "table_location": "0x2889e",
+          "relative_offset": "0x00081",
+          "target_location": "0x288f9",
+          "inferred_action": "Arrive",
+          "inferred_target": "Arrive",
+          "flags": [],
+          "displays": [
+            {
+              "kind": "text",
+              "opcode_location": "0x288f9",
+              "text_offset": "0x00000",
+              "arg": 104,
+              "row_count": null,
+              "command": "(Arrive)",
+              "block_command": "(Arrive)",
+              "english": "Oh shit!",
+              "action": "Arrive",
+              "target": "Arrive"
+            },
+            {
+              "kind": "text",
+              "opcode_location": "0x28905",
+              "text_offset": "0x00000",
+              "arg": 137,
+              "row_count": null,
+              "command": "(Arrive)",
+              "block_command": "(Arrive)",
+              "english": "Oh shit!",
+              "action": "Arrive",
+              "target": "Arrive"
+            }
+          ]
+        }
+      ],
+      "text_contexts": [
+        {
+          "text_offset": "0x00000",
+          "opcode_location": "0x288f9",
+          "header_location": "0x28878",
+          "via_target_location": "0x288f9",
+          "action": "Arrive",
+          "target": "Arrive",
+          "command": "(Arrive)"
+        },
+        {
+          "text_offset": "0x00000",
+          "opcode_location": "0x28905",
+          "header_location": "0x28878",
+          "via_target_location": "0x288f9",
+          "action": "Arrive",
+          "target": "Arrive",
+          "command": "(Arrive)"
+        }
+      ]
+    }
+  ]
+}

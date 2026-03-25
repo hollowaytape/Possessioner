@@ -1,0 +1,614 @@
+[
+  {
+    "file": "P_HON1.MSD",
+    "location": "0x0f3de",
+    "arg1": "0x05",
+    "destination_name": "Corridor",
+    "destination_label": "0x05 \"Corridor\"",
+    "row_matches": [],
+    "window": "26 00 54 09 ff ff ff 01 58 09 00 00 5e 09 00 00 01 05 00 ff 56 07 68 09 c4 09 0e 00 82 09 10 00 8a 09 27 00 92 09 28 00"
+  },
+  {
+    "file": "P_HON1.MSD",
+    "location": "0x10039",
+    "arg1": "0x07",
+    "destination_name": "Lounge",
+    "destination_label": "0x07 \"Lounge\"",
+    "row_matches": [],
+    "window": "2e 00 af 15 ff ff ff 01 b3 15 00 00 b9 15 00 00 01 07 00 ff 5e 14 c3 15 13 16 10 00 e1 15 3e 00 e3 15 27 00 ee 15 86 00"
+  },
+  {
+    "file": "YUMI.MSD",
+    "location": "0x2817b",
+    "arg1": "0x17",
+    "destination_name": "Old City",
+    "destination_label": "0x17 \"Old City\"",
+    "row_matches": [],
+    "window": "54 00 61 0b ff ff ff 01 65 0b 00 00 6b 0b 00 00 01 17 00 ff a6 0a 75 0b 8d 0b 10 00 83 0b 55 00 88 0b 8c 00 c2 0a ff ff"
+  },
+  {
+    "file": "YUMI.MSD",
+    "location": "0x28884",
+    "arg1": "0x05",
+    "destination_name": "Corridor",
+    "destination_label": "0x05 \"Corridor\"",
+    "row_matches": [],
+    "window": "26 00 aa 01 ff ff ff 01 ae 01 00 00 b4 01 00 00 01 05 00 ff 00 00 be 01 0e 02 2c 00 d8 01 31 00 dd 01 10 00 e8 01 49 00"
+  },
+  {
+    "file": "P_ROU1.MSD",
+    "location": "0x228b9",
+    "arg1": "0x04",
+    "destination_name": "HQ",
+    "destination_label": "0x04 \"HQ\"",
+    "row_matches": [],
+    "window": "29 1a 00 00 7e 19 2d 1a 00 00 00 00 29 1a 00 00 01 04 00 ff 02 a1 10 02 ff 4a 1a 51 1a 4d 1a 76 19 51 1a 00 00 7e 19 55"
+  },
+  {
+    "file": "P_ROU1.MSD",
+    "location": "0x228e1",
+    "arg1": "0x06",
+    "destination_name": "Maintenance room",
+    "destination_label": "0x06 \"Maintenance room\"",
+    "row_matches": [],
+    "window": "1a 00 00 00 00 51 1a 00 00 06 04 00 01 a6 02 00 01 06 00 ff 02 f2 10 02 ff 76 19 6c 1a 00 00 7e 19 6f 1a 00 00 00 00 6c"
+  },
+  {
+    "file": "P_ROU1.MSD",
+    "location": "0x22914",
+    "arg1": "0x07",
+    "destination_name": "Lounge",
+    "destination_label": "0x07 \"Lounge\"",
+    "row_matches": [],
+    "window": "84 1a 00 00 7e 19 88 1a 00 00 00 00 84 1a 00 00 01 07 00 ff 02 27 11 02 ff 00 00 93 1a 00 00 01 55 00 18 18 9c 1a 16 1b"
+  },
+  {
+    "file": "P_ROU1.MSD",
+    "location": "0x2390d",
+    "arg1": "0x18",
+    "destination_name": "Abandoned Zone",
+    "destination_label": "0x18 \"Abandoned Zone\"",
+    "row_matches": [],
+    "window": "ff ff ff 01 b5 04 c1 04 00 00 bb 04 00 00 1b 02 01 18 00 ff cd 04 d4 04 00 00 00 00 d8 04 d0 04 d6 00 00 01 78 00 00 01"
+  },
+  {
+    "file": "P_ROU1.MSD",
+    "location": "0x23924",
+    "arg1": "0x23",
+    "destination_name": "Gyotei interior (3 lines)",
+    "destination_label": "0x23 \"Gyotei interior (3 lines)\"",
+    "row_matches": [],
+    "window": "04 00 00 00 00 d8 04 d0 04 d6 00 00 01 78 00 00 01 23 00 ff 02 2f 00 01 04 0a 83 01 03 00 00 0b 03 0a 34 00 cb 27 00 00"
+  },
+  {
+    "file": "P_ROU1.MSD",
+    "location": "0x23d4b",
+    "arg1": "0x24",
+    "destination_name": "Gyotei place with lots of screens (2 lines?) Place with lots of screens",
+    "destination_label": "0x24 \"Gyotei place with lots of screens (2 lines?) Place with lots of screens\"",
+    "row_matches": [],
+    "window": "ef 08 ff ff ff 01 f5 08 ff 08 00 00 fb 08 00 00 01 24 00 ff 00 00 05 09 00 00 01 22 00 ff 76 08 0f 09 1b 09 b5 00 19 09"
+  },
+  {
+    "file": "P_ROU1.MSD",
+    "location": "0x23d55",
+    "arg1": "0x22",
+    "destination_name": "Minsky gate entrance (GYOTEI)",
+    "destination_label": "0x22 \"Minsky gate entrance (GYOTEI)\"",
+    "row_matches": [],
+    "window": "00 00 fb 08 00 00 01 24 00 ff 00 00 05 09 00 00 01 22 00 ff 76 08 0f 09 1b 09 b5 00 19 09 30 00 19 09 ff ff ff 01 1f 09"
+  },
+  {
+    "file": "P_ENT.MSD",
+    "location": "0x1b308",
+    "arg1": "0x05",
+    "destination_name": "Corridor",
+    "destination_label": "0x05 \"Corridor\"",
+    "row_matches": [],
+    "window": "00 00 ff 01 d2 0b dc 0b e6 0b 00 00 d8 0b 00 00 01 05 00 ff 00 00 e2 0b 00 00 01 50 00 ff 2c 0b 55 0c 00 00 3c 0b 34 0c"
+  },
+  {
+    "file": "P_ENT.MSD",
+    "location": "0x1b312",
+    "arg1": "0x50",
+    "destination_name": "Medical ward",
+    "destination_label": "0x50 \"Medical ward\"",
+    "row_matches": [],
+    "window": "00 00 d8 0b 00 00 01 05 00 ff 00 00 e2 0b 00 00 01 50 00 ff 2c 0b 55 0c 00 00 3c 0b 34 0c 00 00 39 0c 55 0c 00 00 3c 0c"
+  },
+  {
+    "file": "P_ENT.MSD",
+    "location": "0x1b385",
+    "arg1": "0x1a",
+    "destination_name": "Central Hub (2 lines)",
+    "destination_label": "0x1a \"Central Hub (2 lines)\"",
+    "row_matches": [],
+    "window": "01 00 02 ee 1f 01 ff 02 1f 1f 06 ff 01 5f 01 00 01 1a 00 ff 02 94 0e 02 ff 02 cb 0e 01 ff 02 f8 0e 01 ff 02 29 05 01 04"
+  },
+  {
+    "file": "P_ENT.MSD",
+    "location": "0x1b39d",
+    "arg1": "0x1a",
+    "destination_name": "Central Hub (2 lines)",
+    "destination_label": "0x1a \"Central Hub (2 lines)\"",
+    "row_matches": [
+      {
+        "file": "P_ENT.MSD",
+        "offset": "0x00529",
+        "command": "Move City (before shopping)",
+        "block_command": "Move City (before shopping)",
+        "english": "Okay, let's go!"
+      }
+    ],
+    "window": "ff 02 cb 0e 01 ff 02 f8 0e 01 ff 02 29 05 01 04 01 1a 00 ff 02 e4 04 02 ff 02 41 00 03 ff 28 0a 81 0c bc 0c 10 00 97 0c",
+    "preceding_text": {
+      "opcode_location": "0x1b398",
+      "text_offset": "0x00529",
+      "arg": 1,
+      "delta": 5
+    }
+  },
+  {
+    "file": "P_ENT.MSD",
+    "location": "0x1bcb2",
+    "arg1": "0x16",
+    "destination_name": "Business Zone (2 lines)",
+    "destination_label": "0x16 \"Business Zone (2 lines)\"",
+    "row_matches": [],
+    "window": "ff 01 76 15 45 15 82 15 00 00 00 00 86 15 00 00 01 16 00 ff 02 58 00 02 ff d8 14 91 15 a9 15 55 00 f4 14 56 00 9f 15 57"
+  },
+  {
+    "file": "P_ENT.MSD",
+    "location": "0x1fb60",
+    "arg1": "0x18",
+    "destination_name": "Abandoned Zone",
+    "destination_label": "0x18 \"Abandoned Zone\"",
+    "row_matches": [],
+    "window": "00 02 03 00 02 25 01 02 ff 02 02 00 02 d4 00 02 01 18 00 ff 00 00 7a 17 00 00 01 13 00 fa 15 83 17 a9 17 10 00 95 17 5a",
+    "preceding_text": {
+      "opcode_location": "0x1fb5c",
+      "text_offset": "0x000d4",
+      "arg": 2,
+      "delta": 4
+    }
+  },
+  {
+    "file": "P_BYO.MSD",
+    "location": "0x1a8d1",
+    "arg1": "0x51",
+    "destination_name": "Entrance again?",
+    "destination_label": "0x51 \"Entrance again?\"",
+    "row_matches": [],
+    "window": "2d 00 97 01 ff ff ff 01 9b 01 00 00 a1 01 00 00 01 51 00 ff 00 00 ab 01 f8 01 10 00 c5 01 38 00 d3 01 39 00 d8 01 8d 00"
+  },
+  {
+    "file": "P_HI.MSD",
+    "location": "0x12957",
+    "arg1": "0x05",
+    "destination_name": "Corridor",
+    "destination_label": "0x05 \"Corridor\"",
+    "row_matches": [],
+    "window": "7b 1a ff ff ff 01 81 1a 8b 1a 00 00 87 1a 00 00 01 05 00 ff 00 00 91 1a 00 00 01 08 00 ff f2 18 9b 1a 03 1b 10 00 bd 1a"
+  },
+  {
+    "file": "P_HI.MSD",
+    "location": "0x12961",
+    "arg1": "0x08",
+    "destination_name": "Shower",
+    "destination_label": "0x08 \"Shower\"",
+    "row_matches": [],
+    "window": "00 00 87 1a 00 00 01 05 00 ff 00 00 91 1a 00 00 01 08 00 ff f2 18 9b 1a 03 1b 10 00 bd 1a 3b 00 c5 1a 47 00 ca 1a 0e 00"
+  },
+  {
+    "file": "P_CITY.MSD",
+    "location": "0x14050",
+    "arg1": "0x16",
+    "destination_name": "Business Zone (2 lines)",
+    "destination_label": "0x16 \"Business Zone (2 lines)\"",
+    "row_matches": [
+      {
+        "file": "P_CITY.MSD",
+        "offset": "0x00248",
+        "command": "Move Old Town/Business Zone (while Michass is here)",
+        "block_command": "Move Old Town/Business Zone (while Michass is here)",
+        "english": "Michass is here! We can't let her get away!"
+      }
+    ],
+    "window": "02 03 00 02 a5 01 01 ff 02 04 00 02 48 02 03 ff 01 16 00 ff 42 09 49 09 00 00 08 09 45 09 00 00 10 09 13 09 00 00 18 09",
+    "preceding_text": {
+      "opcode_location": "0x1404b",
+      "text_offset": "0x00248",
+      "arg": 3,
+      "delta": 5
+    }
+  },
+  {
+    "file": "P_CITY.MSD",
+    "location": "0x14079",
+    "arg1": "0x17",
+    "destination_name": "Old City",
+    "destination_label": "0x17 \"Old City\"",
+    "row_matches": [
+      {
+        "file": "P_CITY.MSD",
+        "offset": "0x0021d",
+        "command": "Move Old Town (after Michass disappears)",
+        "block_command": "Move Old Town (after Michass disappears)",
+        "english": "Okay, let's follow Michass!"
+      }
+    ],
+    "window": "09 00 00 00 00 49 09 00 00 d2 03 00 02 1d 02 01 01 17 00 ff 7e 08 7d 09 71 09 75 09 78 09 00 00 c6 08 7d 09 00 00 81 09",
+    "preceding_text": {
+      "opcode_location": "0x14075",
+      "text_offset": "0x0021d",
+      "arg": 1,
+      "delta": 4
+    }
+  },
+  {
+    "file": "P_CITY.MSD",
+    "location": "0x140ad",
+    "arg1": "0x51",
+    "destination_name": "Entrance again?",
+    "destination_label": "0x51 \"Entrance again?\"",
+    "row_matches": [
+      {
+        "file": "P_CITY.MSD",
+        "offset": "0x02890",
+        "command": "?",
+        "block_command": "?",
+        "english": "I don't want to go back until we've dealt with Labotech."
+      }
+    ],
+    "window": "91 09 00 00 01 d3 00 00 d2 07 00 02 90 28 02 ff 01 51 00 ff 02 03 00 02 56 03 02 ff 02 04 00 02 9d 03 03 ff 02 c0 02 04",
+    "preceding_text": {
+      "opcode_location": "0x140a8",
+      "text_offset": "0x02890",
+      "arg": 2,
+      "delta": 5
+    }
+  },
+  {
+    "file": "P_CITY.MSD",
+    "location": "0x14a89",
+    "arg1": "0x1d",
+    "destination_name": "Abandoned building, door 802 (1 line)",
+    "destination_label": "0x1d \"Abandoned building, door 802 (1 line)\"",
+    "row_matches": [],
+    "window": "ff 01 53 13 5d 13 67 13 71 13 00 00 59 13 00 00 01 1d 00 ff 00 00 63 13 00 00 01 1e 00 ff 00 00 6d 13 00 00 01 1f 00 ff"
+  },
+  {
+    "file": "P_CITY.MSD",
+    "location": "0x14a93",
+    "arg1": "0x1e",
+    "destination_name": "Abandoned building, door 804 (1 line)",
+    "destination_label": "0x1e \"Abandoned building, door 804 (1 line)\"",
+    "row_matches": [],
+    "window": "00 00 59 13 00 00 01 1d 00 ff 00 00 63 13 00 00 01 1e 00 ff 00 00 6d 13 00 00 01 1f 00 ff 00 00 77 13 00 00 01 20 00 ff"
+  },
+  {
+    "file": "P_CITY.MSD",
+    "location": "0x14a9d",
+    "arg1": "0x1f",
+    "destination_name": "Abandoned building, door 803 (1 line)",
+    "destination_label": "0x1f \"Abandoned building, door 803 (1 line)\"",
+    "row_matches": [],
+    "window": "00 00 63 13 00 00 01 1e 00 ff 00 00 6d 13 00 00 01 1f 00 ff 00 00 77 13 00 00 01 20 00 ff c6 12 81 13 8b 13 10 00 e6 12"
+  },
+  {
+    "file": "P_CITY.MSD",
+    "location": "0x14aa7",
+    "arg1": "0x20",
+    "destination_name": "Abandoned building, door right before Michass battle",
+    "destination_label": "0x20 \"Abandoned building, door right before Michass battle\"",
+    "row_matches": [],
+    "window": "00 00 6d 13 00 00 01 1f 00 ff 00 00 77 13 00 00 01 20 00 ff c6 12 81 13 8b 13 10 00 e6 12 2f 00 e6 12 ff ff 8f 13 ac 13"
+  },
+  {
+    "file": "P_CITY.MSD",
+    "location": "0x15344",
+    "arg1": "0x18",
+    "destination_name": "Abandoned Zone",
+    "destination_label": "0x18 \"Abandoned Zone\"",
+    "row_matches": [],
+    "window": "01 d2 06 01 ff 00 0e 1c 18 1c 00 00 14 1c 00 00 01 18 00 ff 24 1c 27 1c 00 00 00 00 2e 1c 3a 1c 94 00 00 04 07 1b 05 01"
+  },
+  {
+    "file": "P_CITY.MSD",
+    "location": "0x15366",
+    "arg1": "0x26",
+    "destination_name": "Sewer, just past grate",
+    "destination_label": "0x26 \"Sewer, just past grate\"",
+    "row_matches": [],
+    "window": "00 04 07 1b 05 01 26 00 02 72 05 04 04 07 1b 05 01 26 00 ff 01 94 00 00 66 1b 44 1c 5e 1c 10 00 52 1c 5d 00 54 1c 1f 01",
+    "preceding_text": {
+      "opcode_location": "0x1535e",
+      "text_offset": "0x00572",
+      "arg": 4,
+      "delta": 8
+    }
+  },
+  {
+    "file": "P_KYU.MSD",
+    "location": "0x202f9",
+    "arg1": "0x17",
+    "destination_name": "Old City",
+    "destination_label": "0x17 \"Old City\"",
+    "row_matches": [],
+    "window": "00 01 17 00 02 03 00 02 b0 00 02 ff 02 81 00 01 01 17 00 ff 96 1e 19 1f 1e 1f 00 00 22 1f 00 00 02 11 09 08 ff 01 3e 06",
+    "preceding_text": {
+      "opcode_location": "0x202f5",
+      "text_offset": "0x00081",
+      "arg": 1,
+      "delta": 4
+    }
+  },
+  {
+    "file": "P_KYU.MSD",
+    "location": "0x2031a",
+    "arg1": "0x1b",
+    "destination_name": "Abandoned building",
+    "destination_label": "0x1b \"Abandoned building\"",
+    "row_matches": [],
+    "window": "11 09 08 ff 01 3e 06 00 02 05 01 01 04 07 1b 03 01 1b 00 ff 40 1f 43 1f 48 1f 00 00 3a 1f 00 00 1b 04 01 22 00 ff d2 07",
+    "preceding_text": {
+      "opcode_location": "0x20312",
+      "text_offset": "0x00105",
+      "arg": 1,
+      "delta": 8
+    }
+  },
+  {
+    "file": "P_KYU.MSD",
+    "location": "0x2032c",
+    "arg1": "0x22",
+    "destination_name": "Minsky gate entrance (GYOTEI)",
+    "destination_label": "0x22 \"Minsky gate entrance (GYOTEI)\"",
+    "row_matches": [],
+    "window": "00 ff 40 1f 43 1f 48 1f 00 00 3a 1f 00 00 1b 04 01 22 00 ff d2 07 00 02 4d 1d 04 ff 01 93 07 00 5e 1f 64 1f 00 00 61 1f"
+  },
+  {
+    "file": "P_GYOTEI.MSD",
+    "location": "0x240b2",
+    "arg1": "0x25",
+    "destination_name": "Gyotei, Prim throne (1 line)",
+    "destination_label": "0x25 \"Gyotei, Prim throne (1 line)\"",
+    "row_matches": [],
+    "window": "01 04 04 00 ff 01 5c 0c 66 0c 00 00 62 0c 00 00 01 25 00 ff 00 00 6c 0c 00 00 01 23 00 ff d8 0b 76 0c 82 0c 10 00 80 0c"
+  },
+  {
+    "file": "P_GYOTEI.MSD",
+    "location": "0x240bc",
+    "arg1": "0x23",
+    "destination_name": "Gyotei interior (3 lines)",
+    "destination_label": "0x23 \"Gyotei interior (3 lines)\"",
+    "row_matches": [],
+    "window": "00 00 62 0c 00 00 01 25 00 ff 00 00 6c 0c 00 00 01 23 00 ff d8 0b 76 0c 82 0c 10 00 80 0c 97 00 80 0c ff ff ff 01 86 0c"
+  },
+  {
+    "file": "P_GYOTEI.MSD",
+    "location": "0x24281",
+    "arg1": "0x24",
+    "destination_name": "Gyotei place with lots of screens (2 lines?) Place with lots of screens",
+    "destination_label": "0x24 \"Gyotei place with lots of screens (2 lines?) Place with lots of screens\"",
+    "row_matches": [],
+    "window": "af 00 27 0e ff ff ff 01 2b 0e 00 00 31 0e 00 00 01 24 00 ff a4 0d 3b 0e 47 0e 10 00 45 0e b9 00 45 0e ff ff ff 01 4b 0e"
+  },
+  {
+    "file": "RASU1.MSD",
+    "location": "0x253fd",
+    "arg1": "0x21",
+    "destination_name": "Sewer grate",
+    "destination_label": "0x21 \"Sewer grate\"",
+    "row_matches": [],
+    "window": "ff ff ff 01 e5 01 f1 01 00 00 eb 01 00 00 1b 02 01 21 00 ff 00 00 f7 01 00 00 01 27 00 ff 58 01 01 02 0d 02 10 00 0b 02"
+  },
+  {
+    "file": "RASU1.MSD",
+    "location": "0x25407",
+    "arg1": "0x27",
+    "destination_name": "Sewer, gondola top (2 lines)",
+    "destination_label": "0x27 \"Sewer, gondola top (2 lines)\"",
+    "row_matches": [],
+    "window": "eb 01 00 00 1b 02 01 21 00 ff 00 00 f7 01 00 00 01 27 00 ff 58 01 01 02 0d 02 10 00 0b 02 e7 00 0b 02 ff ff ff 01 11 02"
+  },
+  {
+    "file": "RASU1.MSD",
+    "location": "0x255bb",
+    "arg1": "0x28",
+    "destination_name": "Sewer, on gondola",
+    "destination_label": "0x28 \"Sewer, on gondola\"",
+    "row_matches": [],
+    "window": "9f 03 ff ff ff 01 a5 03 af 03 00 00 ab 03 00 00 01 28 00 ff 00 00 b5 03 00 00 01 26 00 ff 18 03 bf 03 cb 03 10 00 c9 03"
+  },
+  {
+    "file": "RASU1.MSD",
+    "location": "0x255c5",
+    "arg1": "0x26",
+    "destination_name": "Sewer, just past grate",
+    "destination_label": "0x26 \"Sewer, just past grate\"",
+    "row_matches": [],
+    "window": "00 00 ab 03 00 00 01 28 00 ff 00 00 b5 03 00 00 01 26 00 ff 18 03 bf 03 cb 03 10 00 c9 03 e7 00 c9 03 ff ff ff 01 cf 03"
+  },
+  {
+    "file": "RASU1.MSD",
+    "location": "0x258b7",
+    "arg1": "0x27",
+    "destination_name": "Sewer, gondola top (2 lines)",
+    "destination_label": "0x27 \"Sewer, gondola top (2 lines)\"",
+    "row_matches": [],
+    "window": "9b 06 ff ff ff 01 a1 06 b1 06 00 00 a7 06 00 00 01 27 00 ff 01 01 04 00 02 00 00 00 b7 06 00 00 01 29 00 ff 14 06 c1 06"
+  },
+  {
+    "file": "RASU1.MSD",
+    "location": "0x258c7",
+    "arg1": "0x29",
+    "destination_name": "Sewer, still on gondola (5 lines)",
+    "destination_label": "0x29 \"Sewer, still on gondola (5 lines)\"",
+    "row_matches": [
+      {
+        "file": "RASU1.MSD",
+        "offset": "0x00000",
+        "command": "Look Around",
+        "block_command": "Look Around",
+        "english": "The tunnel stretches out in front of us and behind us. Parts of it appear to be crumbling."
+      }
+    ],
+    "window": "01 27 00 ff 01 01 04 00 02 00 00 00 b7 06 00 00 01 29 00 ff 14 06 c1 06 cd 06 10 00 cb 06 99 00 cb 06 ff ff ff 01 d1 06",
+    "preceding_text": {
+      "opcode_location": "0x258bf",
+      "text_offset": "0x00000",
+      "arg": 0,
+      "delta": 8
+    }
+  },
+  {
+    "file": "RASU1.MSD",
+    "location": "0x25a89",
+    "arg1": "0x28",
+    "destination_name": "Sewer, on gondola",
+    "destination_label": "0x28 \"Sewer, on gondola\"",
+    "row_matches": [],
+    "window": "6d 08 ff ff ff 01 73 08 7d 08 00 00 79 08 00 00 01 28 00 ff 00 00 83 08 00 00 01 2a 00 ff e6 07 8d 08 99 08 10 00 97 08"
+  },
+  {
+    "file": "RASU1.MSD",
+    "location": "0x25a93",
+    "arg1": "0x2a",
+    "destination_name": "Sewer, on gondola",
+    "destination_label": "0x2a \"Sewer, on gondola\"",
+    "row_matches": [],
+    "window": "00 00 79 08 00 00 01 28 00 ff 00 00 83 08 00 00 01 2a 00 ff e6 07 8d 08 99 08 10 00 97 08 ef 00 97 08 ff ff ff 01 9d 08"
+  },
+  {
+    "file": "RASU1.MSD",
+    "location": "0x25e19",
+    "arg1": "0x29",
+    "destination_name": "Sewer, still on gondola (5 lines)",
+    "destination_label": "0x29 \"Sewer, still on gondola (5 lines)\"",
+    "row_matches": [],
+    "window": "fd 0b ff ff ff 01 03 0c 0d 0c 00 00 09 0c 00 00 01 29 00 ff 00 00 13 0c 00 00 01 2b 00 ff 76 0b 1d 0c 29 0c 10 00 27 0c"
+  },
+  {
+    "file": "RASU1.MSD",
+    "location": "0x25e23",
+    "arg1": "0x2b",
+    "destination_name": "Sewer, bottom of gondola (4 lines?)",
+    "destination_label": "0x2b \"Sewer, bottom of gondola (4 lines?)\"",
+    "row_matches": [],
+    "window": "00 00 09 0c 00 00 01 29 00 ff 00 00 13 0c 00 00 01 2b 00 ff 76 0b 1d 0c 29 0c 10 00 27 0c 46 00 27 0c ff ff ff 01 2d 0c"
+  },
+  {
+    "file": "RASU1.MSD",
+    "location": "0x26009",
+    "arg1": "0x2a",
+    "destination_name": "Sewer, on gondola",
+    "destination_label": "0x2a \"Sewer, on gondola\"",
+    "row_matches": [],
+    "window": "ed 0d ff ff ff 01 f3 0d fd 0d 00 00 f9 0d 00 00 01 2a 00 ff 00 00 03 0e 00 00 01 2c 00 ff 66 0d 0d 0e 19 0e 10 00 17 0e"
+  },
+  {
+    "file": "RASU1.MSD",
+    "location": "0x26013",
+    "arg1": "0x2c",
+    "destination_name": "Sewer, bend in the road",
+    "destination_label": "0x2c \"Sewer, bend in the road\"",
+    "row_matches": [],
+    "window": "00 00 f9 0d 00 00 01 2a 00 ff 00 00 03 0e 00 00 01 2c 00 ff 66 0d 0d 0e 19 0e 10 00 17 0e e9 00 17 0e ff ff ff 01 1d 0e"
+  },
+  {
+    "file": "RASU2.MSD",
+    "location": "0x26201",
+    "arg1": "0x2d",
+    "destination_name": "Sewer, road to freaky brain lab",
+    "destination_label": "0x2d \"Sewer, road to freaky brain lab\"",
+    "row_matches": [],
+    "window": "e5 0f ff ff ff 01 eb 0f f5 0f 00 00 f1 0f 00 00 01 2d 00 ff 00 00 fb 0f 00 00 01 2b 00 ff 5e 0f 05 10 11 10 10 00 0f 10"
+  },
+  {
+    "file": "RASU2.MSD",
+    "location": "0x2620b",
+    "arg1": "0x2b",
+    "destination_name": "Sewer, bottom of gondola (4 lines?)",
+    "destination_label": "0x2b \"Sewer, bottom of gondola (4 lines?)\"",
+    "row_matches": [],
+    "window": "00 00 f1 0f 00 00 01 2d 00 ff 00 00 fb 0f 00 00 01 2b 00 ff 5e 0f 05 10 11 10 10 00 0f 10 82 00 0f 10 ff ff ff 01 15 10"
+  },
+  {
+    "file": "RASU2.MSD",
+    "location": "0x263f9",
+    "arg1": "0x2e",
+    "destination_name": "Brain lab entrance (5 lines)",
+    "destination_label": "0x2e \"Brain lab entrance (5 lines)\"",
+    "row_matches": [],
+    "window": "dd 11 ff ff ff 01 e3 11 f3 11 00 00 e9 11 00 00 01 2e 00 ff 01 01 04 00 02 00 00 00 f9 11 00 00 01 2c 00 ff 01 01 04 00"
+  },
+  {
+    "file": "RASU2.MSD",
+    "location": "0x26409",
+    "arg1": "0x2c",
+    "destination_name": "Sewer, bend in the road",
+    "destination_label": "0x2c \"Sewer, bend in the road\"",
+    "row_matches": [
+      {
+        "file": "RASU2.MSD",
+        "offset": "0x00000",
+        "command": "?",
+        "block_command": "?",
+        "english": null
+      }
+    ],
+    "window": "01 2e 00 ff 01 01 04 00 02 00 00 00 f9 11 00 00 01 2c 00 ff 01 01 04 00 02 00 56 11 09 12 15 12 10 00 13 12 98 00 13 12",
+    "preceding_text": {
+      "opcode_location": "0x26401",
+      "text_offset": "0x00000",
+      "arg": 0,
+      "delta": 8
+    }
+  },
+  {
+    "file": "RASU2.MSD",
+    "location": "0x2661c",
+    "arg1": "0x2d",
+    "destination_name": "Sewer, road to freaky brain lab",
+    "destination_label": "0x2d \"Sewer, road to freaky brain lab\"",
+    "row_matches": [],
+    "window": "01 05 04 01 ff 00 06 14 10 14 00 00 0c 14 00 00 01 2d 00 ff 00 00 16 14 00 00 01 2f 00 ff 74 13 20 14 2c 14 10 00 2a 14"
+  },
+  {
+    "file": "RASU2.MSD",
+    "location": "0x26626",
+    "arg1": "0x2f",
+    "destination_name": "Brain lab, room with tanks",
+    "destination_label": "0x2f \"Brain lab, room with tanks\"",
+    "row_matches": [],
+    "window": "00 00 0c 14 00 00 01 2d 00 ff 00 00 16 14 00 00 01 2f 00 ff 74 13 20 14 2c 14 10 00 2a 14 f5 00 2a 14 ff ff ff 01 30 14"
+  },
+  {
+    "file": "RASU2.MSD",
+    "location": "0x269d2",
+    "arg1": "0x30",
+    "destination_name": "Brain lab core with Rasmal robot",
+    "destination_label": "0x30 \"Brain lab core with Rasmal robot\"",
+    "row_matches": [],
+    "window": "01 05 04 01 ff 00 bc 17 c6 17 00 00 c2 17 00 00 01 30 00 ff 00 00 cc 17 00 00 01 2e 00 ff 38 17 d6 17 e2 17 10 00 e0 17"
+  },
+  {
+    "file": "RASU2.MSD",
+    "location": "0x269dc",
+    "arg1": "0x2e",
+    "destination_name": "Brain lab entrance (5 lines)",
+    "destination_label": "0x2e \"Brain lab entrance (5 lines)\"",
+    "row_matches": [],
+    "window": "00 00 c2 17 00 00 01 30 00 ff 00 00 cc 17 00 00 01 2e 00 ff 38 17 d6 17 e2 17 10 00 e0 17 f7 00 e0 17 ff ff ff 01 e6 17"
+  },
+  {
+    "file": "RASU2.MSD",
+    "location": "0x26bb4",
+    "arg1": "0x2f",
+    "destination_name": "Brain lab, room with tanks",
+    "destination_label": "0x2f \"Brain lab, room with tanks\"",
+    "row_matches": [],
+    "window": "68 00 9a 19 ff ff ff 01 9e 19 00 00 a4 19 00 00 01 2f 00 ff 04 19 ae 19 c8 19 10 00 bc 19 f8 00 c3 19 ad 00 be 19 ff ff"
+  }
+]

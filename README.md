@@ -82,6 +82,17 @@
     * Add `--post-space-count 1` when the game needs an extra `Space` press after all steps to advance from text into the next state.
     * `--post-focus-left-click-count` still exists as a fallback, but `Space` is now the preferred path for those advances.
     * Add `--trace-dir some\folder` to save intermediate screenshots after each step for debugging route drift.
+* To automate a route through WSL `libTAS` + `sdlnp21kai` and capture the result:
+    * Make sure WSL `libTAS` and `sdlnp21kai` are installed, and point the helper at the PC-98 font ROM (in this setup: `D:\libtas\font.rom`).
+    * Boot the shared patched image through libTAS and run one menu pick: `python experiment_libtas_route.py --hdi patched\Possessioner.hdi --font D:\libtas\font.rom --step 1:1 --output route.png --close-existing`
+    * Load only a save file and capture after one extra `Space`: `python experiment_libtas_route.py --route load-only --hdi patched\Possessioner.hdi --font D:\libtas\font.rom --file-index 0 --post-space-count 1 --output route.png --close-existing`
+    * For title-screen routes, add `--start-mode new-game`. The helper now brute-force presses `Enter` through boot/title startup and then waits for the configured `--new-game-delay`, which is more reliable here than trying to visually detect every startup state.
+    * Add `--trace-dir some\folder` to save intermediate screenshots after each step.
+    * Add `--pause-before-capture --frame-advance-count N` if you want libTAS to pause and then step `N` exact frames before the final screenshot.
+    * Add `--normal-speed-after-seconds N` if you want the helper to start in fast-forward and automatically return to normal speed after `N` in-game seconds.
+    * Gameplay keys are sent from the WSL side through X11/XTest so they reach `sdlnp21kai` reliably under WSLg; the older Windows foreground-key path was not sufficient for in-game control.
+    * The helper still uses the Windows-side key path for libTAS hotkeys such as `Pause` and frame advance (`V`) after routing.
+    * The helper temporarily rewrites `~/.config/sdlnp21kai/np21kai.cfg` inside the required `[NekoProject21kai]` section, stages a temporary runtime directory with `font.rom` / `FONT.ROM` beside `sdlnp21kai`, applies the required `main_gettimes_threshold` tweak in `~/.config/libTAS/sdlnp21kai.ini`, and restores those files on exit.
 
 #### Script viewer
 * Build the browser viewer dataset:
@@ -94,8 +105,8 @@
     * inspect pointer/parser context
     * browse a file-level navigation map built from the state graph
     * explore `action -> target -> block` links from the command matrix
-    * inspect a walkthrough-readiness heatmap
-    * inspect a per-file block graph with dispatch / flag / transition emphasis
+    * inspect a walkthrough-readiness heatmap built around `route-known`, `conditional`, and `trigger-unknown` counts
+    * inspect a per-file block graph with dispatch / flag / room-transition / event-transition emphasis
     * inspect flag-gated hotspots by file
-    * build route hypotheses from known action/target links and outgoing transitions/handoffs
+    * build route hypotheses from known action/target links and outgoing room transitions / event transitions
     * save local draft edits in the browser and export them as JSON for future workbook write-back

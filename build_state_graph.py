@@ -39,6 +39,52 @@ def summarize_text(rows: list[dict[str, Any]], limit: int = 3) -> list[str]:
     return snippets
 
 
+OPTIONAL_ACTIONS = {"Look", "Talk", "Examine", "Think", "Move"}
+
+
+def classify_node(
+    commands: list[str],
+    block_command: str | None,
+    display_types: list[str],
+    dispatch_triggers: list[dict[str, Any]],
+    event_transitions: list[dict[str, Any]],
+    room_transitions: list[dict[str, Any]],
+    flag_gates: list[dict[str, Any]],
+) -> tuple[str, str]:
+    command_texts = [cmd for cmd in commands if cmd] + ([block_command] if block_command else [])
+    lowered_display = " | ".join(display_types).lower()
+    actions = {(trigger.get("action") or "").strip() for trigger in dispatch_triggers if trigger.get("action")}
+    optional_command = any(
+        any(text.startswith(prefix) for prefix in OPTIONAL_ACTIONS)
+        for text in command_texts
+    )
+    optional_dispatch = bool(actions & OPTIONAL_ACTIONS)
+    has_display_path = bool(display_types) and not all(text == "manual block only" for text in display_types)
+    route_known = bool(command_texts or dispatch_triggers or event_transitions or room_transitions or has_display_path)
+
+    if route_known:
+        route_status = "conditional" if flag_gates else "known"
+    else:
+        route_status = "unknown"
+
+    if optional_command or optional_dispatch:
+        route_role = "optional"
+    elif (
+        block_command in {"(Arrive)", "(End of scene)"}
+        or "arrival text" in lowered_display
+        or "direct range" in lowered_display
+        or event_transitions
+        or room_transitions
+    ):
+        route_role = "critical"
+    elif route_known:
+        route_role = "critical"
+    else:
+        route_role = "unknown"
+
+    return route_status, route_role
+
+
 def should_start_new_node(previous: dict[str, Any] | None, current: dict[str, Any]) -> bool:
     if previous is None:
         return True
@@ -58,16 +104,16 @@ def build_node(file_name: str, rows: list[dict[str, Any]]) -> dict[str, Any]:
     display_types: list[str] = []
     display_details: list[str] = []
     dispatch_triggers: list[dict[str, Any]] = []
-    handoffs: list[dict[str, Any]] = []
-    transitions: list[dict[str, Any]] = []
+    event_transitions: list[dict[str, Any]] = []
+    room_transitions: list[dict[str, Any]] = []
     flag_gates: list[dict[str, Any]] = []
 
     command_seen: set[str] = set()
     display_type_seen: set[str] = set()
     display_detail_seen: set[str] = set()
     dispatch_seen: set[str] = set()
-    handoff_seen: set[str] = set()
-    transition_seen: set[str] = set()
+    event_transition_seen: set[str] = set()
+    room_transition_seen: set[str] = set()
     flag_seen: set[str] = set()
 
     for row in rows:
@@ -103,26 +149,26 @@ def build_node(file_name: str, rows: list[dict[str, Any]]) -> dict[str, Any]:
 
         for context in row.get("handoff_contexts", []):
             append_unique(
-                handoffs,
+                event_transitions,
                 {
                     "location": context.get("location"),
                     "arg1": context.get("arg1"),
                     "destination_label": context.get("destination_label"),
                     "preceding_text": context.get("preceding_text"),
                 },
-                handoff_seen,
+                event_transition_seen,
             )
 
         for context in row.get("transition_contexts", []):
             append_unique(
-                transitions,
+                room_transitions,
                 {
                     "location": context.get("location"),
                     "arg1": context.get("arg1"),
                     "destination_label": context.get("destination_label"),
                     "preceding_text": context.get("preceding_text"),
                 },
-                transition_seen,
+                room_transition_seen,
             )
 
         for context in row.get("flag_contexts", []):
@@ -138,6 +184,16 @@ def build_node(file_name: str, rows: list[dict[str, Any]]) -> dict[str, Any]:
                 flag_seen,
             )
 
+    route_status, route_role = classify_node(
+        commands,
+        rows[0].get("block_command"),
+        display_types,
+        dispatch_triggers,
+        event_transitions,
+        room_transitions,
+        flag_gates,
+    )
+
     return {
         "id": node_id,
         "file": file_name,
@@ -149,9 +205,11 @@ def build_node(file_name: str, rows: list[dict[str, Any]]) -> dict[str, Any]:
         "display_types": display_types,
         "display_details": display_details,
         "english_preview": summarize_text(rows),
+        "route_status": route_status,
+        "route_role": route_role,
         "dispatch_triggers": dispatch_triggers,
-        "handoffs": handoffs,
-        "transitions": transitions,
+        "event_transitions": event_transitions,
+        "room_transitions": room_transitions,
         "flag_gates": flag_gates,
     }
 
@@ -194,37 +252,37 @@ def build_file_graph(file_name: str, rows: list[dict[str, Any]]) -> dict[str, An
                 edge_seen,
             )
 
-        for handoff in node["handoffs"]:
-            destination = handoff.get("destination_label")
+        for event_transition in node["event_transitions"]:
+            destination = event_transition.get("destination_label")
             if destination and destination not in destination_seen:
                 destination_seen.add(destination)
                 destinations.append(destination)
             append_unique(
                 edges,
                 {
-                    "type": "handoff",
+                    "type": "event_transition",
                     "file": file_name,
                     "from_node": node["id"],
-                    "location": handoff.get("location"),
-                    "arg1": handoff.get("arg1"),
+                    "location": event_transition.get("location"),
+                    "arg1": event_transition.get("arg1"),
                     "destination_label": destination,
                 },
                 edge_seen,
             )
 
-        for transition in node["transitions"]:
-            destination = transition.get("destination_label")
+        for room_transition in node["room_transitions"]:
+            destination = room_transition.get("destination_label")
             if destination and destination not in destination_seen:
                 destination_seen.add(destination)
                 destinations.append(destination)
             append_unique(
                 edges,
                 {
-                    "type": "transition",
+                    "type": "room_transition",
                     "file": file_name,
                     "from_node": node["id"],
-                    "location": transition.get("location"),
-                    "arg1": transition.get("arg1"),
+                    "location": room_transition.get("location"),
+                    "arg1": room_transition.get("arg1"),
                     "destination_label": destination,
                 },
                 edge_seen,
@@ -243,8 +301,8 @@ def build_file_graph(file_name: str, rows: list[dict[str, Any]]) -> dict[str, An
         "node_count": len(nodes),
         "edge_count": len(edges),
         "dispatch_edge_count": sum(1 for edge in edges if edge["type"] == "dispatch"),
-        "handoff_edge_count": sum(1 for edge in edges if edge["type"] == "handoff"),
-        "transition_edge_count": sum(1 for edge in edges if edge["type"] == "transition"),
+        "event_transition_edge_count": sum(1 for edge in edges if edge["type"] == "event_transition"),
+        "room_transition_edge_count": sum(1 for edge in edges if edge["type"] == "room_transition"),
         "action_target_pairs": action_target_pairs,
         "destinations": destinations,
         "nodes": nodes,
@@ -257,8 +315,8 @@ def build_graph(trigger_model: dict[str, list[dict[str, Any]]]) -> dict[str, Any
     total_nodes = 0
     total_edges = 0
     total_dispatch_edges = 0
-    total_handoff_edges = 0
-    total_transition_edges = 0
+    total_event_transition_edges = 0
+    total_room_transition_edges = 0
 
     for file_name, rows in trigger_model.items():
         if not rows:
@@ -268,8 +326,8 @@ def build_graph(trigger_model: dict[str, list[dict[str, Any]]]) -> dict[str, Any
         total_nodes += file_graph["node_count"]
         total_edges += file_graph["edge_count"]
         total_dispatch_edges += file_graph["dispatch_edge_count"]
-        total_handoff_edges += file_graph["handoff_edge_count"]
-        total_transition_edges += file_graph["transition_edge_count"]
+        total_event_transition_edges += file_graph["event_transition_edge_count"]
+        total_room_transition_edges += file_graph["room_transition_edge_count"]
 
     return {
         "global_summary": {
@@ -277,8 +335,8 @@ def build_graph(trigger_model: dict[str, list[dict[str, Any]]]) -> dict[str, Any
             "node_count": total_nodes,
             "edge_count": total_edges,
             "dispatch_edge_count": total_dispatch_edges,
-            "handoff_edge_count": total_handoff_edges,
-            "transition_edge_count": total_transition_edges,
+            "event_transition_edge_count": total_event_transition_edges,
+            "room_transition_edge_count": total_room_transition_edges,
         },
         "files": files,
     }

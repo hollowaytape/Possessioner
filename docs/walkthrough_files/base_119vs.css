@@ -1,0 +1,406 @@
+@charset "utf-8";
+
+
+dl, blockquote { line-height:130%; }
+
+body,td{
+font:12px;
+font-family:arial,helvetica,"ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro",Osaka,"メイリオ",Meiryo,"MS Pゴシック",clean,sans-serif;
+color: #000000;
+line-height:1.5em;
+}
+
+/*******************************************
+*******************************************/
+
+/*ページタイトル*/
+/*page-title*/
+
+td.top{
+FONT-SIZE: 16pt; 
+padding-left:5px;margin-top:0; padding-top:0;
+border:none;
+}
+
+/* ページ右上のメニュー */
+/* menu of right-top of the page */
+
+
+.topmenu{
+    border-right:solid black 1px;
+    padding:0px 5px;
+}
+
+#container {
+    min-width: 1100px;
+    /width: 1100px;
+}
+
+/* ページ右上のメニューの「ログイン（ログアウト）」の部分 */
+/* part of "login-logout" in the menu of right-top of the page */
+
+
+.loginout{
+    border:solid #000 1px;
+    padding:1px 5px;
+    background-color:#eee;
+}
+
+#atwiki-jp-bg2{
+    padding-top: 1px;
+}
+
+/* 左のメニューバー */
+/* left-menu */
+
+#menubar {
+    vertical-align: top;
+    padding-right:3px;
+    border:double #ddd 3px;
+    background-color:#eee;
+    margin-left:10px;
+    width:200px;
+    float: left;
+    overflow: hidden;
+}
+
+
+/*左のメニューバーにおけるリストの扱いです*/
+#menubar ul{
+    width:auto; /*デフォルトは"auto"ですが、変えるときは"120px"が目安です*/
+    line-height:2.0em;/*一行の高さを指定できます。*/
+    padding-left:20px;
+    padding-right:2px;
+    margin:1px;
+}
+#menubar ol{
+    width:auto; /*デフォルトは"auto"ですが、変えるときは"120px"が目安です*/
+    line-height:2.0em;/*一行の高さを指定できます。*/
+    padding-left:20px;
+    padding-right:2px;
+    margin:1px;
+}
+
+
+/* 「編集する」のメニュー */
+/* menu of "edit this page" */
+
+
+.editthispage{
+    border:solid black 1px;
+    padding:3px;
+    background-color:#efe;
+}
+
+
+
+/* 「トラックバック・リンク元」のメニュー */
+/* menu of "trackback","link" */
+
+
+
+.topmenudayo{
+
+border:solid black 1px;
+padding:3px;
+
+}
+
+
+
+/* リスト */
+/* list */
+
+
+
+ul{
+    list-style-type: disc;
+    margin:5px;
+    padding-left:20px;
+    line-height:2em;
+}
+
+ol{
+    list-style-type: decimal;
+    margin:5px;
+    padding-left:20px;
+    line-height:2em;
+}
+
+
+
+
+/*******************************************
+*******************************************/
+
+
+
+
+a{
+    font-weight:bold;
+}
+
+a:link{
+    text-decoration: none;
+    color: blue;
+}
+
+a:visited{
+    text-decoration: none;
+    color: #000;
+}
+
+a:hover{
+    text-decoration: underline;
+    color: red;
+}
+
+a:active{
+    text-decoration: none;
+    color: red;
+}
+
+/*******************************************
+*******************************************/
+
+dt{
+    margin: 0.5em 0px 0px 0px;
+    padding: 0px;
+    border-bottom: 1px dashed #666;
+}
+
+/*******************************************
+*******************************************/
+
+h1{
+    font-size: 26px;
+    background:#eee;
+    letter-spacing: 0.2em;
+    padding:5px;
+    margin:5px 0px 8 0px;
+    border-bottom: solid 3px #aaaaaa;
+    border-right: solid 3px #aaaaaa;
+}
+
+h2{
+    background:#eee;
+    font-size: 110%;
+    font-weight: bold;
+    letter-spacing: 0.2em;
+    padding:5px;
+    margin:5px 0px 8 0px;
+    border-bottom: solid 3px #aaaaaa;
+    border-right: solid 3px #aaaaaa;
+}
+
+h3{
+    background:#eee;
+    font-size: 100%;
+    font-weight: bold;
+    letter-spacing: 0.3em;
+    margin: 3em 0em 0em 1em;
+    padding: 0px;
+    border-bottom: solid 1px #aaaaaa;
+}
+
+h4{
+    background:#eee;
+    font-size: 100%;
+    font-weight: normal;
+    line-height: 100%;
+    letter-spacing: 0.1em;
+    margin: 3em 0em 0em 1em;
+    padding-left: 0.5em;
+    border-left: solid 10px #aaaaaa;
+}
+
+h5, h6{
+    background:#eee;
+    padding: 1px;
+    border-bottom: dotted 1px #aaaaaa;
+}
+
+p{
+    text-indent: 1em;
+}
+
+pre{
+    border-top: 	 #DDDDEE 1px solid;
+    border-bottom: #888899 1px solid;
+    border-left:	 #DDDDEE 1px solid;
+    border-right:  #888899 1px solid;
+    padding: .5em;
+    margin-left: 1em;
+    margin-right: 2em;
+    white-space: pre;
+    background-color: #F0F0F0;
+    color: black;
+}
+
+img{
+    border: none;
+    vertical-align: middle;
+}
+
+
+
+em{
+    font-style:italic;
+}
+
+strong{
+    font-weight:bold;
+}
+
+address{
+    font-style:normal;
+    font-size:8px;
+}
+
+/*-- 存在しないページへのリンク --*/
+a.noexistpage{
+    background-color: #cfc;
+    font:white;
+}
+
+
+
+
+.plugin_recent_list{
+    margin:0px;
+    margin-left:1em;
+    padding:0px;
+    border:0px;
+    word-wrap:break-word;
+    word-break:break-all;
+}
+
+div.p_left{
+    text-align:left;
+    border:dotted black 1px;
+}
+div.p_center{
+    text-align:center;
+}
+div.p_right{
+    text-align:right;
+}
+
+/*意味段落*/
+div.subsection{
+    margin: 1.4em 0px;
+}
+
+/*存在しないInterWikiName*/
+span.nointerwikiname{
+    background-color: #ffe;
+}
+
+/*その他の警告*/
+p.warning,
+    span.warning{
+    color: #FF99BE;
+}
+
+/*css有効時に隠したいテキスト*/
+.hidden{
+display: none;
+}
+
+
+/*
+ * 差分表示
+ */
+span.diff_add{
+color: red;
+}
+
+span.diff_del{
+color: blue;
+}
+
+span.search{
+color: black;
+background-color: yellow;
+}
+
+div#editmenu{
+text-align:right;
+margin-bottom: 0.5em;
+
+}
+
+
+#header {
+    font-size: 16px;
+    font-weight:bold;
+    letter-spacing: 0.2em;
+    margin:1px;
+    text-align: left;
+}
+#header h1 {
+    font-size: 16px;
+    display: inline-block;
+    background: none;
+    border: none;
+}
+
+#header h2{
+    background:none;
+}
+
+div#footer{
+background-color:#eee;
+text-align:center;
+}
+
+div.referer_attach{
+text-align:right;
+}
+
+div.referer_page{
+text-align:right;
+}
+
+div#contents{
+    border:solid black 1px;
+    margin: 0px 10px 0px 235px;
+    padding: 5px 10px;
+    overflow: hidden;
+    min-width: 830px;
+    /width: 830px;
+}
+
+div#ad{
+margin: 0px 0px 10px 0px;
+}
+
+span.word1{ color: black; background-color: #ffff66; }
+span.word2{ color: black; background-color: #a0ffff; }
+span.word3{ color: black; background-color: #99ff99; }
+span.word4{ color: black; background-color: #ff9999; }
+span.word5{ color: black; background-color: #ff66ff; }
+span.word6{ color: white; background-color: #880000; }
+span.word7{ color: white; background-color: #00aa00; }
+span.word8{ color: white; background-color: #886800; }
+span.word9{ color: white; background-color: #004699; }
+span.word10{ color: white; background-color: #990099; }
+
+a.atwiki-hedit:before{
+    background-image: url(/common/_img/ic-edit-alt-gray.svg);
+}
+
+/*ads*/
+
+.gafc_on{
+	background-color:#ECECEC;
+}
+a.gafc_domain{
+	color:green;
+}
+
+/* Hides from IE-mac \*/
+ * html #source___Frame{ width:97% !important;}
+ /* End hide from IE-mac */
+
+

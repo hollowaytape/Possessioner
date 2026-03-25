@@ -134,4 +134,5 @@ screens/
 *.png
 *.xlsx
 PSSR_dump.xlsx
+script_viewer/assets/*
 script_viewer/viewer-data.js

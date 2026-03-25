@@ -1,0 +1,282 @@
+[
+  {
+    "location": "0x0eb68",
+    "owner_file": "POS1.MSD",
+    "slot": 6,
+    "slot_hex": "0x06",
+    "pattern_bytes": "01 05 00 11 05 11 06 11 07 00 11 06 00 01 11 06 00 01 01 07 00",
+    "text_entries": [
+      {
+        "opcode_location": "0x0eb7d",
+        "text_offset": "0x00197",
+        "line_count": 2,
+        "terminator": "0xff",
+        "rows": [
+          {
+            "file": "POS1.MSD",
+            "offset": "0x00197",
+            "command": "Look Honghua (after attack)",
+            "block_command": "Look Honghua (after attack)",
+            "english": "Her face is tense, like she's ready to fight."
+          }
+        ]
+      },
+      {
+        "opcode_location": "0x0eb82",
+        "text_offset": "0x001d4",
+        "line_count": 2,
+        "terminator": "0xff",
+        "rows": [
+          {
+            "file": "POS1.MSD",
+            "offset": "0x001d4",
+            "command": "Look Honghua (3)",
+            "block_command": "Look Honghua (3)",
+            "english": null
+          },
+          {
+            "file": "P_CITY.MSD",
+            "offset": "0x001d4",
+            "command": "",
+            "block_command": "Move Old Town/Business Zone (after Meryl points out Michass)",
+            "english": "Remember that girl I pointed out a minute ago? Keep your eyes peeled for her!"
+          }
+        ]
+      },
+      {
+        "opcode_location": "0x0eb87",
+        "text_offset": "0x00215",
+        "line_count": 3,
+        "terminator": "0xff",
+        "rows": [
+          {
+            "file": "POS1.MSD",
+            "offset": "0x00215",
+            "command": "Look - Honghua (2)",
+            "block_command": "Look - Honghua (2)",
+            "english": "Honghua has the ability to summon various magical creatures. She could probably summon one right now if she wanted."
+          },
+          {
+            "file": "P_GE.MSD",
+            "offset": "0x00215",
+            "command": "",
+            "block_command": "Talk All",
+            "english": null
+          }
+        ]
+      },
+      {
+        "opcode_location": "0x0eb8c",
+        "text_offset": "0x00156",
+        "line_count": 2,
+        "terminator": "0xff",
+        "rows": [
+          {
+            "file": "POS1.MSD",
+            "offset": "0x00156",
+            "command": "Look - Honghua (1)",
+            "block_command": "Look - Honghua (1)",
+            "english": "She's the oldest member of Slit. Her hair's done up in buns."
+          }
+        ]
+      }
+    ],
+    "flag_ops": []
+  },
+  {
+    "location": "0x0eba9",
+    "owner_file": "POS1.MSD",
+    "slot": 7,
+    "slot_hex": "0x07",
+    "pattern_bytes": "01 05 00 11 05 11 06 11 07 00 11 07 00 01 11 07 00 01 01 07 00",
+    "text_entries": [
+      {
+        "opcode_location": "0x0ebbe",
+        "text_offset": "0x002d3",
+        "line_count": 1,
+        "terminator": "0xff",
+        "rows": [
+          {
+            "file": "POS1.MSD",
+            "offset": "0x002d3",
+            "command": "Look Meryl (after attack)",
+            "block_command": "Look Meryl (after attack)",
+            "english": "She's already halfway out the door."
+          }
+        ]
+      },
+      {
+        "opcode_location": "0x0ebc3",
+        "text_offset": "0x002fc",
+        "line_count": 3,
+        "terminator": "0xff",
+        "rows": [
+          {
+            "file": "POS1.MSD",
+            "offset": "0x002fc",
+            "command": "Look Meryl (3)",
+            "block_command": "Look Meryl (3)",
+            "english": "Meryl is our resident weapons expert, but she has a bad habit of carrying concealed weapons."
+          },
+          {
+            "file": "MINS.MSD",
+            "offset": "0x002fc",
+            "command": "",
+            "block_command": "Scene begins",
+            "english": null
+          },
+          {
+            "file": "NEDRA1.MSD",
+            "offset": "0x002fc",
+            "command": "",
+            "block_command": "Scene begins",
+            "english": "Y-you wanna join in too, Honghua?"
+          }
+        ]
+      },
+      {
+        "opcode_location": "0x0ebc8",
+        "text_offset": "0x00390",
+        "line_count": 3,
+        "terminator": "0xff",
+        "rows": [
+          {
+            "file": "POS1.MSD",
+            "offset": "0x00390",
+            "command": "Look Meryl 2",
+            "block_command": "Look Meryl 2",
+            "english": "Meryl joined Slit because of her expertise with weapons, but she has a bad habit of carrying concealed weapons."
+          },
+          {
+            "file": "MAI.MSD",
+            "offset": "0x00390",
+            "command": "Touch Hair (CG2)",
+            "block_command": "Touch Hair (CG2)",
+            "english": null
+          }
+        ]
+      },
+      {
+        "opcode_location": "0x0ebcd",
+        "text_offset": "0x0028e",
+        "line_count": 2,
+        "terminator": "0xff",
+        "rows": [
+          {
+            "file": "POS1.MSD",
+            "offset": "0x0028e",
+            "command": "Look - Meryl (1)",
+            "block_command": "Look - Meryl (1)",
+            "english": "She's an energetic, happy-go-lucky girl. I think she has a little crush on me."
+          },
+          {
+            "file": "MERYL.MSD",
+            "offset": "0x0028e",
+            "command": "",
+            "block_command": "(Continue)",
+            "english": "Stop! You're making me blush."
+          },
+          {
+            "file": "ERIS.MSD",
+            "offset": "0x0028e",
+            "command": "",
+            "block_command": "Listen Voice 2",
+            "english": "Deel, lick me more!"
+          },
+          {
+            "file": "P_71.MSD",
+            "offset": "0x0028e",
+            "command": "Talk Everyone",
+            "block_command": "Talk Everyone",
+            "english": "This place is full of ducts. Won't we get lost when we try to leave?"
+          }
+        ]
+      }
+    ],
+    "flag_ops": []
+  },
+  {
+    "location": "0x0ebea",
+    "owner_file": "POS1.MSD",
+    "slot": 5,
+    "slot_hex": "0x05",
+    "pattern_bytes": "01 05 00 11 05 11 06 11 07 00 11 05 00 01 11 05 00 01 01 07 00",
+    "text_entries": [
+      {
+        "opcode_location": "0x0ebff",
+        "text_offset": "0x004ca",
+        "line_count": 1,
+        "terminator": "0xff",
+        "rows": [
+          {
+            "file": "POS1.MSD",
+            "offset": "0x004ca",
+            "command": "Look Nedra (after attack)",
+            "block_command": "Look Nedra (after attack)",
+            "english": "She's checking her computer link."
+          },
+          {
+            "file": "P_BILL.MSD",
+            "offset": "0x004ca",
+            "command": "",
+            "block_command": "Examine Floor",
+            "english": null
+          }
+        ]
+      },
+      {
+        "opcode_location": "0x0ec04",
+        "text_offset": "0x004f9",
+        "line_count": 2,
+        "terminator": "0xff",
+        "rows": [
+          {
+            "file": "POS1.MSD",
+            "offset": "0x004f9",
+            "command": "Look Nedra 2",
+            "block_command": "Look Nedra 2",
+            "english": "She's younger than me, but she has an air of mystery about her."
+          },
+          {
+            "file": "P_HI.MSD",
+            "offset": "0x004f9",
+            "command": "",
+            "block_command": "Examine LCD Scroll (after Stella briefing)",
+            "english": null
+          }
+        ]
+      },
+      {
+        "opcode_location": "0x0ec09",
+        "text_offset": "0x00534",
+        "line_count": 2,
+        "terminator": "0xff",
+        "rows": [
+          {
+            "file": "POS1.MSD",
+            "offset": "0x00534",
+            "command": "?",
+            "block_command": "?",
+            "english": null
+          }
+        ]
+      },
+      {
+        "opcode_location": "0x0ec0e",
+        "text_offset": "0x0040d",
+        "line_count": 5,
+        "terminator": "0xff",
+        "rows": [
+          {
+            "file": "POS1.MSD",
+            "offset": "0x0040d",
+            "command": "Look - Nedra (1)",
+            "block_command": "Look - Nedra (1)",
+            "english": "Nedra Kronecker is our Hyperlink. She can operate computers via an implant in the back of her head. She's an invaluable part of the team."
+          }
+        ]
+      }
+    ],
+    "flag_ops": []
+  }
+]

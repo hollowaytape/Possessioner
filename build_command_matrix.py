@@ -25,8 +25,8 @@ def build_command_matrix(graph: dict[str, Any]) -> dict[str, Any]:
                     target,
                     {
                         "nodes": [],
-                        "destinations": [],
-                        "handoffs": [],
+                        "room_transitions": [],
+                        "event_transitions": [],
                         "flags": [],
                     },
                 )
@@ -39,19 +39,21 @@ def build_command_matrix(graph: dict[str, Any]) -> dict[str, Any]:
                     "row_count": node["row_count"],
                     "display_types": node["display_types"],
                     "english_preview": node["english_preview"],
+                    "route_status": node["route_status"],
+                    "route_role": node["route_role"],
                 }
                 if node_entry not in target_bucket["nodes"]:
                     target_bucket["nodes"].append(node_entry)
 
-                for transition in node.get("transitions", []):
-                    destination = transition.get("destination_label")
-                    if destination and destination not in target_bucket["destinations"]:
-                        target_bucket["destinations"].append(destination)
+                for room_transition in node.get("room_transitions", []):
+                    destination = room_transition.get("destination_label")
+                    if destination and destination not in target_bucket["room_transitions"]:
+                        target_bucket["room_transitions"].append(destination)
 
-                for handoff in node.get("handoffs", []):
-                    label = handoff.get("destination_label")
-                    if label and label not in target_bucket["handoffs"]:
-                        target_bucket["handoffs"].append(label)
+                for event_transition in node.get("event_transitions", []):
+                    label = event_transition.get("destination_label")
+                    if label and label not in target_bucket["event_transitions"]:
+                        target_bucket["event_transitions"].append(label)
 
                 for flag in node.get("flag_gates", []):
                     flag_entry = {

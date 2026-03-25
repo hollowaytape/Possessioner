@@ -12,33 +12,31 @@ def load_json(path: Path) -> Any:
 
 def rate_file(payload: dict[str, Any]) -> str:
     node_count = payload["node_count"] or 1
-    dispatch_edges = payload["dispatch_edge_count"]
-    special_edges = payload["handoff_edge_count"] + payload["transition_edge_count"]
-    unattached_nodes = sum(
-        1
-        for node in payload["nodes"]
-        if not node["dispatch_triggers"] and not node["handoffs"] and not node["transitions"]
-    )
-    unattached_ratio = unattached_nodes / node_count
+    unknown_nodes = sum(1 for node in payload["nodes"] if node["route_status"] == "unknown")
+    unknown_ratio = unknown_nodes / node_count
 
-    if dispatch_edges >= 10 and unattached_ratio < 0.5:
+    if unknown_ratio <= 0.10:
         return "strong"
-    if dispatch_edges > 0 or special_edges > 0:
+    if unknown_ratio <= 0.35:
         return "partial"
     return "weak"
 
 
 def summarize_file(file_name: str, payload: dict[str, Any]) -> dict[str, Any]:
     nodes = payload["nodes"]
-    unattached_nodes = [
-        node
-        for node in nodes
-        if not node["dispatch_triggers"] and not node["handoffs"] and not node["transitions"]
-    ]
-    flagged_unattached = [node for node in unattached_nodes if node["flag_gates"]]
+    route_known_nodes = [node for node in nodes if node["route_status"] in {"known", "conditional"}]
+    conditional_nodes = [node for node in nodes if node["route_status"] == "conditional"]
+    trigger_unknown_nodes = [node for node in nodes if node["route_status"] == "unknown"]
+    critical_nodes = [node for node in nodes if node["route_role"] == "critical"]
+    optional_nodes = [node for node in nodes if node["route_role"] == "optional"]
 
-    hotspots = sorted(
-        flagged_unattached,
+    unknown_hotspots = sorted(
+        trigger_unknown_nodes,
+        key=lambda node: (node["row_count"], len(node["flag_gates"])),
+        reverse=True,
+    )[:10]
+    conditional_hotspots = sorted(
+        conditional_nodes,
         key=lambda node: (len(node["flag_gates"]), node["row_count"]),
         reverse=True,
     )[:10]
@@ -49,23 +47,42 @@ def summarize_file(file_name: str, payload: dict[str, Any]) -> dict[str, Any]:
         "node_count": payload["node_count"],
         "edge_count": payload["edge_count"],
         "dispatch_edge_count": payload["dispatch_edge_count"],
-        "handoff_edge_count": payload["handoff_edge_count"],
-        "transition_edge_count": payload["transition_edge_count"],
+        "event_transition_edge_count": payload["event_transition_edge_count"],
+        "room_transition_edge_count": payload["room_transition_edge_count"],
         "action_target_pairs": payload["action_target_pairs"],
         "destinations": payload["destinations"],
-        "unattached_node_count": len(unattached_nodes),
-        "flagged_unattached_count": len(flagged_unattached),
-        "hotspots": [
+        "route_known_count": len(route_known_nodes),
+        "conditional_count": len(conditional_nodes),
+        "trigger_unknown_count": len(trigger_unknown_nodes),
+        "critical_count": len(critical_nodes),
+        "optional_count": len(optional_nodes),
+        "unknown_hotspots": [
             {
                 "id": node["id"],
                 "block_command": node["block_command"],
                 "start_offset": node["start_offset"],
                 "row_count": node["row_count"],
                 "display_types": node["display_types"],
+                "route_status": node["route_status"],
+                "route_role": node["route_role"],
                 "flag_gates": node["flag_gates"],
                 "english_preview": node["english_preview"],
             }
-            for node in hotspots
+            for node in unknown_hotspots
+        ],
+        "conditional_hotspots": [
+            {
+                "id": node["id"],
+                "block_command": node["block_command"],
+                "start_offset": node["start_offset"],
+                "row_count": node["row_count"],
+                "display_types": node["display_types"],
+                "route_status": node["route_status"],
+                "route_role": node["route_role"],
+                "flag_gates": node["flag_gates"],
+                "english_preview": node["english_preview"],
+            }
+            for node in conditional_hotspots
         ],
     }
 
@@ -75,8 +92,8 @@ def build_acceptance_outline(graph: dict[str, Any]) -> dict[str, Any]:
     files.sort(
         key=lambda item: (
             {"weak": 0, "partial": 1, "strong": 2}[item["readiness"]],
-            -item["flagged_unattached_count"],
-            -item["unattached_node_count"],
+            -item["trigger_unknown_count"],
+            -item["conditional_count"],
         )
     )
 

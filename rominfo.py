@@ -528,7 +528,7 @@ MSD_POINTER_RANGES = {
     'MAI.MSD': [
         (0x1caaf, 0x1cf30),
     ],
-    'ARISA.MSD': [              # Missing 0x324d
+    'ARISA.MSD': [
         (0x1e455, 0x1ef52),
         (0x209e8, 0x20a53),
     ],
@@ -654,7 +654,7 @@ POINTER_DISAMBIGUATION = [
     ('P_CITY.MSD', 0x00bc7, 0x1457b),
 
     ('P_SYO.MSD', 0x162, None),
-    ('P_SYO.MSD', 0x385, None),   # It's normally 385; moving it one up to avoid a text glitch
+    ('P_SYO.MSD', 0x385, 0x1f788),
     ('P_SYO.MSD', 0x83c, 0x1fc6b),
     ('P_SYO.MSD', 0xa3a, 0x1f520),
     ('P_SYO.MSD', 0xc14, 0x1f850),

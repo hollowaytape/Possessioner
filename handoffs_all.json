@@ -1,0 +1,356 @@
+[
+  {
+    "location": "0x0de4a",
+    "arg1": "0x01",
+    "destination_name": "HQ during intro",
+    "destination_label": "0x01 \"HQ during intro\"",
+    "row_matches": [],
+    "window": "64 93 64 99 64 9f 64 a5 64 00 00 00 05 7a 00 00 03 01 00 01 07 77 00 04 27 01 01 01 07 77 00 04 27 02 01 02 04 7b 00 05"
+  },
+  {
+    "location": "0x0eafc",
+    "arg1": "0x1c",
+    "destination_name": "Abandoned building, corridor with 8 doors (3 lines)",
+    "destination_label": "0x1c \"Abandoned building, corridor with 8 doors (3 lines)\"",
+    "row_matches": [
+      {
+        "file": "POS1.MSD",
+        "offset": "0x013fc",
+        "command": "Move - Appearance Site",
+        "block_command": "Move - Appearance Site",
+        "english": "Let's move!"
+      }
+    ],
+    "window": "01 6f 00 00 00 75 00 7f 00 02 fc 13 02 04 07 06 03 1c 00 01 01 04 00 00 00 89 00 9d 00 0e 00 9b 00 0c 00 9b 00 0b 00 9b",
+    "preceding_text": {
+      "opcode_location": "0x0eaf5",
+      "text_offset": "0x013fc",
+      "arg": 2,
+      "delta": 7
+    }
+  },
+  {
+    "location": "0x10f46",
+    "arg1": "0x03",
+    "destination_name": "Yumi battle (again?)",
+    "destination_label": "0x03 \"Yumi battle (again?)\"",
+    "row_matches": [],
+    "window": "07 0f 12 32 00 00 00 50 90 01 85 07 09 11 1f 09 03 03 00 01 b1 04 00 00 00 83 00 00 00 00 45 03 ff 00 00 8d 00 00 00 00"
+  },
+  {
+    "location": "0x115e3",
+    "arg1": "0x04",
+    "destination_name": "HQ",
+    "destination_label": "0x04 \"HQ\"",
+    "row_matches": [],
+    "window": "02 00 00 0b 02 17 a0 00 b9 3e 00 00 04 07 0f 1a 03 04 00 01 06 03 00 b3 04 b3 05 00 02 20 54 0b ff b3 06 00 02 cf 55 08"
+  },
+  {
+    "location": "0x1860f",
+    "arg1": "0x1a",
+    "destination_name": "Central Hub (2 lines)",
+    "destination_label": "0x1a \"Central Hub (2 lines)\"",
+    "row_matches": [
+      {
+        "file": "P_71.MSD",
+        "offset": "0x02aaf",
+        "command": "Talk Tina",
+        "block_command": "Talk Tina",
+        "english": "Tina! Or rather, the Possessioner controlling Tina! Do you understand what you're doing?! I don't like Possessioners, but if humanity is destroyed, you will be too!"
+      }
+    ],
+    "window": "00 d9 2b e2 2b 02 07 2c 02 ff 02 af 2a 0a 04 07 03 1a 00 01 07 04 00 f8 2b fb 2b 00 00 4e 22 00 2c 05 2c 00 00 09 2c 00",
+    "preceding_text": {
+      "opcode_location": "0x18609",
+      "text_offset": "0x02aaf",
+      "arg": 10,
+      "delta": 6
+    }
+  },
+  {
+    "location": "0x18e85",
+    "arg1": "0x1b",
+    "destination_name": "Abandoned building",
+    "destination_label": "0x1b \"Abandoned building\"",
+    "row_matches": [
+      {
+        "file": "MINS.MSD",
+        "offset": "0x042f2",
+        "command": "",
+        "block_command": "(End of scene)",
+        "english": null
+      },
+      {
+        "file": "P_71.MSD",
+        "offset": "0x042f2",
+        "command": "Talk Elf 3",
+        "block_command": "Talk Elf 3",
+        "english": "...I see your point. Until now, human emotion has been beyond my understanding. These \"emotions\" are an essential part of survival. Understanding things like anger and sadness are necessary to operating an imperfect organic form. However, is this level of emotion not excessive? I created the Possessioner Program as a way to download my consciousness into a human body. However, my consciousness wasn't fully compatible with human neural networks. Furthermore, a rush of human emotion could overload the program, forcing me out of my human host."
+      }
+    ],
+    "window": "34 00 00 68 34 6d 34 bd 03 00 02 f2 42 25 04 07 03 1b 00 01 07 02 00 bd 04 00 02 68 48 10 ff 01 bd 03 00 02 06 3f 1b ff",
+    "preceding_text": {
+      "opcode_location": "0x18e7f",
+      "text_offset": "0x042f2",
+      "arg": 37,
+      "delta": 6
+    }
+  },
+  {
+    "location": "0x1cdb4",
+    "arg1": "0x09",
+    "destination_name": "Prim scene",
+    "destination_label": "0x09 \"Prim scene\"",
+    "row_matches": [
+      {
+        "file": "MAI.MSD",
+        "offset": "0x01eeb",
+        "command": "Caress Crotch (CG3)",
+        "block_command": "Caress Crotch (CG3)",
+        "english": null
+      }
+    ],
+    "window": "00 0b 02 16 2c 01 ba 02 00 00 09 02 eb 1e 0a 06 03 09 00 01 05 04 00 a3 06 00 02 be 20 06 ff a3 07 00 02 be 20 06 04 0f",
+    "preceding_text": {
+      "opcode_location": "0x1cdaf",
+      "text_offset": "0x01eeb",
+      "arg": 10,
+      "delta": 5
+    }
+  },
+  {
+    "location": "0x1d35b",
+    "arg1": "0x0a",
+    "destination_name": "Ayaka scene",
+    "destination_label": "0x0a \"Ayaka scene\"",
+    "row_matches": [],
+    "window": "e7 00 02 00 00 0b 02 0a 68 00 08 55 00 00 04 06 03 0a 00 01 7f 00 00 7f 04 00 02 7f 2a 09 ff 7f 07 00 02 d6 2b 07 ff 01"
+  },
+  {
+    "location": "0x1dd6e",
+    "arg1": "0x0b",
+    "destination_name": "Michass scene",
+    "destination_label": "0x0b \"Michass scene\"",
+    "row_matches": [
+      {
+        "file": "AYAKA.MSD",
+        "offset": "0x031d1",
+        "command": "",
+        "block_command": "Use Wand 3",
+        "english": null
+      },
+      {
+        "file": "HONHOA.MSD",
+        "offset": "0x031d1",
+        "command": "Use Vibe 3",
+        "block_command": "Use Vibe 3",
+        "english": null
+      }
+    ],
+    "window": "00 00 00 00 b9 1b e2 1b 8f 05 00 02 d1 31 0c 07 03 0b 00 01 05 06 00 8f 04 00 02 77 33 0c ff 01 8f 05 00 8f 06 00 02 6a",
+    "preceding_text": {
+      "opcode_location": "0x1dd69",
+      "text_offset": "0x031d1",
+      "arg": 12,
+      "delta": 5
+    }
+  },
+  {
+    "location": "0x1e875",
+    "arg1": "0x0c",
+    "destination_name": "May scene",
+    "destination_label": "0x0c \"May scene\"",
+    "row_matches": [
+      {
+        "file": "MINS.MSD",
+        "offset": "0x02737",
+        "command": "",
+        "block_command": "Carmine Pen Vibe 2",
+        "english": null
+      },
+      {
+        "file": "ARISA.MSD",
+        "offset": "0x02737",
+        "command": "Insert Crotch later?",
+        "block_command": "Insert Crotch later?",
+        "english": null
+      }
+    ],
+    "window": "af 04 af 05 af 06 af 07 00 02 37 27 0d 07 06 1a 03 0c 00 01 06 05 00 af 02 af 03 00 02 f8 28 06 ff af 06 00 02 cd 29 07",
+    "preceding_text": {
+      "opcode_location": "0x1e86e",
+      "text_offset": "0x02737",
+      "arg": 13,
+      "delta": 7
+    }
+  },
+  {
+    "location": "0x1eafb",
+    "arg1": "0x0d",
+    "destination_name": "Minsky scene",
+    "destination_label": "0x0d \"Minsky scene\"",
+    "row_matches": [
+      {
+        "file": "P_BILL.MSD",
+        "offset": "0x00313",
+        "command": "",
+        "block_command": "Talk Everyone",
+        "english": "Hm. The elevator stopped on 8F."
+      },
+      {
+        "file": "ERIS.MSD",
+        "offset": "0x00313",
+        "command": "Rush In",
+        "block_command": "Rush In",
+        "english": "Hey! What are you three doing in here?!"
+      }
+    ],
+    "window": "27 0b ff 00 00 04 07 0e 07 02 13 03 18 04 07 06 03 0d 00 01 03 06 00 1e 07 21 07 00 00 00 00 26 07 2b 07 4a 03 00 02 db",
+    "preceding_text": {
+      "opcode_location": "0x1eaf4",
+      "text_offset": "0x00313",
+      "arg": 24,
+      "delta": 7
+    }
+  },
+  {
+    "location": "0x1eeac",
+    "arg1": "0x0e",
+    "destination_name": "Shower/Meryl scene",
+    "destination_label": "0x0e \"Shower/Meryl scene\"",
+    "row_matches": [
+      {
+        "file": "ERIS.MSD",
+        "offset": "0x02d7c",
+        "command": "Torment Kumiko 4",
+        "block_command": "Torment Kumiko 4",
+        "english": null
+      }
+    ],
+    "window": "0a d3 0a 00 00 d7 0a dc 0a 4e 07 00 02 7c 2d 21 03 0e 00 01 03 06 00 4d 00 00 02 32 36 06 ff 4d 01 00 02 1f 37 05 ff 01",
+    "preceding_text": {
+      "opcode_location": "0x1eea8",
+      "text_offset": "0x02d7c",
+      "arg": 33,
+      "delta": 4
+    }
+  },
+  {
+    "location": "0x2142f",
+    "arg1": "0x17",
+    "destination_name": "Old City",
+    "destination_label": "0x17 \"Old City\"",
+    "row_matches": [
+      {
+        "file": "MERYL.MSD",
+        "offset": "0x02976",
+        "command": "",
+        "block_command": "Lick Chest",
+        "english": null
+      },
+      {
+        "file": "PLYM.MSD",
+        "offset": "0x02976",
+        "command": "Use Vibe 3",
+        "block_command": "Use Vibe 3",
+        "english": null
+      }
+    ],
+    "window": "05 00 00 b2 05 d5 05 83 04 00 02 76 29 0c 06 1a 03 17 00 01 04 04 00 83 05 00 02 f9 2a 04 ff 01 83 04 00 02 d2 28 05 0a",
+    "preceding_text": {
+      "opcode_location": "0x21429",
+      "text_offset": "0x02976",
+      "arg": 12,
+      "delta": 6
+    }
+  },
+  {
+    "location": "0x2230b",
+    "arg1": "0x10",
+    "destination_name": "Nedra scene",
+    "destination_label": "0x10 \"Nedra scene\"",
+    "row_matches": [],
+    "window": "00 02 53 1f 07 12 7a 00 00 00 50 90 01 8c 16 09 03 10 00 01 3d 04 00 3d 06 00 02 64 20 04 ff 3d 07 00 02 34 21 0d 0a 0b"
+  },
+  {
+    "location": "0x255b8",
+    "arg1": "0x00",
+    "destination_name": "Maintenance room",
+    "destination_label": "0x00 \"Maintenance room\"",
+    "row_matches": [],
+    "window": "03 68 00 9f 03 ff ff ff 01 a5 03 af 03 00 00 ab 03 00 00 01 28 00 ff 00 00 b5 03 00 00 01 26 00 ff 18 03 bf 03 cb 03 10"
+  },
+  {
+    "location": "0x255c2",
+    "arg1": "0x00",
+    "destination_name": "Maintenance room",
+    "destination_label": "0x00 \"Maintenance room\"",
+    "row_matches": [],
+    "window": "03 af 03 00 00 ab 03 00 00 01 28 00 ff 00 00 b5 03 00 00 01 26 00 ff 18 03 bf 03 cb 03 10 00 c9 03 e7 00 c9 03 ff ff ff"
+  },
+  {
+    "location": "0x26c9a",
+    "arg1": "0x19",
+    "destination_name": "Fairy scene (51 lines)",
+    "destination_label": "0x19 \"Fairy scene (51 lines)\"",
+    "row_matches": [
+      {
+        "file": "P_KYU.MSD",
+        "offset": "0x0287f",
+        "command": "",
+        "block_command": "Examine Sky 2",
+        "english": null
+      },
+      {
+        "file": "RASU2.MSD",
+        "offset": "0x0287f",
+        "command": "Talk Rashmar 3",
+        "block_command": "Talk Rashmar 3",
+        "english": "Right or wrong, I understand why you made Bioclusters. But what about Possessioners?! Why control humans' bodies if you despise them so much?!"
+      },
+      {
+        "file": "NEDRA2.MSD",
+        "offset": "0x0287f",
+        "command": "?",
+        "block_command": "?",
+        "english": null
+      }
+    ],
+    "window": "9f 1a 05 03 00 02 56 28 01 ff 02 7f 28 08 04 07 03 19 00 01 05 03 00 02 b1 29 0e ff 01 9f 02 00 02 54 25 15 ff 01 9f 03",
+    "preceding_text": {
+      "opcode_location": "0x26c94",
+      "text_offset": "0x0287f",
+      "arg": 8,
+      "delta": 6
+    }
+  },
+  {
+    "location": "0x27be6",
+    "arg1": "0x15",
+    "destination_name": "Operators scene (2 lines)",
+    "destination_label": "0x15 \"Operators scene (2 lines)\"",
+    "row_matches": [
+      {
+        "file": "YUMI.MSD",
+        "offset": "0x0263d",
+        "command": "Pinch Crotch",
+        "block_command": "Pinch Crotch",
+        "english": "With my fingers deep in Yumi's pussy, I use my free hand to pinch her swollen clit."
+      },
+      {
+        "file": "P_KYU.MSD",
+        "offset": "0x0263d",
+        "command": "",
+        "block_command": "Talk Everyone (after Rashmar)",
+        "english": "Huh? But why?"
+      }
+    ],
+    "window": "ff ff ca 05 00 00 d0 05 d9 05 02 3d 26 06 04 07 03 15 00 01 18 02 00 00 00 00 08 0e 07 0a 0f 09 0c 0f 0b 02 06 03 03 0a",
+    "preceding_text": {
+      "opcode_location": "0x27be0",
+      "text_offset": "0x0263d",
+      "arg": 6,
+      "delta": 6
+    }
+  }
+]
