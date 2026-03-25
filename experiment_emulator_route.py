@@ -4,6 +4,7 @@ import argparse
 import ctypes
 import subprocess
 import time
+from collections.abc import Callable
 from pathlib import Path
 
 import win32con
@@ -392,6 +393,42 @@ def run_menu_target_route(
             wait_for_content_stable(hwnd, timeout=20.0, stable_period=1.5)
         save_trace_frame(trace_dir, f"{frame_index:02d}-after-focus-left-{click_index + 1}.png", hwnd)
         frame_index += 1
+
+
+def advance_to_menu(
+    hwnd: int,
+    classify_fn: "Callable[[Image.Image], str]",
+    max_presses: int = 100,
+    space_change_timeout: float = 3.0,
+    stable_timeout: float = 12.0,
+    stable_period: float = 1.0,
+) -> str:
+    """Press SPACE until the screen reaches the action_menu state (or gives up).
+
+    Uses *classify_fn* (a callable matching screen_state.classify_screen_state's
+    signature) to decide whether to keep advancing or stop.
+
+    Returns the final classified state.
+    """
+    for _ in range(max_presses):
+        image = capture_window_image(hwnd)
+        state = classify_fn(image)
+        if state == "action_menu":
+            return state
+        if state in ("loading", "battle"):
+            # Wait for things to settle rather than mashing SPACE
+            wait_for_content_stable(hwnd, timeout=stable_timeout, stable_period=stable_period)
+            continue
+        # dialogue, cutscene, or unknown — try pressing SPACE
+        baseline = image
+        post_key(hwnd, VK_BY_NAME["SPACE"])
+        changed = wait_for_content_change(hwnd, baseline, timeout=space_change_timeout)
+        if not images_different(baseline, changed):
+            # SPACE had no effect — likely already at menu or fully stable
+            state = classify_fn(changed)
+            return state
+        wait_for_content_stable(hwnd, timeout=stable_timeout, stable_period=stable_period)
+    return classify_fn(capture_window_image(hwnd))
 
 
 def compare_images(first: Path, second: Path) -> tuple[bool, tuple[int, int, int, int] | None]:
