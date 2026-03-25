@@ -28,6 +28,17 @@ VK_BY_NAME = {
 }
 
 
+class POINT(ctypes.Structure):
+    _fields_ = [("x", ctypes.c_long), ("y", ctypes.c_long)]
+
+
+def cursor_pos() -> tuple[int, int]:
+    point = POINT()
+    if not ctypes.windll.user32.GetCursorPos(ctypes.byref(point)):
+        raise OSError("GetCursorPos failed")
+    return int(point.x), int(point.y)
+
+
 def post_key(hwnd: int, vk: int, hold: float = 0.05) -> None:
     hwnd = ensure_valid_window(hwnd)
     win32gui.PostMessage(hwnd, win32con.WM_KEYDOWN, vk, 0)
@@ -242,12 +253,12 @@ def click_window_point(
     up_flag: int = win32con.MOUSEEVENTF_LEFTUP,
 ) -> None:
     hwnd = ensure_valid_window(hwnd)
-    left, top, _, _ = win32gui.GetWindowRect(hwnd)
     ctypes.windll.user32.ShowWindow(hwnd, win32con.SW_RESTORE)
     ctypes.windll.user32.SetForegroundWindow(hwnd)
     time.sleep(0.1)
+    left, top, _, _ = win32gui.GetWindowRect(hwnd)
     ctypes.windll.user32.SetCursorPos(left + x, top + y)
-    time.sleep(0.05)
+    time.sleep(0.02)
     ctypes.windll.user32.mouse_event(down_flag, 0, 0, 0, 0)
     time.sleep(0.05)
     ctypes.windll.user32.mouse_event(up_flag, 0, 0, 0, 0)
@@ -318,18 +329,33 @@ def parse_step(spec: str) -> tuple[int, int, int]:
     return int(action_text), int(target_text), advance_count
 
 
-def choose_menu_target(hwnd: int, action_index: int, target_index: int) -> None:
+def choose_menu_target(
+    hwnd: int,
+    action_index: int,
+    target_index: int,
+    trace_fn: Callable[[str], None] | None = None,
+) -> None:
     middle_click_window_point(hwnd, 320, 220)
     time.sleep(0.3)
+    if trace_fn is not None:
+        trace_fn("focused window for menu input")
 
     for _ in range(action_index):
+        if trace_fn is not None:
+            trace_fn("press DOWN on action menu")
         press_and_wait(hwnd, VK_BY_NAME["DOWN"], change_timeout=3.0, wait_for_stable=False)
-    press_and_wait(hwnd, VK_BY_NAME["ENTER"], change_timeout=5.0, stable_timeout=10.0, stable_period=0.75)
+    if trace_fn is not None:
+        trace_fn("confirm action with SPACE")
+    press_and_wait(hwnd, VK_BY_NAME["SPACE"], change_timeout=5.0, stable_timeout=10.0, stable_period=0.75)
     time.sleep(0.5)
     for _ in range(target_index):
+        if trace_fn is not None:
+            trace_fn("press DOWN on target menu")
         press_and_wait(hwnd, VK_BY_NAME["DOWN"], change_timeout=3.0, wait_for_stable=False)
     time.sleep(0.3)
-    press_and_wait_with_fallback(hwnd, VK_BY_NAME["ENTER"], change_timeout=12.0, stable_timeout=16.0, stable_period=1.5)
+    if trace_fn is not None:
+        trace_fn("confirm target with SPACE")
+    press_and_wait_with_fallback(hwnd, VK_BY_NAME["SPACE"], change_timeout=12.0, stable_timeout=16.0, stable_period=1.5)
 
 
 def save_trace_frame(trace_dir: Path | None, name: str, hwnd: int) -> None:
@@ -457,6 +483,137 @@ def run_load_only_route(
         frame_index += 1
 
 
+# ---------------------------------------------------------------------------
+# Battle resolution
+# ---------------------------------------------------------------------------
+# Battle UI layout (PC-98 640×400 game coordinates):
+#   Left-column character portraits occupy x=0-160.
+#   Right-column character portraits occupy x=480-640.
+#   Each portrait half is 200 px tall: top row y=0-200, bottom row y=200-400.
+#   The "C" (command) button is at the right edge of each name bar:
+#     char1 top-left  game (104, 115)   char3 top-right    game (608, 122)
+#     char2 bot-left  game (111, 330)   char4 bot-right    game (607, 330)
+#   After clicking C the 3-item command menu drops into the portrait area.
+#   The 3rd option (Defend) is inferred geometrically from the visible menu:
+#     about 44 px left and 11 px below the button / hinge position.
+#   The FIGHT button sits on the lower center-right strip at game (465, 378).
+#
+# Window coordinates = game coordinates + chrome offsets.
+# np2debug window chrome: 60 px top, 4 px per side (window is 648×451).
+# All _WC_ constants below are already in window-relative space.
+# IMPORTANT: These coordinates were derived from reference screenshots and
+# need empirical verification on a live battle.  Adjust if clicks miss.
+
+_WC_CHROME_LEFT = 4
+_WC_CHROME_TOP = 60
+_DIALOGUE_ADVANCE_PAUSE = 0.15
+
+def _game_to_win(gx: int, gy: int) -> tuple[int, int]:
+    return gx + _WC_CHROME_LEFT, gy + _WC_CHROME_TOP
+
+
+def _win_offset(point: tuple[int, int], dx: int, dy: int) -> tuple[int, int]:
+    return point[0] + dx, point[1] + dy
+
+
+# C button positions in window coords
+_WC_C_CHAR1 = _game_to_win(104, 115)   # top-left character
+_WC_C_CHAR2 = _game_to_win(111, 330)   # bottom-left character
+_WC_C_CHAR3 = _game_to_win(608, 122)   # top-right character
+_WC_C_CHAR4 = _game_to_win(607, 330)   # bottom-right character
+
+# 3rd-option (Defend) click within the portrait command menu.
+# Based on the visible top-left menu, the 3rd option center is consistently
+# about 44 px left and 11 px below the command button / hinge position.
+_WC_DEFEND_DX = -44
+_WC_DEFEND_DY = 11
+_WC_OPT3_CHAR1 = _win_offset(_WC_C_CHAR1, _WC_DEFEND_DX, _WC_DEFEND_DY)
+_WC_OPT3_CHAR2 = _win_offset(_WC_C_CHAR2, _WC_DEFEND_DX, _WC_DEFEND_DY)
+_WC_OPT3_CHAR3 = _win_offset(_WC_C_CHAR3, _WC_DEFEND_DX, _WC_DEFEND_DY)
+_WC_OPT3_CHAR4 = _win_offset(_WC_C_CHAR4, _WC_DEFEND_DX, _WC_DEFEND_DY)
+
+# FIGHT button
+_WC_FIGHT = _game_to_win(465, 378)
+
+_BATTLE_CLICK_PAUSE = 0.3   # seconds between battle clicks
+
+
+def _battle_click(hwnd: int, wx: int, wy: int, pause: float = _BATTLE_CLICK_PAUSE) -> None:
+    """Left-click at a game-space coordinate via PostMessage.
+
+    np2debug's cursor is physically locked to the window centre by mouse
+    capture (ClipCursor / RawInput), so SetCursorPos-based approaches always
+    land at the same spot.  Posting WM_MOUSEMOVE followed by WM_LBUTTONDOWN
+    goes directly into np2debug's message queue with client-relative coords
+    (which equal game coords, since the PC-98 display fills the client area).
+    The _WC_* constants use _game_to_win() which adds chrome, so strip it
+    back before posting.
+    """
+    gx = wx - _WC_CHROME_LEFT
+    gy = wy - _WC_CHROME_TOP
+    lp = (gy << 16) | (gx & 0xFFFF)
+    win32gui.PostMessage(hwnd, win32con.WM_MOUSEMOVE, 0, lp)
+    time.sleep(0.05)
+    win32gui.PostMessage(hwnd, win32con.WM_LBUTTONDOWN, win32con.MK_LBUTTON, lp)
+    time.sleep(0.05)
+    win32gui.PostMessage(hwnd, win32con.WM_LBUTTONUP, 0, lp)
+    time.sleep(pause)
+
+
+def _battle_middle_click(hwnd: int, wx: int, wy: int, pause: float = _BATTLE_CLICK_PAUSE) -> None:
+    """Middle-click a window-relative coordinate and pause briefly."""
+    middle_click_window_point(hwnd, wx, wy)
+    time.sleep(pause)
+
+
+def resolve_battle(
+    hwnd: int,
+    *,
+    battle_timeout: float = 60.0,
+    stable_timeout: float = 12.0,
+    stable_period: float = 1.5,
+    trace_fn: Callable[[str], None] | None = None,
+) -> None:
+    """Drive one battle round using mouse clicks.
+
+    Sequence for each of the 4 character portraits:
+      1. Click the "C" (command) button to open the command menu.
+      2. Click the 3rd option (Defend / 守る) to select it.
+    Then click the "FIGHT" button to execute the round.
+    After the round, wait for the screen to stabilise (battle text / next scene).
+
+    Coordinates are derived from reference screenshots; see the _WC_* constants
+    above if adjustments are needed.
+    """
+    # Select Defend for each character
+    for label, c_pos, opt3_pos in (
+        ("char1", _WC_C_CHAR1, _WC_OPT3_CHAR1),
+        ("char2", _WC_C_CHAR2, _WC_OPT3_CHAR2),
+        ("char3", _WC_C_CHAR3, _WC_OPT3_CHAR3),
+        ("char4", _WC_C_CHAR4, _WC_OPT3_CHAR4),
+    ):
+        baseline = capture_window_image(hwnd)
+        if trace_fn is not None:
+            trace_fn(f"click {label} command at {c_pos}")
+        _battle_click(hwnd, *c_pos)
+        # Wait for the command menu to appear (screen change)
+        wait_for_content_change(hwnd, baseline, timeout=3.0)
+        time.sleep(0.2)
+        if trace_fn is not None:
+            trace_fn(f"click {label} defend at {opt3_pos}")
+        _battle_click(hwnd, *opt3_pos)
+        time.sleep(0.3)
+
+    # Confirm all selections and start the round
+    baseline = capture_window_image(hwnd)
+    if trace_fn is not None:
+        trace_fn(f"click FIGHT at {_WC_FIGHT}")
+    _battle_click(hwnd, *_WC_FIGHT, pause=0.1)
+    wait_for_content_change(hwnd, baseline, timeout=5.0)
+    # Wait for animations, battle result text, and return to game state
+    wait_for_content_stable(hwnd, timeout=battle_timeout, stable_period=stable_period)
+
+
 def advance_to_menu(
     hwnd: int,
     classify_fn: Callable[[Image.Image], str],
@@ -464,33 +621,51 @@ def advance_to_menu(
     space_change_timeout: float = 3.0,
     stable_timeout: float = 12.0,
     stable_period: float = 1.0,
+    trace_fn: Callable[[str], None] | None = None,
 ) -> str:
     """Press SPACE until the screen reaches the action_menu state (or gives up).
 
     Uses *classify_fn* (a callable matching screen_state.classify_screen_state's
-    signature) to decide whether to keep advancing or stop.
+    signature) to decide whether to keep advancing or stop.  When the classifier
+    returns 'battle', calls resolve_battle() to drive the combat UI instead of
+    waiting passively.
 
     Returns the final classified state.
     """
-    for _ in range(max_presses):
+    for attempt in range(max_presses):
         image = capture_window_image(hwnd)
         state = classify_fn(image)
+        if trace_fn is not None:
+            trace_fn(f"advance[{attempt}] classified state={state!r}")
         if state == "action_menu":
             return state
-        if state in ("loading", "battle"):
-            # Wait for things to settle rather than mashing SPACE
+        if state == "loading":
+            if trace_fn is not None:
+                trace_fn(f"advance[{attempt}] waiting for loading to settle")
             wait_for_content_stable(hwnd, timeout=stable_timeout, stable_period=stable_period)
+            continue
+        if state == "battle":
+            if trace_fn is not None:
+                trace_fn(f"advance[{attempt}] entering resolve_battle()")
+            resolve_battle(hwnd, stable_timeout=stable_timeout, stable_period=stable_period, trace_fn=trace_fn)
             continue
         # dialogue, cutscene, or unknown — try pressing SPACE
         baseline = image
+        if trace_fn is not None:
+            trace_fn(f"advance[{attempt}] pressing SPACE to continue")
         post_key(hwnd, VK_BY_NAME["SPACE"])
         changed = wait_for_content_change(hwnd, baseline, timeout=space_change_timeout)
         if not images_different(baseline, changed):
             # SPACE had no effect — likely already at menu or fully stable
             state = classify_fn(changed)
+            if trace_fn is not None:
+                trace_fn(f"advance[{attempt}] SPACE had no effect; final state={state!r}")
             return state
-        wait_for_content_stable(hwnd, timeout=stable_timeout, stable_period=stable_period)
-    return classify_fn(capture_window_image(hwnd))
+        time.sleep(_DIALOGUE_ADVANCE_PAUSE)
+    final_state = classify_fn(capture_window_image(hwnd))
+    if trace_fn is not None:
+        trace_fn(f"advance exhausted max_presses; final state={final_state!r}")
+    return final_state
 
 
 def compare_images(first: Path, second: Path) -> tuple[bool, tuple[int, int, int, int] | None]:

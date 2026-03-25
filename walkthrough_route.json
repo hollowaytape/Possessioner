@@ -149,6 +149,22 @@
       ]
     },
 
+    "battle_test": {
+      "description": "Battle automation test — junk shop Possessioner fight",
+      "load_state": 0,
+      "file_index": 1,
+      "_source": "User-provided recipe: save 0, file 2, Talk → Possessioner triggers a battle",
+      "_note": "Use this slot to verify resolve_battle() coordinates before relying on it in production slots.",
+      "steps": [
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-Possessioner",
+          "_verify": "Talk → 1st target (Possessioner) then SPACE through dialog → battle screen should appear and be auto-resolved by resolve_battle()"
+        }
+      ]
+    },
+
     "3": {
       "description": "Doctor's office (病棟) post-scene",
       "load_state": 0,

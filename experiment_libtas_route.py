@@ -6,6 +6,7 @@ import ctypes
 import subprocess
 import time
 import uuid
+from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -646,6 +647,41 @@ def press_and_wait_with_fallback(
     if not images_different(baseline, changed):
         return
     wait_for_content_stable(hwnd, timeout=stable_timeout, stable_period=stable_period)
+
+
+def advance_to_menu(
+    hwnd: int,
+    classify_fn: Callable[[Image.Image], str],
+    *,
+    wsl_distro: str = DEFAULT_WSL_DISTRO,
+    max_presses: int = 100,
+    space_change_timeout: float = 3.0,
+    stable_timeout: float = 12.0,
+    stable_period: float = 1.0,
+) -> str:
+    """Press SPACE until the vision classifier sees an action_menu.
+
+    Returns the final classified state string.  Handles dialogue, cutscene,
+    loading, and battle states gracefully.  Uses the libTAS send_game_key path
+    so that key events are injected via WSL X11 (same as the rest of the route).
+    """
+    for _ in range(max_presses):
+        image = capture_window_image(hwnd)
+        state = classify_fn(image)
+        if state == "action_menu":
+            return state
+        if state in ("loading", "battle"):
+            wait_for_content_stable(hwnd, timeout=stable_timeout, stable_period=stable_period)
+            continue
+        baseline = image
+        send_game_key(hwnd, GAME_KEYSYM_BY_NAME["SPACE"], wsl_distro=wsl_distro)
+        changed = wait_for_content_change(hwnd, baseline, timeout=space_change_timeout)
+        if not images_different(baseline, changed):
+            # Screen didn't move after SPACE — assume we've arrived at the menu
+            state = classify_fn(changed)
+            return state
+        wait_for_content_stable(hwnd, timeout=stable_timeout, stable_period=stable_period)
+    return classify_fn(capture_window_image(hwnd))
 
 
 def load_file_from_main_menu(hwnd: int, file_index: int = 0, *, wsl_distro: str = DEFAULT_WSL_DISTRO) -> None:

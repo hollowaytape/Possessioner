@@ -6,6 +6,8 @@ step with adaptive text advancement powered by the Claude vision classifier in
 screen_state.py.  A screenshot is saved after every step so you can inspect
 what happened.
 
+Uses experiment_emulator_route (Windows np2debug) for emulator control.
+
 Usage
 -----
 # Run save-state slot 0, output screenshots to out/slot0/
@@ -24,11 +26,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
 import time
 from pathlib import Path
 
-from PIL import Image
+import win32con
+import win32gui
 
 from experiment_emulator_route import (
     DEFAULT_EMULATOR_PATH,
@@ -45,10 +49,6 @@ from experiment_emulator_route import (
 )
 from screen_state import classify_screen_state
 
-import subprocess
-import win32gui
-import win32con
-
 DEFAULT_ROUTE_PATH = Path("walkthrough_route.json")
 
 
@@ -60,6 +60,12 @@ def load_route(route_path: Path) -> dict:
     with route_path.open(encoding="utf-8") as fh:
         return json.load(fh)
 
+
+def log_current_state(hwnd: int, prefix: str) -> str:
+    state = classify_screen_state(capture_window_image(hwnd))
+    print(f"{prefix} state={state!r}")
+    return state
+    
 
 # ---------------------------------------------------------------------------
 # Single-slot runner
@@ -83,18 +89,24 @@ def run_slot(
     # Defaults to None (skip), since save states are volatile.
     load_state: int | None = slot_data.get("load_state", None)
 
-    time.sleep(4.0)
     if load_state is not None:
         load_state_direct(hwnd, load_state)
-        wait_for_content_stable(hwnd, timeout=8.0, stable_period=0.5)
+    else:
+        time.sleep(4.0)
 
     screenshot_window(hwnd, out_dir / "00-after-load-state.png")
+    log_current_state(hwnd, "  After load-state:")
 
     load_file_from_main_menu(hwnd, file_index=file_index)
     screenshot_window(hwnd, out_dir / "01-after-file-load.png")
+    log_current_state(hwnd, "  After file load:")
 
     # Advance through any opening text before the first interactive menu
-    state = advance_to_menu(hwnd, classify_screen_state)
+    state = advance_to_menu(
+        hwnd,
+        classify_screen_state,
+        trace_fn=lambda message: print(f"    [advance-opening] {message}"),
+    )
     screenshot_window(hwnd, out_dir / "02-after-opening-advance.png")
     print(f"  Opening advance → state={state!r}")
 
@@ -108,15 +120,30 @@ def run_slot(
             rep_suffix = f"-rep{rep + 1}" if repeat > 1 else ""
             frame_name = f"{step_index:03d}{rep_suffix}-{note}.png"
             print(f"  Step {step_index}{rep_suffix}: action={action_index} target={target_index}  ({note})")
+            log_current_state(hwnd, "    Before choose:")
 
             try:
-                choose_menu_target(hwnd, action_index, target_index)
+                choose_menu_target(
+                    hwnd,
+                    action_index,
+                    target_index,
+                    trace_fn=lambda message, step_label=f"{step_index}{rep_suffix}": print(
+                        f"    [choose {step_label}] {message}"
+                    ),
+                )
             except Exception as exc:
                 print(f"    WARNING: choose_menu_target failed: {exc}")
                 screenshot_window(hwnd, out_dir / f"{frame_name}.error.png")
                 continue
 
-            state = advance_to_menu(hwnd, classify_screen_state)
+            log_current_state(hwnd, "    After choose:")
+            state = advance_to_menu(
+                hwnd,
+                classify_screen_state,
+                trace_fn=lambda message, step_label=f"{step_index}{rep_suffix}": print(
+                    f"    [advance {step_label}] {message}"
+                ),
+            )
             screenshot_window(hwnd, out_dir / frame_name)
             print(f"    → state after advance: {state!r}")
 
@@ -127,9 +154,9 @@ def run_slot(
 
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(description="Run a scripted Possessioner walkthrough in the emulator.")
-    p.add_argument("--emulator", type=Path, default=DEFAULT_EMULATOR_PATH)
-    p.add_argument("--hdi", type=Path, default=DEFAULT_HDI_PATH)
-    p.add_argument("--route", type=Path, default=DEFAULT_ROUTE_PATH)
+    p.add_argument("--emulator", type=Path, default=DEFAULT_EMULATOR_PATH, help=f"Path to np2debug executable (default: {DEFAULT_EMULATOR_PATH})")
+    p.add_argument("--hdi", type=Path, default=DEFAULT_HDI_PATH, help=f"HDI image path (default: {DEFAULT_HDI_PATH})")
+    p.add_argument("--route", type=Path, default=DEFAULT_ROUTE_PATH, help="Path to walkthrough route JSON")
     p.add_argument("--out", type=Path, required=True, help="Output directory for screenshots")
     slot_group = p.add_mutually_exclusive_group(required=True)
     slot_group.add_argument("--slot", help="Save state slot to run (key in walkthrough_route.json)")
