@@ -135,7 +135,7 @@ def insert_pos_exe_into_disk(output_hdi: Path, output_pos_exe: Path) -> None:
 
 
 def launch_emulator(emulator_path: Path, hdi_path: Path) -> subprocess.Popen[bytes]:
-    return subprocess.Popen([str(emulator_path), str(hdi_path)], cwd=str(emulator_path.parent))
+    return subprocess.Popen([str(emulator_path), str(hdi_path.resolve())], cwd=str(emulator_path.parent))
 
 
 def send_keys_with_pywinauto(process: subprocess.Popen[bytes], keys: str, delay: float) -> None:

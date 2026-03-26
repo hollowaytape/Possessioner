@@ -1,0 +1,35 @@
+{
+  "total_rounds": 40,
+  "total_actions": 1,
+  "resolved": false,
+  "crashed": false,
+  "attempt_counts": {
+    "愛撫す+むね": 1
+  },
+  "initial_menu": [
+    {
+      "ja": "愛撫す",
+      "en": "Caress"
+    },
+    {
+      "ja": "なめる",
+      "en": "Lick"
+    }
+  ],
+  "final_menu": [],
+  "actions": [
+    {
+      "round": 0,
+      "verb_index": 0,
+      "verb_ja": "愛撫す",
+      "verb_en": "Caress",
+      "target_index": 0,
+      "target_ja": "むね",
+      "target_en": "Chest",
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    }
+  ]
+}

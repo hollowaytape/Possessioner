@@ -1,0 +1,683 @@
+{
+  "total_rounds": 48,
+  "total_actions": 44,
+  "resolved": false,
+  "crashed": false,
+  "attempt_counts": {
+    "???+None": 2,
+    "???+なめる": 5,
+    "???+愛撫する": 5,
+    "あそこ+None": 3,
+    "きわる+あそこ": 1,
+    "きわる+むね": 1,
+    "きわる+背中": 1,
+    "きわる+顔": 1,
+    "きわる+髪": 1,
+    "さわる+あそこ": 2,
+    "さわる+むね": 2,
+    "さわる+背中": 2,
+    "さわる+顔": 2,
+    "さわる+髪": 2,
+    "むね+None": 3,
+    "キスする+くちびる": 1,
+    "キスする+むね": 1,
+    "キスする+耳": 2,
+    "キスする+髪": 2,
+    "太もも+None": 3,
+    "愛撫す+???": 1,
+    "脱が司+None": 1
+  },
+  "initial_menu": [
+    {
+      "ja": "さわる",
+      "en": "Touch"
+    },
+    {
+      "ja": "キスする",
+      "en": "Kiss"
+    }
+  ],
+  "final_menu": [],
+  "actions": [
+    {
+      "round": 0,
+      "verb_index": 0,
+      "verb_ja": "さわる",
+      "verb_en": "Touch",
+      "target_index": 0,
+      "target_ja": "髪",
+      "target_en": "Hair",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a000_さわる_髪\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 1,
+      "verb_index": 0,
+      "verb_ja": "さわる",
+      "verb_en": "Touch",
+      "target_index": 1,
+      "target_ja": "顔",
+      "target_en": "Face",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a001_さわる_顔\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 2,
+      "verb_index": 0,
+      "verb_ja": "さわる",
+      "verb_en": "Touch",
+      "target_index": 2,
+      "target_ja": "むね",
+      "target_en": "Chest",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a002_さわる_むね\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 3,
+      "verb_index": 0,
+      "verb_ja": "さわる",
+      "verb_en": "Touch",
+      "target_index": 3,
+      "target_ja": "背中",
+      "target_en": "Back",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a003_さわる_背中\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 4,
+      "verb_index": 1,
+      "verb_ja": "キスする",
+      "verb_en": "Kiss",
+      "target_index": 0,
+      "target_ja": "髪",
+      "target_en": "Hair",
+      "page_count": 2,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a004_キスする_髪\\text_p000.png",
+        "out\\run1\\slotfull\\007-hscene\\a004_キスする_髪\\text_p001.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 5,
+      "verb_index": 1,
+      "verb_ja": "キスする",
+      "verb_en": "Kiss",
+      "target_index": 1,
+      "target_ja": "耳",
+      "target_en": "Ears",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a005_キスする_耳\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 6,
+      "verb_index": 1,
+      "verb_ja": "キスする",
+      "verb_en": "Kiss",
+      "target_index": 2,
+      "target_ja": "くちびる",
+      "target_en": "Lips",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a006_キスする_くちびる\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 7,
+      "verb_index": 1,
+      "verb_ja": "キスする",
+      "verb_en": "Kiss",
+      "target_index": 3,
+      "target_ja": "むね",
+      "target_en": "Chest",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a007_キスする_むね\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 8,
+      "verb_index": 0,
+      "verb_ja": "さわる",
+      "verb_en": "Touch",
+      "target_index": 0,
+      "target_ja": "髪",
+      "target_en": "Hair",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a008_さわる_髪\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 9,
+      "verb_index": 0,
+      "verb_ja": "さわる",
+      "verb_en": "Touch",
+      "target_index": 4,
+      "target_ja": "あそこ",
+      "target_en": "Crotch",
+      "page_count": 2,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a009_さわる_あそこ\\text_p000.png",
+        "out\\run1\\slotfull\\007-hscene\\a009_さわる_あそこ\\text_p001.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 10,
+      "verb_index": 0,
+      "verb_ja": "さわる",
+      "verb_en": "Touch",
+      "target_index": 1,
+      "target_ja": "顔",
+      "target_en": "Face",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a010_さわる_顔\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 11,
+      "verb_index": 0,
+      "verb_ja": "さわる",
+      "verb_en": "Touch",
+      "target_index": 2,
+      "target_ja": "むね",
+      "target_en": "Chest",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a011_さわる_むね\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 12,
+      "verb_index": 0,
+      "verb_ja": "さわる",
+      "verb_en": "Touch",
+      "target_index": 3,
+      "target_ja": "背中",
+      "target_en": "Back",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a012_さわる_背中\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 13,
+      "verb_index": 0,
+      "verb_ja": "さわる",
+      "verb_en": "Touch",
+      "target_index": 4,
+      "target_ja": "あそこ",
+      "target_en": "Crotch",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a013_さわる_あそこ\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 14,
+      "verb_index": 1,
+      "verb_ja": "キスする",
+      "verb_en": "Kiss",
+      "target_index": 0,
+      "target_ja": "髪",
+      "target_en": "Hair",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a014_キスする_髪\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 15,
+      "verb_index": 1,
+      "verb_ja": "キスする",
+      "verb_en": "Kiss",
+      "target_index": 1,
+      "target_ja": "耳",
+      "target_en": "Ears",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a015_キスする_耳\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 16,
+      "verb_index": 0,
+      "verb_ja": "きわる",
+      "verb_en": "きわる",
+      "target_index": 0,
+      "target_ja": "髪",
+      "target_en": "Hair",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a016_きわる_髪\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 17,
+      "verb_index": 0,
+      "verb_ja": "きわる",
+      "verb_en": "きわる",
+      "target_index": 1,
+      "target_ja": "顔",
+      "target_en": "Face",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a017_きわる_顔\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 18,
+      "verb_index": 0,
+      "verb_ja": "きわる",
+      "verb_en": "きわる",
+      "target_index": 2,
+      "target_ja": "むね",
+      "target_en": "Chest",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a018_きわる_むね\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 19,
+      "verb_index": 0,
+      "verb_ja": "きわる",
+      "verb_en": "きわる",
+      "target_index": 3,
+      "target_ja": "背中",
+      "target_en": "Back",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a019_きわる_背中\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 20,
+      "verb_index": 0,
+      "verb_ja": "きわる",
+      "verb_en": "きわる",
+      "target_index": 4,
+      "target_ja": "あそこ",
+      "target_en": "Crotch",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a020_きわる_あそこ\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 21,
+      "verb_index": 2,
+      "verb_ja": "脱が司",
+      "verb_en": "脱が司",
+      "target_index": null,
+      "target_ja": null,
+      "target_en": null,
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a021_脱が司_direct\\text_p000.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 22,
+      "verb_index": 0,
+      "verb_ja": "愛撫す",
+      "verb_en": "Caress",
+      "target_index": 0,
+      "target_ja": "???",
+      "target_en": "???",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a022_愛撫す____\\diag_forced_advance_0.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 23,
+      "verb_index": 0,
+      "verb_ja": "???",
+      "verb_en": "???",
+      "target_index": null,
+      "target_ja": null,
+      "target_en": null,
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 24,
+      "verb_index": 0,
+      "verb_ja": "???",
+      "verb_en": "???",
+      "target_index": 0,
+      "target_ja": "愛撫する",
+      "target_en": "Caress",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a024_____愛撫する\\diag_forced_advance_0.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 25,
+      "verb_index": 0,
+      "verb_ja": "???",
+      "verb_en": "???",
+      "target_index": null,
+      "target_ja": null,
+      "target_en": null,
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 26,
+      "verb_index": 0,
+      "verb_ja": "???",
+      "verb_en": "???",
+      "target_index": 1,
+      "target_ja": "なめる",
+      "target_en": "Lick",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a026_____なめる\\diag_forced_advance_0.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 27,
+      "verb_index": 1,
+      "verb_ja": "むね",
+      "verb_en": "Chest",
+      "target_index": null,
+      "target_ja": null,
+      "target_en": null,
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 28,
+      "verb_index": 0,
+      "verb_ja": "???",
+      "verb_en": "???",
+      "target_index": 0,
+      "target_ja": "愛撫する",
+      "target_en": "Caress",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a028_____愛撫する\\diag_forced_advance_0.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 29,
+      "verb_index": 2,
+      "verb_ja": "太もも",
+      "verb_en": "Thighs",
+      "target_index": null,
+      "target_ja": null,
+      "target_en": null,
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 30,
+      "verb_index": 0,
+      "verb_ja": "???",
+      "verb_en": "???",
+      "target_index": 1,
+      "target_ja": "なめる",
+      "target_en": "Lick",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a030_____なめる\\diag_forced_advance_0.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 31,
+      "verb_index": 3,
+      "verb_ja": "あそこ",
+      "verb_en": "Crotch",
+      "target_index": null,
+      "target_ja": null,
+      "target_en": null,
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 33,
+      "verb_index": 0,
+      "verb_ja": "???",
+      "verb_en": "???",
+      "target_index": 0,
+      "target_ja": "愛撫する",
+      "target_en": "Caress",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a032_____愛撫する\\diag_forced_advance_0.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 34,
+      "verb_index": 1,
+      "verb_ja": "むね",
+      "verb_en": "Chest",
+      "target_index": null,
+      "target_ja": null,
+      "target_en": null,
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 35,
+      "verb_index": 0,
+      "verb_ja": "???",
+      "verb_en": "???",
+      "target_index": 1,
+      "target_ja": "なめる",
+      "target_en": "Lick",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a034_____なめる\\diag_forced_advance_0.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 36,
+      "verb_index": 2,
+      "verb_ja": "太もも",
+      "verb_en": "Thighs",
+      "target_index": null,
+      "target_ja": null,
+      "target_en": null,
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 38,
+      "verb_index": 0,
+      "verb_ja": "???",
+      "verb_en": "???",
+      "target_index": 0,
+      "target_ja": "愛撫する",
+      "target_en": "Caress",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a036_____愛撫する\\diag_forced_advance_0.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 39,
+      "verb_index": 3,
+      "verb_ja": "あそこ",
+      "verb_en": "Crotch",
+      "target_index": null,
+      "target_ja": null,
+      "target_en": null,
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 40,
+      "verb_index": 0,
+      "verb_ja": "???",
+      "verb_en": "???",
+      "target_index": 1,
+      "target_ja": "なめる",
+      "target_en": "Lick",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a038_____なめる\\diag_forced_advance_0.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 41,
+      "verb_index": 1,
+      "verb_ja": "むね",
+      "verb_en": "Chest",
+      "target_index": null,
+      "target_ja": null,
+      "target_en": null,
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 43,
+      "verb_index": 0,
+      "verb_ja": "???",
+      "verb_en": "???",
+      "target_index": 0,
+      "target_ja": "愛撫する",
+      "target_en": "Caress",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a040_____愛撫する\\diag_forced_advance_0.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 44,
+      "verb_index": 2,
+      "verb_ja": "太もも",
+      "verb_en": "Thighs",
+      "target_index": null,
+      "target_ja": null,
+      "target_en": null,
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 45,
+      "verb_index": 0,
+      "verb_ja": "???",
+      "verb_en": "???",
+      "target_index": 1,
+      "target_ja": "なめる",
+      "target_en": "Lick",
+      "page_count": 1,
+      "text_pages": [
+        "out\\run1\\slotfull\\007-hscene\\a042_____なめる\\diag_forced_advance_0.png"
+      ],
+      "effect": "dialogue",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 46,
+      "verb_index": 3,
+      "verb_ja": "あそこ",
+      "verb_en": "Crotch",
+      "target_index": null,
+      "target_ja": null,
+      "target_en": null,
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    }
+  ]
+}

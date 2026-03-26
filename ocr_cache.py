@@ -53,8 +53,8 @@ from PIL import Image
 # For a 648×451 window image these are safe crops that stay within the
 # game area even accounting for slight chrome-height variation.
 
-_VERB_CROP   = (510, 47, 640, 230)   # (left, top, right, bottom) window px
-_TARGET_CROP = (518, 47, 640, 200)   # 518 = leftmost x where EasyOCR detects 工場に入る
+_VERB_CROP   = (510, 35, 640, 250)   # (left, top, right, bottom) window px
+_TARGET_CROP = (518, 35, 640, 210)   # 518 = leftmost x where EasyOCR detects 工場に入る
 
 # ---------------------------------------------------------------------------
 # Cache file
@@ -121,16 +121,65 @@ def _get_reader():
 
 
 def _run_ocr(crop_rgb: Image.Image) -> list[str]:
-    """Run EasyOCR on a (small) crop and return text strings top-to-bottom."""
+    """Run EasyOCR on a (small) crop and return text strings top-to-bottom.
+
+    Uses a dual-pass strategy to handle varying menu backgrounds:
+      Pass 1: original colour crop (best for light backgrounds)
+      Pass 2: greyscale → invert → brightness boost (best for dark/teal backgrounds)
+    Results are merged by vertical position, keeping the higher-confidence
+    detection when both passes find text in the same row band.
+    """
     import numpy as np
+    from PIL import ImageOps, ImageEnhance
 
     reader = _get_reader()
-    arr = np.array(crop_rgb)
-    results = reader.readtext(arr, detail=1, paragraph=False)
-    # results: list of ([bbox], text, confidence)
-    # Sort by vertical centre of bbox so order matches display top→bottom
-    results.sort(key=lambda r: (r[0][0][1] + r[0][2][1]) / 2)
-    return [r[1] for r in results if r[2] > 0.2]   # confidence > 20 %
+    MIN_CONF = 0.05
+
+    def _detect(img_array):
+        results = reader.readtext(img_array, detail=1, paragraph=False)
+        # (text, confidence, y_center)
+        return [
+            (r[1], float(r[2]), (r[0][0][1] + r[0][2][1]) / 2)
+            for r in results if r[2] > MIN_CONF
+        ]
+
+    # Pass 1: original
+    hits_normal = _detect(np.array(crop_rgb))
+
+    # Pass 2: grey + invert + brightness (reveals dark-on-dark text)
+    grey = crop_rgb.convert("L")
+    inv = ImageOps.invert(grey)
+    bright = ImageEnhance.Brightness(inv.convert("RGB")).enhance(1.5)
+    hits_inv = _detect(np.array(bright))
+
+    # Merge: group by y-center bands (~20px tolerance), keep best confidence
+    Y_BAND = 20
+    merged: list[tuple[str, float, float]] = []  # (text, conf, y)
+    used = [False] * len(hits_inv)
+
+    for text, conf, y in hits_normal:
+        # Find best matching inverted hit in same y-band
+        best_inv = None
+        best_idx = -1
+        for j, (t2, c2, y2) in enumerate(hits_inv):
+            if not used[j] and abs(y - y2) < Y_BAND:
+                if best_inv is None or c2 > best_inv[1]:
+                    best_inv = (t2, c2, y2)
+                    best_idx = j
+        if best_inv and best_inv[1] > conf:
+            merged.append(best_inv)
+        else:
+            merged.append((text, conf, y))
+        if best_idx >= 0:
+            used[best_idx] = True
+
+    # Add any inverted-only detections (not matched to normal hits)
+    for j, (t2, c2, y2) in enumerate(hits_inv):
+        if not used[j]:
+            merged.append((t2, c2, y2))
+
+    merged.sort(key=lambda x: x[2])
+    return [text for text, _conf, _y in merged]
 
 
 # ---------------------------------------------------------------------------
@@ -195,7 +244,10 @@ def _clean_ocr(text: str) -> str:
     # Known single-character OCR confusions for this font
     corrections = {
         "者える": "考える",
-        "者": "考",     # standalone confusion
+        "者え": "考え",       # truncated form
+        "者": "考",           # standalone confusion
+        "話む": "話す",       # す→む confusion in HQ verb panel
+        "稲動": "移動",       # 移→稲 confusion (low-confidence detection)
     }
     return corrections.get(text, text)
 
@@ -203,9 +255,11 @@ def _clean_ocr(text: str) -> str:
 def _translate(ja: str) -> str:
     """Return English translation for a Japanese string, or the raw OCR text if unknown.
 
-    Uses exact match first, then a limited suffix-match fallback to handle
-    the case where the crop edge clips the very first character of a compound
-    word (e.g. OCR returns '場に入る' when the table entry is '工場に入る').
+    Uses exact match first, then limited fallbacks:
+      1. Suffix match — crop clipped the leading character
+         (e.g. OCR '場に入る' → table '工場に入る')
+      2. Prefix match — OCR truncated the trailing character
+         (e.g. OCR '調べ' → table '調べる')
     No general substring matching — that causes dialogue lines to swamp short
     verb lookups.
     """
@@ -217,6 +271,11 @@ def _translate(ja: str) -> str:
     # Accept a table key that is exactly 1 character longer and ends with `ja`.
     for k, v in table.items():
         if k.endswith(ja) and len(k) - len(ja) == 1:
+            return v
+    # Prefix fallback: EasyOCR truncated the trailing character of a short verb.
+    # Accept a table key that is exactly 1 character longer and starts with `ja`.
+    for k, v in table.items():
+        if k.startswith(ja) and len(k) - len(ja) == 1:
             return v
     return ja   # unknown — return Japanese as-is so the user can correct the cache
 
@@ -244,7 +303,9 @@ def _label_from_crop(img: Image.Image, box: tuple[int, int, int, int]) -> list[t
     raw_texts = _run_ocr(crop_rgb)
     elapsed = time.monotonic() - t0
     cleaned = [_clean_ocr(t) for t in raw_texts]
-    print(f"  OCR ({elapsed:.1f}s): {cleaned}")
+    # Only log on slow (uncached) runs to avoid clutter
+    if elapsed > 1.0:
+        print(f"  OCR ({elapsed:.1f}s): {cleaned}")
 
     pairs = [(ja, _translate(ja)) for ja in cleaned]
 

@@ -1,0 +1,145 @@
+{
+  "total_rounds": 10,
+  "total_actions": 9,
+  "resolved": false,
+  "crashed": false,
+  "attempt_counts": {
+    "???+None": 1,
+    "???+なめる": 2,
+    "???+愛撫する": 2,
+    "むね+None": 1,
+    "乳房+None": 1,
+    "太もも+None": 1,
+    "愛撫す+???": 1
+  },
+  "initial_menu": [
+    {
+      "ja": "愛撫す",
+      "en": "Caress"
+    },
+    {
+      "ja": "なめる",
+      "en": "Lick"
+    }
+  ],
+  "final_menu": [],
+  "actions": [
+    {
+      "round": 0,
+      "verb_index": 0,
+      "verb_ja": "愛撫す",
+      "verb_en": "Caress",
+      "target_index": 0,
+      "target_ja": "???",
+      "target_en": "???",
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 1,
+      "verb_index": 0,
+      "verb_ja": "???",
+      "verb_en": "???",
+      "target_index": 0,
+      "target_ja": "愛撫する",
+      "target_en": "Caress",
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 2,
+      "verb_index": 0,
+      "verb_ja": "???",
+      "verb_en": "???",
+      "target_index": null,
+      "target_ja": null,
+      "target_en": null,
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 3,
+      "verb_index": 0,
+      "verb_ja": "???",
+      "verb_en": "???",
+      "target_index": 1,
+      "target_ja": "なめる",
+      "target_en": "Lick",
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 4,
+      "verb_index": 0,
+      "verb_ja": "乳房",
+      "verb_en": "Breasts",
+      "target_index": null,
+      "target_ja": null,
+      "target_en": null,
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 5,
+      "verb_index": 0,
+      "verb_ja": "???",
+      "verb_en": "???",
+      "target_index": 0,
+      "target_ja": "愛撫する",
+      "target_en": "Caress",
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 6,
+      "verb_index": 1,
+      "verb_ja": "むね",
+      "verb_en": "Chest",
+      "target_index": null,
+      "target_ja": null,
+      "target_en": null,
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 7,
+      "verb_index": 0,
+      "verb_ja": "???",
+      "verb_en": "???",
+      "target_index": 1,
+      "target_ja": "なめる",
+      "target_en": "Lick",
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    },
+    {
+      "round": 8,
+      "verb_index": 1,
+      "verb_ja": "太もも",
+      "verb_en": "Thighs",
+      "target_index": null,
+      "target_ja": null,
+      "target_en": null,
+      "page_count": 0,
+      "text_pages": [],
+      "effect": "no_effect",
+      "final_state": "action_menu"
+    }
+  ]
+}

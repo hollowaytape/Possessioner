@@ -3,104 +3,1238 @@
     "Walkthrough route for automated Possessioner testing.",
     "",
     "load_state: emulator save-state slot to load before navigating the in-game",
-    "  menu. Emulator save states are volatile; slot 0 is currently the main menu.",
-    "  Omit to skip loading a save state (assumes the emulator is already running",
-    "  and showing the main menu).",
+    "  menu. Slot 0 is the main menu / file-select screen.",
     "",
     "file_index: zero-based index used by load_file_from_main_menu to pick which",
-    "  in-game save file to load. 0 = first file, 1 = second, etc.",
-    "  In-game saves are persistent and correspond to the five checkpoints in",
-    "  docs/TODO.md (HQ, maintenance room, junk shop, doctor's office, Prim).",
+    "  in-game save file to load. 0 = File 1 (HQ intro start), 1 = File 2, etc.",
     "",
-    "action_index: zero-based DOWN-presses before ENTER in the verb/action menu.",
-    "target_index: zero-based DOWN-presses before ENTER in the target submenu.",
+    "action_index: zero-based DOWN-presses before SPACE on the verb/action menu.",
+    "target_index: zero-based DOWN-presses before SPACE on the target submenu.",
     "repeat: how many times to execute the same action+target (default 1).",
     "",
-    "IMPORTANT: action_index and target_index values are ESTIMATES derived from",
-    "docs/walkthrough.htm. Verify by running run_walkthrough.py and inspecting",
-    "the output screenshots.",
+    "action_index mapping empirically verified via explore_menu.py on the rasu scene:",
+    "  0=移動(Move)  1=見る(Look)  2=話す(Talk)  3=調べる(Examine)  4=考える(Think)",
+    "Context-specific verbs (浴びる/昇る/聞く/乱入する/脱ぐ/使う/開ける/搭乗) appear",
+    "at varying positions — steps using them have action_index=99 as a placeholder;",
+    "the OCR out-of-range check will stop safely so you can fill in the real index.",
     "",
-    "Typical verb ordering in most rooms (may vary by location):",
-    "  0=見る(Look), 1=話す(Talk), 2=調べる(Examine), 3=移動(Move), 4=考える(Think)",
-    "Some rooms add extra verbs (昇る/乗る/脱ぐ/使う/開ける/乱入する) at",
-    "context-dependent positions — verify those individually.",
-    "",
-    "For chained Move steps (e.g. '移動 廊下 → 本部') add one step per arrow;",
-    "after each Move the next room's menu appears and action_index resets."
+    "For chained Move steps ('移動 廊下→控室') each arrow is its own step.",
+    "target_index values are best guesses; verify with explore_menu.py."
   ],
-
   "save_states": {
-    "0": {
-      "description": "HQ (本部) after Alisa box scene",
+    "full": {
+      "description": "Full game from File 1 — HQ intro to final battle (154 walkthrough actions)",
       "load_state": 0,
       "file_index": 0,
-      "_source": "docs/walkthrough.htm § 本部 (after コンピューターシステム)",
+      "_source": "docs/walkthrough.htm — complete playthrough",
+      "_note": "All action_index/target_index are estimates. Special-verb steps use action_index=99 (placeholder) so the OCR range-check fires and you can fill in the correct index before continuing.",
       "steps": [
         {
-          "action_index": 2,
-          "target_index": 0,
-          "note": "調べる-ボックス",
-          "_verify": "Examine the box — confirm the scene plays"
+          "action_index": 0,
+          "target_index": 1,
+          "note": "見る-ホンホア",
+          "verified": true
         },
         {
-          "action_index": 3,
-          "target_index": 0,
-          "note": "開ける-ボックス",
-          "_verify": "Open the box — action_index may shift if 開ける appears differently"
+          "action_index": 0,
+          "target_index": 2,
+          "note": "見る-メリル",
+          "verified": true
         },
         {
-          "action_index": 1,
-          "target_index": 0,
-          "note": "話す-ネドラ",
-          "repeat": 4,
-          "_verify": "Talk to Nedra x4 — target_index=0 if Nedra is first in Talk submenu"
-        },
-        {
-          "action_index": 3,
-          "target_index": 0,
-          "note": "移動-廊下",
-          "_verify": "Move → Hallway (廊下)"
-        },
-        {
-          "action_index": 3,
-          "target_index": 0,
-          "note": "移動-控室",
-          "_verify": "Move → Rest room (控室) from hallway"
+          "action_index": 0,
+          "target_index": 3,
+          "note": "見る-ネドラ",
+          "repeat": 2,
+          "verified": true
         },
         {
           "action_index": 1,
           "target_index": 0,
           "note": "話す-ホンホア",
+          "verified": true
+        },
+        {
+          "action_index": 1,
+          "target_index": 1,
+          "note": "話す-メリル",
+          "verified": true
+        },
+        {
+          "action_index": 1,
+          "target_index": 2,
+          "note": "話す-ネドラ",
+          "repeat": 3,
+          "verified": true
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-出現現場",
+          "verified": true,
+          "save_checkpoint": true
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-ユミ=中山 [旧市街地]",
+          "verified": true
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-ポゼッショナー [BATTLE]",
+          "verified": true
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下 (from-本部)",
+          "save_checkpoint": true
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-控室 (from-廊下)"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-シャワールーム (from-控室)"
+        },
+        {
+          "action_index": 99,
+          "target_index": 0,
+          "note": "浴びる-シャワー [VERIFY action_index]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 1,
+          "note": "移動-もどる/控室 (from-シャワールーム)"
+        },
+        {
+          "action_index": 0,
+          "target_index": 1,
+          "note": "移動-廊下 (from-控室)"
+        },
+        {
+          "action_index": 0,
+          "target_index": 1,
+          "note": "移動-本部 (from-廊下)"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-オペレーター",
+          "repeat": 3
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下 (from-本部)"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-エントランス"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-街"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-商業地区"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-みんな [商業地区]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-ステラ"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-店員 [ステラ]"
+        },
+        {
+          "action_index": 1,
+          "target_index": 1,
+          "note": "話す-オーナー"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-みんな"
+        },
+        {
+          "action_index": 1,
+          "target_index": 1,
+          "note": "話す-オーナー (2nd)"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-外に出る"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-多層構造地区"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-みんな [多層構造地区]"
+        },
+        {
+          "action_index": 2,
+          "target_index": 0,
+          "note": "調べる-通行人"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "見る-通行人"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-旧市街"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "見る-まわり [旧市街]",
           "repeat": 2,
-          "_verify": "Talk to Honhoa x2 in rest room"
+          "verified": true
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-放棄地区"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廃ビル (from-放棄地区)"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "見る-エレベーター [廃ビル]"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-みんな"
+        },
+        {
+          "action_index": 2,
+          "target_index": 0,
+          "note": "調べる-エレベーター"
+        },
+        {
+          "action_index": 99,
+          "target_index": 0,
+          "note": "使う-エレベーター [VERIFY action_index]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-右前のドア [8階]"
+        },
+        {
+          "action_index": 99,
+          "target_index": 0,
+          "note": "開ける-ドア [VERIFY action_index]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "見る-部屋 [右前のドア]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 1,
+          "note": "見る-ミシャス"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-みんな"
+        },
+        {
+          "action_index": 1,
+          "target_index": 1,
+          "note": "話す-ミシャス [BATTLE]",
+          "repeat": 2
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-放棄地区 (from-廃ビル)"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-旧市街"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-多層構造地区"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-本部ビル"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-本部"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下 (2nd)"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-設備室/整備室"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "見る-整備室"
+        },
+        {
+          "action_index": 2,
+          "target_index": 0,
+          "note": "調べる-整備室"
+        },
+        {
+          "action_index": 99,
+          "target_index": 0,
+          "note": "昇る-階段 [VERIFY action_index]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "見る-3人 [中二階]",
+          "repeat": 2
+        },
+        {
+          "action_index": 99,
+          "target_index": 0,
+          "note": "聞く-声 [VERIFY action_index]",
+          "repeat": 2
         },
         {
           "action_index": 3,
           "target_index": 0,
-          "note": "移動-廊下",
-          "_verify": "Move → Hallway"
+          "note": "考える",
+          "verified": true
         },
         {
-          "action_index": 3,
+          "action_index": 99,
           "target_index": 0,
-          "note": "移動-エントランス",
-          "_verify": "Move → Entrance (エントランス)"
+          "note": "乱入する [VERIFY action_index]"
         },
         {
-          "action_index": 3,
+          "action_index": 0,
           "target_index": 0,
-          "note": "移動-街",
-          "_verify": "Move → City (街)"
+          "note": "移動-廊下 (from-整備室)"
         },
         {
-          "action_index": 3,
+          "action_index": 0,
           "target_index": 0,
-          "note": "移動-旧市街",
-          "_verify": "Move → Old City (旧市街)"
+          "note": "移動-本部"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-オペレーター [本部]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-控室"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-二人 [控室]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下 (from-控室)"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-エントランス"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-街"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-旧市街"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "見る-まわり [旧市街 2nd visit]"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-通行人"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-みんな"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-ジャンク屋"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-主人 [ジャンク屋 1st]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-外に出る"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-多層構造地区 (to-病棟)"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-本部ビル"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-病棟"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-ドクター [病棟]"
+        },
+        {
+          "action_index": 99,
+          "target_index": 0,
+          "note": "脱ぐ-洋服 [VERIFY action_index]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-エントランス (from-病棟)"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-街"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-旧市街"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-ジャンク屋"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-主人 [ジャンク屋 2nd]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-外に出る"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-多層構造地区 (to-本部)"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-本部ビル"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-本部"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-オペレーター [本部 2nd]"
+        },
+        {
+          "action_index": 2,
+          "target_index": 0,
+          "note": "調べる-ラボテック"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-エントランス"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "見る-まわり [エントランス]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 1,
+          "note": "見る-ポゼッショナー"
+        },
+        {
+          "action_index": 2,
+          "target_index": 0,
+          "note": "調べる-装備"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-みんな",
+          "repeat": 3
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "見る-上 [BATTLE]"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-みんな [本部 3rd]",
+          "repeat": 2
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-エントランス"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-街"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-旧市街"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-放棄地区"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-みんな [放棄地区]"
+        },
+        {
+          "action_index": 2,
+          "target_index": 0,
+          "note": "調べる-道路"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-発信地点"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-中に入る [建物入口]"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-ミンスキー [BATTLE]",
+          "repeat": 2
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-中に入る [BATTLE]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-前に進む [廊下]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-前に進む"
+        },
+        {
+          "action_index": 2,
+          "target_index": 0,
+          "note": "調べる-女帝 [奥の部屋]"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-女帝 [BATTLE]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-もどる [コンピューターシステム]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-もどる"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-もどる"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-旧市街"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-多層構造地区"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-本部ビル"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-本部"
+        },
+        {
+          "action_index": 2,
+          "target_index": 0,
+          "note": "調べる-ボックス [本部 4th]"
+        },
+        {
+          "action_index": 99,
+          "target_index": 0,
+          "note": "開ける-ボックス [VERIFY action_index]"
+        },
+        {
+          "action_index": 1,
+          "target_index": 2,
+          "note": "話す-ネドラ",
+          "repeat": 4,
+          "verified": true
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-控室"
+        },
+        {
+          "action_index": 1,
+          "target_index": 1,
+          "note": "話す-ホンホア [控室 2nd]",
+          "repeat": 2,
+          "verified": true
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-エントランス"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-街"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-旧市街"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-放棄地区"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-下水入口"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-下水の中へ"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-進む [下水] [BATTLE]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-降りる"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-下へ [BATTLE]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-下へ"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-下へ"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-奥へ"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-進む"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-工場に入る"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-メイ [工場] [BATTLE]",
+          "repeat": 3
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-奥へ"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-進む"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "見る-男 [部屋 2nd]"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-ラシュマル [BATTLE]",
+          "repeat": 3
+        },
+        {
+          "action_index": 2,
+          "target_index": 0,
+          "note": "調べる-コンピューター"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-もどる"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-もどる"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-外に出る"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-もどる"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-もどる"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-上へ"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-上へ"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-上へ"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-上へ"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-もどる"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-入口へ"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-もどる"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-旧市街 (to-控室)"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-多層構造地区"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-本部ビル"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-控室"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-みんな [控室 3rd]",
+          "repeat": 2
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下"
+        },
+        {
+          "action_index": 2,
+          "target_index": 0,
+          "note": "調べる-床 [廊下 — ディスク入手]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-本部"
+        },
+        {
+          "action_index": 99,
+          "target_index": 0,
+          "note": "使う-ボックス [本部] [VERIFY action_index]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-控室"
+        },
+        {
+          "action_index": 1,
+          "target_index": 0,
+          "note": "話す-みんな [控室 4th]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-整備室"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下 (from-整備室)"
+        },
+        {
+          "action_index": 2,
+          "target_index": 0,
+          "note": "調べる-ドア [廊下]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-資料室"
+        },
+        {
+          "action_index": 1,
+          "target_index": 3,
+          "note": "話す-ネドラ [資料室]",
+          "repeat": 3,
+          "verified": true
+        },
+        {
+          "action_index": 1,
+          "target_index": 1,
+          "note": "話す-二人"
+        },
+        {
+          "action_index": 1,
+          "target_index": 3,
+          "note": "話す-ネドラ (last) [BATTLE]",
+          "verified": true
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下 (to-整備室)"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-整備室"
+        },
+        {
+          "action_index": 2,
+          "target_index": 0,
+          "note": "話す-整備員 [整備室]"
+        },
+        {
+          "action_index": 2,
+          "target_index": 1,
+          "note": "話す-オペレーター"
+        },
+        {
+          "action_index": 99,
+          "target_index": 0,
+          "note": "搭乗-装甲車 [VERIFY action_index]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-制御室 [排熱孔] [BATTLE]"
+        },
+        {
+          "action_index": 2,
+          "target_index": 0,
+          "note": "調べる-制御卓 [制御室]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-奥に進む"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-右 [タワー] [BATTLE]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 1,
+          "note": "移動-もどる"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-左"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-真っすぐ [BATTLE]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-前 [BATTLE]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-前"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-右 [BATTLE — ビーコン入手]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 1,
+          "note": "移動-もどる"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-後ろ"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-後ろ"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-右"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-右"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-縦穴"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-上昇 [BATTLE]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-上昇"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-穴に入る"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-前のドア [BATTLE]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 1,
+          "note": "移動-右のドア"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-前 [BATTLE]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-進む"
+        },
+        {
+          "action_index": 0,
+          "target_index": 1,
+          "note": "移動-右のドア (2nd)"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-階段を昇る"
+        },
+        {
+          "action_index": 2,
+          "target_index": 0,
+          "note": "話す-ティナ [BATTLE]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-ドアの先へ"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-進む [BATTLE]"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-進む"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-進む"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-中に入る"
+        },
+        {
+          "action_index": 2,
+          "target_index": 0,
+          "note": "話す-妖精 [FINAL BATTLE]",
+          "repeat": 3
         }
       ]
     },
-
+    "0": {
+      "description": "HQ (本部) box scene — second HQ visit",
+      "load_state": 0,
+      "file_index": 0,
+      "_source": "docs/walkthrough.htm § 本部 (after コンピューターシステム)",
+      "steps": [
+        {
+          "action_index": 3,
+          "target_index": 0,
+          "note": "調べる-ボックス"
+        },
+        {
+          "action_index": 99,
+          "target_index": 0,
+          "note": "開ける-ボックス [VERIFY action_index]"
+        },
+        {
+          "action_index": 2,
+          "target_index": 0,
+          "note": "話す-ネドラ",
+          "repeat": 4
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-控室"
+        },
+        {
+          "action_index": 2,
+          "target_index": 0,
+          "note": "話す-ホンホア",
+          "repeat": 2
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-廊下"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-エントランス"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-街"
+        },
+        {
+          "action_index": 0,
+          "target_index": 0,
+          "note": "移動-旧市街"
+        }
+      ]
+    },
     "1": {
       "description": "Maintenance room (整備室) after Eris encounter",
       "load_state": 0,
@@ -108,26 +1242,22 @@
       "_source": "docs/walkthrough.htm § 整備室",
       "steps": [
         {
-          "action_index": 0,
+          "action_index": 1,
           "target_index": 0,
-          "note": "見る-整備室",
-          "_verify": "Look at the maintenance room"
-        },
-        {
-          "action_index": 2,
-          "target_index": 0,
-          "note": "調べる-整備室",
-          "_verify": "Examine the maintenance room"
+          "note": "見る-整備室"
         },
         {
           "action_index": 3,
           "target_index": 0,
-          "note": "昇る-階段",
-          "_verify": "Climb stairs (昇る) — action_index may be different; verify position"
+          "note": "調べる-整備室"
+        },
+        {
+          "action_index": 99,
+          "target_index": 0,
+          "note": "昇る-階段 [VERIFY action_index]"
         }
       ]
     },
-
     "2": {
       "description": "Junk shop (ジャンク屋)",
       "load_state": 0,
@@ -135,36 +1265,17 @@
       "_source": "docs/walkthrough.htm § ジャンク屋",
       "steps": [
         {
-          "action_index": 1,
+          "action_index": 2,
           "target_index": 0,
-          "note": "話す-主人",
-          "_verify": "Talk to the shopkeeper (主人)"
+          "note": "話す-主人"
         },
         {
-          "action_index": 3,
+          "action_index": 0,
           "target_index": 0,
-          "note": "移動-外に出る",
-          "_verify": "Move → exit (外に出る)"
+          "note": "移動-外に出る"
         }
       ]
     },
-
-    "battle_test": {
-      "description": "Battle automation test — junk shop Possessioner fight",
-      "load_state": 0,
-      "file_index": 0,
-      "_source": "User-provided recipe: save 0, file 2 (file_index=0), Talk → Possessioner triggers a battle",
-      "_note": "Use this slot to verify resolve_battle() coordinates before relying on it in production slots.",
-      "steps": [
-        {
-          "action_index": 1,
-          "target_index": 0,
-          "note": "話す-Possessioner",
-          "_verify": "Talk → 1st target (Possessioner) then SPACE through dialog → battle screen should appear and be auto-resolved by resolve_battle()"
-        }
-      ]
-    },
-
     "3": {
       "description": "Doctor's office (病棟) post-scene",
       "load_state": 0,
@@ -172,37 +1283,44 @@
       "_source": "docs/walkthrough.htm § 病棟",
       "steps": [
         {
-          "action_index": 1,
+          "action_index": 2,
           "target_index": 0,
-          "note": "話す-ドクター",
-          "_verify": "Talk to the doctor"
+          "note": "話す-ドクター"
         },
         {
-          "action_index": 3,
+          "action_index": 99,
           "target_index": 0,
-          "note": "脱ぐ-洋服",
-          "_verify": "Take off clothes (脱ぐ) — action_index varies; verify"
+          "note": "脱ぐ-洋服 [VERIFY action_index]"
         },
         {
-          "action_index": 3,
+          "action_index": 0,
           "target_index": 0,
-          "note": "移動-エントランス",
-          "_verify": "Move to entrance"
+          "note": "移動-エントランス"
         }
       ]
     },
-
     "4": {
-      "description": "Before Prim battle",
+      "description": "Before Prim battle (placeholder)",
       "load_state": 0,
       "file_index": 4,
       "_source": "docs/walkthrough.htm — late game, before Prim fight",
       "steps": [
         {
-          "_comment": "Steps for this save state need to be derived from a later section of the walkthrough. Fill in after verifying slots 0-3.",
           "action_index": 0,
           "target_index": 0,
-          "note": "PLACEHOLDER-verify-this-slot"
+          "note": "PLACEHOLDER — verify this slot"
+        }
+      ]
+    },
+    "battle_test": {
+      "description": "Battle test — Talk to Possessioner triggers fight",
+      "load_state": 0,
+      "file_index": 0,
+      "steps": [
+        {
+          "action_index": 2,
+          "target_index": 1,
+          "note": "話す-ポゼッショナー [BATTLE]"
         }
       ]
     }

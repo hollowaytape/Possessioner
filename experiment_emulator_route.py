@@ -14,8 +14,12 @@ import win32gui
 import win32ui
 from PIL import Image, ImageChops, ImageGrab
 
+SAVE_STATE_COMMAND_BASE = 40201
 LOAD_STATE_COMMAND_BASE = 40251
-DEFAULT_EMULATOR_PATH = Path(r"D:\Code\roms\romtools\np2debug\np21debug_x64.exe")
+# Speed menu IDs (np2fmgen only, requires CPUSMENU ini key)
+SPEED_COMMAND_BASE = 40140
+DEFAULT_EMULATOR_PATH = Path(r"D:\Code\roms\romtools\np2fmgen\np21nt.exe")
+DEFAULT_EMULATOR_PATH_DEBUG = Path(r"D:\Code\roms\romtools\np2debug\np21debug_x64.exe")
 DEFAULT_HDI_PATH = Path("patched") / "Possessioner.hdi"
 PREFERRED_PROCESS_ID: int | None = None
 
@@ -42,7 +46,7 @@ def cursor_pos() -> tuple[int, int]:
     return int(point.x), int(point.y)
 
 
-def post_key(hwnd: int, vk: int, hold: float = 0.05) -> None:
+def post_key(hwnd: int, vk: int, hold: float = 0.12) -> None:
     hwnd = ensure_valid_window(hwnd)
     win32gui.PostMessage(hwnd, win32con.WM_KEYDOWN, vk, 0)
     time.sleep(hold)
@@ -101,6 +105,26 @@ def load_state_direct(hwnd: int, slot: int) -> None:
     win32gui.SendMessage(hwnd, win32con.WM_COMMAND, LOAD_STATE_COMMAND_BASE + slot, 0)
 
 
+def save_state_direct(hwnd: int, slot: int) -> None:
+    if not 0 <= slot <= 9:
+        raise SystemExit("--save-state must be between 0 and 9")
+    hwnd = ensure_valid_window(hwnd)
+    win32gui.SendMessage(hwnd, win32con.WM_COMMAND, SAVE_STATE_COMMAND_BASE + slot, 0)
+
+
+def set_emulator_speed(hwnd: int, speed_index: int) -> None:
+    """Set emulator speed via the Emulate > Speed menu (np2fmgen only).
+
+    speed_index maps to the CPUSMENU ini entries. With the default
+    ``CPUSMENU=25,50,75,100,150,200,400,800``, the indices are:
+      0=25%  1=50%  2=75%  3=100%  4=150%  5=200%  6=400%  7=800%
+    """
+    if not 0 <= speed_index <= 7:
+        raise SystemExit("speed_index must be between 0 and 7")
+    hwnd = ensure_valid_window(hwnd)
+    win32gui.SendMessage(hwnd, win32con.WM_COMMAND, SPEED_COMMAND_BASE + speed_index, 0)
+
+
 def capture_window_image(hwnd: int) -> Image.Image:
     hwnd = ensure_valid_window(hwnd)
     left, top, right, bottom = win32gui.GetWindowRect(hwnd)
@@ -154,8 +178,11 @@ def capture_window_image(hwnd: int) -> Image.Image:
 
 
 def content_region(image: Image.Image) -> Image.Image:
-    top_crop = 36
-    bottom_crop = 0
+    top_crop = 46   # skip window chrome (title bar + menu bar)
+    # Crop 20px from bottom to exclude the blinking red "advance" arrow that
+    # appears during dialogue.  Without this, the blink resets the stability
+    # timer in wait_for_content_stable and delays every text page by seconds.
+    bottom_crop = 20
     if image.height <= top_crop + bottom_crop:
         return image
     return image.crop((0, top_crop, image.width, image.height - bottom_crop))
@@ -208,11 +235,20 @@ def press_and_wait(
     stable_timeout: float = 10.0,
     stable_period: float = 1.0,
     wait_for_stable: bool = True,
+    retries: int = 2,
 ) -> None:
     baseline = capture_window_image(hwnd)
-    post_key(hwnd, vk)
-    changed = wait_for_content_change(hwnd, baseline, timeout=change_timeout)
-    if not images_different(baseline, changed):
+    for attempt in range(1 + retries):
+        if attempt == 0:
+            post_key(hwnd, vk)
+        else:
+            # Retry with foreground key injection (more reliable)
+            send_foreground_key(hwnd, vk, hold=0.15)
+        changed = wait_for_content_change(hwnd, baseline, timeout=change_timeout)
+        if images_different(baseline, changed):
+            break
+    else:
+        # All attempts failed to produce a visible change
         return
     if not wait_for_stable:
         time.sleep(0.15)
@@ -220,7 +256,7 @@ def press_and_wait(
     wait_for_content_stable(hwnd, timeout=stable_timeout, stable_period=stable_period)
 
 
-def send_foreground_key(hwnd: int, vk: int, hold: float = 0.05) -> None:
+def send_foreground_key(hwnd: int, vk: int, hold: float = 0.12) -> None:
     hwnd = ensure_valid_window(hwnd)
     ctypes.windll.user32.ShowWindow(hwnd, win32con.SW_RESTORE)
     ctypes.windll.user32.SetForegroundWindow(hwnd)
@@ -304,16 +340,17 @@ def screenshot_window(hwnd: int, output_path: Path) -> Path:
 
 
 def load_file_from_main_menu(hwnd: int, file_index: int = 0) -> None:
+    """Navigate the main-menu file-select screen via PostMessage (background-safe)."""
     if file_index < 0:
         raise SystemExit("--file-index must be 0 or greater")
-    send_foreground_key(hwnd, VK_BY_NAME["DOWN"])
+    post_key(hwnd, VK_BY_NAME["DOWN"])
     time.sleep(1.0)
-    send_foreground_key(hwnd, VK_BY_NAME["ENTER"])
+    post_key(hwnd, VK_BY_NAME["ENTER"])
     time.sleep(1.5)
     for _ in range(file_index + 1):
-        send_foreground_key(hwnd, VK_BY_NAME["DOWN"])
+        post_key(hwnd, VK_BY_NAME["DOWN"])
         time.sleep(0.5)
-    send_foreground_key(hwnd, VK_BY_NAME["ENTER"])
+    post_key(hwnd, VK_BY_NAME["ENTER"])
     time.sleep(6.0)
     wait_for_content_stable(hwnd, timeout=20.0, stable_period=1.5)
 
@@ -502,13 +539,13 @@ def run_load_only_route(
 #   The FIGHT button sits on the lower center-right strip at game (465, 378).
 #
 # Window coordinates = game coordinates + chrome offsets.
-# np2debug window chrome: 60 px top, 4 px per side (window is 648×451).
+# np2fmgen (np21nt) window chrome: ~46 px top, 4 px per side (window is 648×451).
 # All _WC_ constants below are already in window-relative space.
 # IMPORTANT: These coordinates were derived from reference screenshots and
 # need empirical verification on a live battle.  Adjust if clicks miss.
 
 _WC_CHROME_LEFT = 4
-_WC_CHROME_TOP = 60
+_WC_CHROME_TOP = 46
 _DIALOGUE_ADVANCE_PAUSE = 0.15
 
 def _game_to_win(gx: int, gy: int) -> tuple[int, int]:
@@ -753,12 +790,12 @@ def compare_images(first: Path, second: Path) -> tuple[bool, tuple[int, int, int
 
 def main() -> None:
     global PREFERRED_PROCESS_ID
-    parser = argparse.ArgumentParser(description="Launch np2debug, run a scripted route, and capture the window.")
+    parser = argparse.ArgumentParser(description="Launch NP2 emulator, run a scripted route, and capture the window.")
     parser.add_argument(
         "--emulator",
         type=Path,
         default=DEFAULT_EMULATOR_PATH,
-        help=f"Path to np2debug executable (default: {DEFAULT_EMULATOR_PATH})",
+        help=f"Path to NP2 executable (default: {DEFAULT_EMULATOR_PATH})",
     )
     parser.add_argument(
         "--hdi",
@@ -789,15 +826,22 @@ def main() -> None:
     parser.add_argument("--close-existing", action="store_true", help="Close any existing emulator windows before launch")
     parser.add_argument("--load-state", type=int, help="Load state slot 0-9 via emulator menu command before the route")
     parser.add_argument("--startup-delay", type=float, default=4.0, help="Seconds to wait after emulator launch before routing")
+    parser.add_argument("--speed", type=int, choices=range(8), default=None, metavar="IDX",
+                        help="Set emulator speed after launch (np2fmgen: 0=25%% 1=50%% 2=75%% 3=100%% 4=150%% 5=200%% 6=400%% 7=800%%)")
     args = parser.parse_args()
 
     if args.close_existing:
         close_existing_emulator_windows()
 
-    process = subprocess.Popen([str(args.emulator), str(args.hdi)], cwd=str(args.emulator.parent))
+    hdi_abs = str(args.hdi.resolve())
+    process = subprocess.Popen([str(args.emulator), hdi_abs], cwd=str(args.emulator.parent))
     PREFERRED_PROCESS_ID = process.pid
     hwnd = find_main_window(process_id=process.pid)
     print(f"PID={process.pid} HWND=0x{hwnd:08x}")
+
+    if args.speed is not None:
+        set_emulator_speed(hwnd, args.speed)
+        print(f"Set speed index {args.speed}")
 
     if args.route == "menu-target":
         steps = [parse_step(spec) for spec in args.step] if args.step else None
