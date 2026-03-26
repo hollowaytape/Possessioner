@@ -5,6 +5,7 @@
 
 import os
 
+from cheats import apply_pos_cheats
 from rominfo import FILE_BLOCKS, FILES, FILES_TO_REINSERT, ORIGINAL_ROM_PATH, TARGET_ROM_PATH, DUMP_XLS_PATH, POINTER_DUMP_XLS_PATH, inverse_CONCISE_CTRL, inverse_CTRL
 from rominfo import ENEMY_NAME_LOCATIONS
 from romtools.disk import Disk, Gamefile, Block
@@ -80,13 +81,7 @@ def run_reinsert():
             gamefile.edit(0xa3bf, b'\xa8\x04')
 
             if CHEATS_ON:
-                # Set all enemy HP to 0, so they die in one hit
-                for loc in ENEMY_NAME_LOCATIONS:
-                    gamefile.edit(loc - 9, b'\x00')   # HP = 0
-                    gamefile.edit(loc - 10, b'\x80')  # State = dead?
-
-                # Instant text display
-                gamefile.edit(0xa3bf, b'\xa8\x03')
+                apply_pos_cheats(gamefile, ENEMY_NAME_LOCATIONS)
 
         elif filename == 'POSM.EXE':
             # Redirect font table reference

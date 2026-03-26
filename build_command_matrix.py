@@ -28,6 +28,7 @@ def build_command_matrix(graph: dict[str, Any]) -> dict[str, Any]:
                         "room_transitions": [],
                         "event_transitions": [],
                         "flags": [],
+                        "battle_encounters": [],
                     },
                 )
 
@@ -41,6 +42,7 @@ def build_command_matrix(graph: dict[str, Any]) -> dict[str, Any]:
                     "english_preview": node["english_preview"],
                     "route_status": node["route_status"],
                     "route_role": node["route_role"],
+                    "battle_encounters": node.get("battle_encounters", []),
                 }
                 if node_entry not in target_bucket["nodes"]:
                     target_bucket["nodes"].append(node_entry)
@@ -63,6 +65,10 @@ def build_command_matrix(graph: dict[str, Any]) -> dict[str, Any]:
                     }
                     if flag_entry not in target_bucket["flags"]:
                         target_bucket["flags"].append(flag_entry)
+
+                for encounter in node.get("battle_encounters", []):
+                    if encounter not in target_bucket["battle_encounters"]:
+                        target_bucket["battle_encounters"].append(encounter)
 
         matrix[file_name] = {
             "action_count": len(actions),

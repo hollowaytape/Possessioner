@@ -647,7 +647,7 @@
   function renderActionExplorer() {
     const matrix = commandMatrix[state.action.file] || { actions: {} };
     const actionBucket = (matrix.actions || {})[state.action.action] || {};
-    const targetBucket = actionBucket[state.action.target] || { nodes: [], room_transitions: [], event_transitions: [], flags: [] };
+    const targetBucket = actionBucket[state.action.target] || { nodes: [], room_transitions: [], event_transitions: [], flags: [], battle_encounters: [] };
     const fileGraph = stateGraph.files[state.action.file] || { edge_count: 0 };
 
     els.actionSummary.innerHTML = renderSummaryCards([
@@ -657,6 +657,7 @@
       summaryCard("Matching nodes", String(targetBucket.nodes.length)),
       summaryCard("File edges", String(fileGraph.edge_count || 0)),
       summaryCard("Outgoing transitions", String(targetBucket.room_transitions.length + targetBucket.event_transitions.length)),
+      summaryCard("Known encounters", String((targetBucket.battle_encounters || []).length)),
     ]);
 
     if (!targetBucket.nodes.length) {
@@ -669,6 +670,7 @@
         roomTransitions: targetBucket.room_transitions,
         eventTransitions: targetBucket.event_transitions,
         flags: targetBucket.flags,
+        battleEncounters: targetBucket.battle_encounters,
       }))
       .join("");
   }
@@ -682,6 +684,7 @@
       summaryCard("Dispatch edges", String(summary.dispatch_edge_count || 0)),
       summaryCard("Event transitions", String(summary.event_transition_edge_count || 0)),
       summaryCard("Room transitions", String(summary.room_transition_edge_count || 0)),
+      summaryCard("Known encounters", String(summary.battle_encounter_count || 0)),
     ]);
 
     const cards = (acceptance.files || [])
@@ -758,6 +761,7 @@
       summaryCard("Dispatch", String(fileGraph.dispatch_edge_count || 0)),
       summaryCard("Dependencies", String(graphModel.dependencyEdges.length)),
       summaryCard("Walkthrough hints", String(graphModel.walkthroughHintEdges.length)),
+      summaryCard("Known encounters", String(fileGraph.battle_encounter_count || 0)),
       summaryCard("Conditional", String(fileGraph.nodes.filter((node) => node.route_status === "conditional").length)),
       summaryCard("Trigger-unknown", String(fileGraph.nodes.filter((node) => node.route_status === "unknown").length)),
       summaryCard("Shown", `${graphModel.nodes.length}${fileGraph.nodes.length > graphModel.nodes.length ? ` / ${fileGraph.nodes.length}` : ""}`),
@@ -1486,14 +1490,17 @@
             <span>${escapeHtml(String(step.bucket.nodes.length))} nodes</span>
             <span>${escapeHtml(String((step.bucket.room_transitions || []).length))} room transitions</span>
             <span>${escapeHtml(String((step.bucket.event_transitions || []).length))} event transitions</span>
+            <span>${escapeHtml(String((step.bucket.battle_encounters || []).length))} encounters</span>
           </div>
           ${renderTransitionSection("Room transitions", step.bucket.room_transitions)}
           ${renderTransitionSection("Event transitions", step.bucket.event_transitions)}
+          ${renderBattleSection(step.bucket.battle_encounters)}
           <div class="card-stack compact">
             ${step.bucket.nodes.slice(0, 4).map((node) => renderNodeCard(node, {
               roomTransitions: step.bucket.room_transitions,
               eventTransitions: step.bucket.event_transitions,
               flags: step.bucket.flags,
+              battleEncounters: step.bucket.battle_encounters,
             })).join("")}
           </div>
         </article>
@@ -1514,6 +1521,7 @@
           <span>${escapeHtml(String(node.row_count || 0))} rows</span>
           <span>${escapeHtml(String((node.dispatch_triggers || []).length || 0))} dispatch</span>
           <span>${escapeHtml(String((extra.flags || node.flag_gates || []).length || 0))} flags</span>
+          <span>${escapeHtml(String((extra.battleEncounters || node.battle_encounters || []).length || 0))} encounters</span>
           <span>${escapeHtml(String((node.walkthrough_steps || []).length || 0))} walkthrough</span>
           <span>${escapeHtml(node.route_status || "")}</span>
           <span>${escapeHtml(node.route_role || "")}</span>
@@ -1524,6 +1532,7 @@
         ${renderChipSection("Walkthrough prior steps", node.walkthrough_prior_steps || [])}
         ${renderTransitionSection("Room transitions", extra.roomTransitions || node.room_transitions || [])}
         ${renderTransitionSection("Event transitions", extra.eventTransitions || node.event_transitions || [])}
+        ${renderBattleSection(extra.battleEncounters || node.battle_encounters || [])}
         ${renderChipSection("Unlocked by", extra.prerequisites || [])}
         ${renderChipSection("Unlocks", extra.unlocks || [])}
         ${renderFlagSection(extra.flags || node.flag_gates || [])}
@@ -1560,6 +1569,32 @@
                 <img src="${escapeAttribute(normalizeAssetPath(item.capture.image))}" alt="${escapeAttribute(item.label)}">
                 <figcaption>${escapeHtml(item.label)}</figcaption>
               </figure>
+            `).join("")}
+          </div>
+        ` : ""}
+      </div>
+    `;
+  }
+
+  function renderBattleSection(values) {
+    const items = (values || []).filter(Boolean);
+    return `
+      <div class="section-block">
+        <strong>Known encounters</strong>
+        <div class="tag-list">
+          ${items.length ? items.map((item) => `<span class="tag">${escapeHtml(item.label || item.destination_label || JSON.stringify(item))}</span>`).join("") : "<span class='record-subline'>(none)</span>"}
+        </div>
+        ${items.length ? `
+          <div class="card-stack compact">
+            ${items.map((item) => `
+              <div class="record-subline">
+                <strong>${escapeHtml(item.label || "Encounter")}</strong>
+                ${item.destination_label ? `<br>${escapeHtml(item.destination_label)}` : ""}
+                ${item.flags?.length ? `<br>Flags: ${escapeHtml(item.flags.join(", "))}` : ""}
+                ${item.launch_location ? `<br>Launch call: ${escapeHtml(item.launch_location)}` : ""}
+                ${item.status ? `<br>Status: ${escapeHtml(item.status)}` : ""}
+                ${item.notes ? `<br>${escapeHtml(item.notes)}` : ""}
+              </div>
             `).join("")}
           </div>
         ` : ""}

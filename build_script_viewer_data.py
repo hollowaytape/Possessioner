@@ -40,6 +40,7 @@ from build_trigger_model import (
 )
 from build_walkthrough_acceptance import build_acceptance_outline
 from rominfo import DUMP_XLS_PATH, MSD_POINTER_RANGES, ORIGINAL_ROM_DIR, POINTER_DUMP_XLS_PATH
+from viewer_battle_knowledge import annotate_graph_with_battle_knowledge
 
 VERB_ALIASES = {
     "TALK": "TALKED_TO",
@@ -293,6 +294,7 @@ def build_graph_payload(root: Path, pos_exe_bytes: bytes) -> dict[str, Any]:
         True,
     )
     state_graph = build_graph(trigger_model)
+    annotate_graph_with_battle_knowledge(state_graph)
     acceptance = build_acceptance_outline(state_graph)
     command_matrix = build_command_matrix(state_graph)
     flag_aliases = build_flag_aliases(flag_payload)

@@ -1,0 +1,91 @@
+{
+  "actions": [
+    {
+      "action_index": 0,
+      "screenshot": "action_00.png",
+      "verb_ja": "移動",
+      "verb_en": "Move",
+      "targets": [
+        {
+          "target_index": 0,
+          "screenshot": "action_00_target_00.png",
+          "target_ja": "場に入る",
+          "target_en": "Enter"
+        },
+        {
+          "target_index": 1,
+          "screenshot": "action_00_target_01.png",
+          "target_ja": "もどる",
+          "target_en": "Return"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "action_index": 1,
+      "screenshot": "action_01.png",
+      "verb_ja": "見る",
+      "verb_en": "Look",
+      "targets": [
+        {
+          "target_index": 0,
+          "screenshot": "action_01_target_00.png",
+          "target_ja": "まわり",
+          "target_en": "Vicinity"
+        },
+        {
+          "target_index": 1,
+          "screenshot": "action_01_target_01.png",
+          "target_ja": "ラボテック",
+          "target_en": "Labotech"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "action_index": 2,
+      "screenshot": "action_02.png",
+      "verb_ja": "話す",
+      "verb_en": "Talk",
+      "targets": [
+        {
+          "target_index": 0,
+          "screenshot": "action_02_target_00.png",
+          "target_ja": "みんな",
+          "target_en": "All"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "action_index": 3,
+      "screenshot": "action_03.png",
+      "verb_ja": "調べる",
+      "verb_en": "Examine",
+      "targets": [
+        {
+          "target_index": 0,
+          "screenshot": "action_03_target_00.png",
+          "target_ja": "道",
+          "target_en": "Path"
+        },
+        {
+          "target_index": 1,
+          "screenshot": "action_03_target_01.png",
+          "target_ja": "ラボテック",
+          "target_en": "Labotech"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "action_index": 4,
+      "screenshot": "action_04.png",
+      "verb_ja": "考える",
+      "verb_en": "Think",
+      "targets": [],
+      "note": "no-submenu (returned to action menu)"
+    }
+  ],
+  "total_actions": 5
+}

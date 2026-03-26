@@ -3,7 +3,9 @@ from __future__ import annotations
 import argparse
 import ctypes
 import subprocess
+import threading
 import time
+import winsound
 from collections.abc import Callable
 from pathlib import Path
 
@@ -19,12 +21,13 @@ PREFERRED_PROCESS_ID: int | None = None
 
 
 VK_BY_NAME = {
-    "ENTER": win32con.VK_RETURN,
-    "SPACE": win32con.VK_SPACE,
-    "DOWN": win32con.VK_DOWN,
-    "UP": win32con.VK_UP,
-    "LEFT": win32con.VK_LEFT,
-    "RIGHT": win32con.VK_RIGHT,
+    "ENTER":  win32con.VK_RETURN,
+    "SPACE":  win32con.VK_SPACE,
+    "ESCAPE": win32con.VK_ESCAPE,
+    "DOWN":   win32con.VK_DOWN,
+    "UP":     win32con.VK_UP,
+    "LEFT":   win32con.VK_LEFT,
+    "RIGHT":  win32con.VK_RIGHT,
 }
 
 
@@ -614,6 +617,71 @@ def resolve_battle(
     wait_for_content_stable(hwnd, timeout=battle_timeout, stable_period=stable_period)
 
 
+def _alert_user(message: str) -> None:
+    """Print a banner and sound an audible alert."""
+    banner = "!" * 64
+    print(f"\n{banner}")
+    print(f"!  {message}")
+    print(f"{banner}\n")
+    for _ in range(3):
+        try:
+            winsound.Beep(880, 300)
+        except Exception:
+            print("\a", end="", flush=True)
+        time.sleep(0.15)
+
+
+def wait_for_battle_resolution(
+    hwnd: int,
+    classify_fn: Callable[[Image.Image], str],
+    *,
+    poll: float = 1.0,
+    trace_fn: Callable[[str], None] | None = None,
+) -> str:
+    """Alert the user and wait until the screen leaves the battle state.
+
+    Polls the emulator window every *poll* seconds.  Also listens for an Enter
+    keypress in the terminal in case the user resolves the battle before the
+    classifier catches it (e.g. after Copilot's battle-skip cheat is applied).
+
+    Returns the first classified state that is not 'battle'.
+    """
+    _alert_user("BATTLE DETECTED — resolve it in the emulator, then press Enter here (or just resolve it and wait)")
+    print("Monitoring emulator for battle end…  (press Enter at any time to re-check immediately)\n")
+
+    result_state: list[str] = []
+    stop_event = threading.Event()
+
+    def _stdin_watcher() -> None:
+        try:
+            input()
+        except Exception:
+            pass
+        stop_event.set()
+
+    watcher = threading.Thread(target=_stdin_watcher, daemon=True)
+    watcher.start()
+
+    while not stop_event.is_set():
+        image = capture_window_image(hwnd)
+        state = classify_fn(image)
+        if trace_fn is not None:
+            trace_fn(f"battle-wait: state={state!r}")
+        if state != "battle":
+            result_state.append(state)
+            stop_event.set()
+            break
+        stop_event.wait(timeout=poll)
+
+    if not result_state:
+        final = classify_fn(capture_window_image(hwnd))
+        result_state.append(final)
+
+    resolved = result_state[0]
+    print(f"Battle resolved — continuing (state={resolved!r})\n")
+    return resolved
+
+
 def advance_to_menu(
     hwnd: int,
     classify_fn: Callable[[Image.Image], str],
@@ -621,14 +689,17 @@ def advance_to_menu(
     space_change_timeout: float = 3.0,
     stable_timeout: float = 12.0,
     stable_period: float = 1.0,
+    on_battle: str = "wait",
     trace_fn: Callable[[str], None] | None = None,
 ) -> str:
     """Press SPACE until the screen reaches the action_menu state (or gives up).
 
-    Uses *classify_fn* (a callable matching screen_state.classify_screen_state's
-    signature) to decide whether to keep advancing or stop.  When the classifier
-    returns 'battle', calls resolve_battle() to drive the combat UI instead of
-    waiting passively.
+    Uses *classify_fn* to decide whether to keep advancing or stop.
+
+    *on_battle* controls what happens when a battle screen is detected:
+      "wait"    — alert the user and block until they resolve the battle
+                  (default; safe when battle automation is unavailable)
+      "resolve" — call resolve_battle() to attempt automated mouse-click combat
 
     Returns the final classified state.
     """
@@ -645,9 +716,13 @@ def advance_to_menu(
             wait_for_content_stable(hwnd, timeout=stable_timeout, stable_period=stable_period)
             continue
         if state == "battle":
-            if trace_fn is not None:
-                trace_fn(f"advance[{attempt}] entering resolve_battle()")
-            resolve_battle(hwnd, stable_timeout=stable_timeout, stable_period=stable_period, trace_fn=trace_fn)
+            if on_battle == "resolve":
+                if trace_fn is not None:
+                    trace_fn(f"advance[{attempt}] entering resolve_battle()")
+                resolve_battle(hwnd, stable_timeout=stable_timeout, stable_period=stable_period, trace_fn=trace_fn)
+            else:
+                # Default: pause and let the user handle it
+                wait_for_battle_resolution(hwnd, classify_fn, trace_fn=trace_fn)
             continue
         # dialogue, cutscene, or unknown — try pressing SPACE
         baseline = image

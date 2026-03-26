@@ -306,6 +306,45 @@ def _is_battle(area: Image.Image) -> bool:
 # Public classifier
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Dialogue-advance arrow detector
+# ---------------------------------------------------------------------------
+# When the game is waiting for the player to press SPACE to advance text it
+# displays a small red blinking down-arrow at the bottom of the text box.
+# This is the ONLY reliable indicator that a SPACE press is required.
+#
+# Pixel signature: R > 150, G < 100, B < 100 in the bottom 30 % of game area.
+# Reference counts (648×451 full-window captures):
+#   intro.png (waiting) : 726 red pixels
+#   yumi.png  (waiting) : 5403 red pixels
+#   action menus        : 0–10 red pixels  (no arrow shown)
+#
+# Threshold of 50 pixels is conservative and avoids false positives from
+# incidental red pixels in scene backgrounds.
+
+_ARROW_MIN_R = 150
+_ARROW_MAX_G = 100
+_ARROW_MAX_B = 100
+_ARROW_MIN_PIXELS = 50
+_ARROW_Y_FRAC = 0.70   # inspect bottom 30 % of game area
+
+
+def _has_advance_arrow(area: Image.Image) -> bool:
+    """True if the red 'press SPACE to continue' arrow is visible."""
+    w, h = area.size
+    y0 = int(h * _ARROW_Y_FRAC)
+    crop = area.crop((0, y0, w, h)).convert("RGB")
+    count = sum(
+        1 for r, g, b in crop.getdata()
+        if r > _ARROW_MIN_R and g < _ARROW_MAX_G and b < _ARROW_MAX_B
+    )
+    return count >= _ARROW_MIN_PIXELS
+
+
+# ---------------------------------------------------------------------------
+# Public classifier
+# ---------------------------------------------------------------------------
+
 def classify_screen_state(image: Image.Image) -> str:
     """Classify a PIL screenshot into a game state string.
 
@@ -315,17 +354,27 @@ def classify_screen_state(image: Image.Image) -> str:
       - 'action_menu' → stop advancing (interactive menu is ready)
       - 'loading'     → wait without pressing SPACE
       - 'battle'      → perform mouse-click battle resolution sequence
-      - 'dialogue'    → press SPACE to advance text (also used for cutscenes)
+      - 'dialogue'    → press SPACE to advance text (only when red arrow visible)
+
+    NOTE: 'dialogue' is returned ONLY when the red advance-arrow is confirmed OR
+    the dialogue text overlay is detected.  Actions like "Think" that trigger a
+    brief response and immediately restore the action menu are classified as
+    'action_menu' because the verb-column structure is still present.
     """
     area = _game_area(image)
     if _is_loading(area):
         return "loading"
     if _is_battle(area):
         return "battle"
-    if _has_dialogue_overlay(area):
-        return "dialogue"
+    # Check action_menu BEFORE dialogue so that screens where Think/etc. briefly
+    # adds a text line at the bottom but keeps the verb column are not mis-classified
+    # as dialogue.
     if _is_action_menu(area):
         return "action_menu"
+    # Dialogue: either the red advance-arrow is visible, or the text overlay
+    # heuristic fires (catches cutscenes where arrow may be mid-blink).
+    if _has_advance_arrow(area) or _has_dialogue_overlay(area):
+        return "dialogue"
     return "dialogue"
 
 
@@ -342,6 +391,7 @@ def _debug_report(path: Path, image: Image.Image) -> None:
     cf = _right_strip_cyan_fraction(area)
     tf = _dialogue_text_white_fraction(area)
     wf = _menu_topslot_white_fraction(area)
+    arrow = _has_advance_arrow(area)
     state = classify_screen_state(image)
     print(
         f"{path.name}: {state}"
@@ -352,6 +402,7 @@ def _debug_report(path: Path, image: Image.Image) -> None:
         f"  right_cyan={cf:.2f} (single-menu thr {_SINGLE_MENU_CYAN_FRACTION:.2f})"
         f"  text_white={tf:.2f} (dialogue thr {_DIALOGUE_TEXT_WHITE_FRACTION:.2f})"
         f"  topslot_white={wf:.2f} (action thr {_MENU_TOPSLOT_WHITE_FRACTION:.2f})"
+        f"  advance_arrow={arrow} (thr {_ARROW_MIN_PIXELS}px)"
     )
 
 
