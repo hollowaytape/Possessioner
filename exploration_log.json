@@ -1,0 +1,2334 @@
+[
+  {
+    "step": 1,
+    "type": "action",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x01",
+    "map_after": "0x01",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x13",
+        "old": "0x00",
+        "new": "0x01",
+        "bits_set": [
+          0
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 9
+  },
+  {
+    "step": 2,
+    "type": "action",
+    "verb": 0,
+    "target": 1,
+    "map_before": "0x01",
+    "map_after": "0x01",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x11",
+        "old": "0x00",
+        "new": "0x02",
+        "bits_set": [
+          1
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 10
+  },
+  {
+    "step": 3,
+    "type": "action",
+    "verb": 0,
+    "target": 2,
+    "map_before": "0x01",
+    "map_after": "0x01",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x11",
+        "old": "0x02",
+        "new": "0x03",
+        "bits_set": [
+          0
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 11
+  },
+  {
+    "step": 4,
+    "type": "action",
+    "verb": 0,
+    "target": 3,
+    "map_before": "0x01",
+    "map_after": "0x01",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x11",
+        "old": "0x03",
+        "new": "0x07",
+        "bits_set": [
+          2
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 12
+  },
+  {
+    "step": 5,
+    "type": "action",
+    "verb": 1,
+    "target": 0,
+    "map_before": "0x01",
+    "map_after": "0x01",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x12",
+        "old": "0x00",
+        "new": "0x02",
+        "bits_set": [
+          1
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 13
+  },
+  {
+    "step": 6,
+    "type": "action",
+    "verb": 1,
+    "target": 1,
+    "map_before": "0x01",
+    "map_after": "0x01",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x12",
+        "old": "0x02",
+        "new": "0x03",
+        "bits_set": [
+          0
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 14
+  },
+  {
+    "step": 7,
+    "type": "action",
+    "verb": 1,
+    "target": 2,
+    "map_before": "0x01",
+    "map_after": "0x01",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x12",
+        "old": "0x03",
+        "new": "0x07",
+        "bits_set": [
+          2
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 15
+  },
+  {
+    "step": 8,
+    "type": "action",
+    "verb": 2,
+    "target": 0,
+    "map_before": "0x01",
+    "map_after": "0x01",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x13",
+        "old": "0x01",
+        "new": "0x03",
+        "bits_set": [
+          1
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 16
+  },
+  {
+    "step": 9,
+    "type": "action",
+    "verb": 3,
+    "target": 0,
+    "map_before": "0x01",
+    "map_after": "0x01",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x13",
+        "old": "0x03",
+        "new": "0x07",
+        "bits_set": [
+          2
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 17
+  },
+  {
+    "step": 10,
+    "type": "action",
+    "verb": 3,
+    "target": 1,
+    "map_before": "0x01",
+    "map_after": "0x01",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x13",
+        "old": "0x07",
+        "new": "0x0F",
+        "bits_set": [
+          3
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 18
+  },
+  {
+    "step": 11,
+    "type": "action",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x01",
+    "map_after": "0x01",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 18
+  },
+  {
+    "step": 12,
+    "type": "action",
+    "verb": 0,
+    "target": 1,
+    "map_before": "0x01",
+    "map_after": "0x01",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x01",
+        "old": "0x00",
+        "new": "0x01",
+        "bits_set": [
+          0
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 19
+  },
+  {
+    "step": 13,
+    "type": "action",
+    "verb": 0,
+    "target": 2,
+    "map_before": "0x01",
+    "map_after": "0x01",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 19
+  },
+  {
+    "step": 14,
+    "type": "action",
+    "verb": 0,
+    "target": 3,
+    "map_before": "0x01",
+    "map_after": "0x01",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 19
+  },
+  {
+    "step": 15,
+    "type": "action",
+    "verb": 1,
+    "target": 0,
+    "map_before": "0x01",
+    "map_after": "0x01",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x01",
+        "old": "0x01",
+        "new": "0x03",
+        "bits_set": [
+          1
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 20
+  },
+  {
+    "step": 16,
+    "type": "action",
+    "verb": 1,
+    "target": 1,
+    "map_before": "0x01",
+    "map_after": "0x01",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 20
+  },
+  {
+    "step": 17,
+    "type": "action",
+    "verb": 1,
+    "target": 2,
+    "map_before": "0x01",
+    "map_after": "0x01",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x01",
+        "old": "0x03",
+        "new": "0x07",
+        "bits_set": [
+          2
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 21
+  },
+  {
+    "step": 18,
+    "type": "move",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x01",
+    "map_after": "0x02",
+    "scene_changed": true,
+    "flags_changed": 2,
+    "flag_diffs": [
+      {
+        "offset": "0x01",
+        "old": "0x07",
+        "new": "0x0F",
+        "bits_set": [
+          3
+        ],
+        "bits_cleared": []
+      },
+      {
+        "offset": "0x14",
+        "old": "0x00",
+        "new": "0x01",
+        "bits_set": [
+          0
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": [
+      {
+        "stat_offset": "0x102",
+        "old": 2,
+        "new": 3
+      }
+    ],
+    "total_flags": 23
+  },
+  {
+    "step": 19,
+    "type": "action",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x15",
+        "old": "0x00",
+        "new": "0x01",
+        "bits_set": [
+          0
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 28
+  },
+  {
+    "step": 20,
+    "type": "action",
+    "verb": 0,
+    "target": 1,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x15",
+        "old": "0x01",
+        "new": "0x03",
+        "bits_set": [
+          1
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 29
+  },
+  {
+    "step": 21,
+    "type": "action",
+    "verb": 0,
+    "target": 2,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x15",
+        "old": "0x03",
+        "new": "0x07",
+        "bits_set": [
+          2
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 30
+  },
+  {
+    "step": 22,
+    "type": "action",
+    "verb": 0,
+    "target": 3,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x15",
+        "old": "0x07",
+        "new": "0x0F",
+        "bits_set": [
+          3
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 31
+  },
+  {
+    "step": 23,
+    "type": "action",
+    "verb": 1,
+    "target": 0,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x15",
+        "old": "0x0F",
+        "new": "0x1F",
+        "bits_set": [
+          4
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 32
+  },
+  {
+    "step": 24,
+    "type": "action",
+    "verb": 1,
+    "target": 1,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x15",
+        "old": "0x1F",
+        "new": "0x3F",
+        "bits_set": [
+          5
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 33
+  },
+  {
+    "step": 25,
+    "type": "action",
+    "verb": 1,
+    "target": 2,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x15",
+        "old": "0x3F",
+        "new": "0x7F",
+        "bits_set": [
+          6
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 34
+  },
+  {
+    "step": 26,
+    "type": "action",
+    "verb": 1,
+    "target": 3,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x15",
+        "old": "0x7F",
+        "new": "0xFF",
+        "bits_set": [
+          7
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 35
+  },
+  {
+    "step": 27,
+    "type": "action",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x16",
+        "old": "0x00",
+        "new": "0x01",
+        "bits_set": [
+          0
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 36
+  },
+  {
+    "step": 28,
+    "type": "action",
+    "verb": 0,
+    "target": 1,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 36
+  },
+  {
+    "step": 29,
+    "type": "action",
+    "verb": 0,
+    "target": 2,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 36
+  },
+  {
+    "step": 30,
+    "type": "action",
+    "verb": 0,
+    "target": 3,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 36
+  },
+  {
+    "step": 31,
+    "type": "action",
+    "verb": 1,
+    "target": 0,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 36
+  },
+  {
+    "step": 32,
+    "type": "action",
+    "verb": 1,
+    "target": 1,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x16",
+        "old": "0x01",
+        "new": "0x05",
+        "bits_set": [
+          2
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 37
+  },
+  {
+    "step": 33,
+    "type": "direct",
+    "verb": 2,
+    "target": null,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 38
+  },
+  {
+    "step": 34,
+    "type": "action",
+    "verb": 1,
+    "target": 2,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x17",
+        "old": "0x00",
+        "new": "0x40",
+        "bits_set": [
+          6
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 39
+  },
+  {
+    "step": 35,
+    "type": "action",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x17",
+        "old": "0x40",
+        "new": "0x41",
+        "bits_set": [
+          0
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 40
+  },
+  {
+    "step": 36,
+    "type": "action",
+    "verb": 0,
+    "target": 1,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x17",
+        "old": "0x41",
+        "new": "0x43",
+        "bits_set": [
+          1
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 41
+  },
+  {
+    "step": 37,
+    "type": "action",
+    "verb": 0,
+    "target": 2,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x17",
+        "old": "0x43",
+        "new": "0x47",
+        "bits_set": [
+          2
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 42
+  },
+  {
+    "step": 38,
+    "type": "action",
+    "verb": 0,
+    "target": 3,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x17",
+        "old": "0x47",
+        "new": "0x4F",
+        "bits_set": [
+          3
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 43
+  },
+  {
+    "step": 39,
+    "type": "action",
+    "verb": 1,
+    "target": 0,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x17",
+        "old": "0x4F",
+        "new": "0x5F",
+        "bits_set": [
+          4
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 44
+  },
+  {
+    "step": 40,
+    "type": "action",
+    "verb": 1,
+    "target": 1,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x17",
+        "old": "0x5F",
+        "new": "0x7F",
+        "bits_set": [
+          5
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 45
+  },
+  {
+    "step": 41,
+    "type": "action",
+    "verb": 1,
+    "target": 2,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x18",
+        "old": "0x00",
+        "new": "0x01",
+        "bits_set": [
+          0
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 46
+  },
+  {
+    "step": 42,
+    "type": "direct",
+    "verb": 2,
+    "target": null,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 47
+  },
+  {
+    "step": 43,
+    "type": "action",
+    "verb": 1,
+    "target": 3,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x18",
+        "old": "0x03",
+        "new": "0x0B",
+        "bits_set": [
+          3
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 48
+  },
+  {
+    "step": 44,
+    "type": "action",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 48
+  },
+  {
+    "step": 45,
+    "type": "action",
+    "verb": 0,
+    "target": 1,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 48
+  },
+  {
+    "step": 46,
+    "type": "action",
+    "verb": 0,
+    "target": 2,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 48
+  },
+  {
+    "step": 47,
+    "type": "action",
+    "verb": 0,
+    "target": 3,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x18",
+        "old": "0x0B",
+        "new": "0x0F",
+        "bits_set": [
+          2
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 49
+  },
+  {
+    "step": 48,
+    "type": "action",
+    "verb": 1,
+    "target": 0,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 49
+  },
+  {
+    "step": 49,
+    "type": "action",
+    "verb": 1,
+    "target": 1,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 2,
+    "flag_diffs": [
+      {
+        "offset": "0x18",
+        "old": "0x0F",
+        "new": "0x1F",
+        "bits_set": [
+          4
+        ],
+        "bits_cleared": []
+      },
+      {
+        "offset": "0xC8",
+        "old": "0x00",
+        "new": "0x02",
+        "bits_set": [
+          1
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 51
+  },
+  {
+    "step": 50,
+    "type": "action",
+    "verb": 1,
+    "target": 3,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 51
+  },
+  {
+    "step": 51,
+    "type": "action",
+    "verb": 1,
+    "target": 2,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 51
+  },
+  {
+    "step": 52,
+    "type": "action",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 51
+  },
+  {
+    "step": 53,
+    "type": "action",
+    "verb": 0,
+    "target": 1,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 51
+  },
+  {
+    "step": 54,
+    "type": "action",
+    "verb": 0,
+    "target": 2,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 51
+  },
+  {
+    "step": 55,
+    "type": "action",
+    "verb": 0,
+    "target": 3,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 51
+  },
+  {
+    "step": 56,
+    "type": "action",
+    "verb": 1,
+    "target": 0,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 51
+  },
+  {
+    "step": 57,
+    "type": "action",
+    "verb": 1,
+    "target": 1,
+    "map_before": "0x56",
+    "map_after": "0x56",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 51
+  },
+  {
+    "step": 58,
+    "type": "action",
+    "verb": 3,
+    "target": 0,
+    "map_before": "0x56",
+    "map_after": "0x04",
+    "scene_changed": true,
+    "flags_changed": 2,
+    "flag_diffs": [
+      {
+        "offset": "0x18",
+        "old": "0x1F",
+        "new": "0x3F",
+        "bits_set": [
+          5
+        ],
+        "bits_cleared": []
+      },
+      {
+        "offset": "0x19",
+        "old": "0x00",
+        "new": "0x01",
+        "bits_set": [
+          0
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": [
+      {
+        "stat_offset": "0x102",
+        "old": 3,
+        "new": 2
+      }
+    ],
+    "total_flags": 53
+  },
+  {
+    "step": 59,
+    "type": "direct",
+    "verb": 4,
+    "target": null,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 53
+  },
+  {
+    "step": 60,
+    "type": "action",
+    "verb": 1,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0x01",
+        "new": "0x03",
+        "bits_set": [
+          1
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 54
+  },
+  {
+    "step": 61,
+    "type": "action",
+    "verb": 1,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0x03",
+        "new": "0x23",
+        "bits_set": [
+          5
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 55
+  },
+  {
+    "step": 62,
+    "type": "action",
+    "verb": 2,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0x23",
+        "new": "0xA3",
+        "bits_set": [
+          7
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 56
+  },
+  {
+    "step": 63,
+    "type": "action",
+    "verb": 2,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0xA3",
+        "new": "0xE3",
+        "bits_set": [
+          6
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 57
+  },
+  {
+    "step": 64,
+    "type": "action",
+    "verb": 3,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x1A",
+        "old": "0x00",
+        "new": "0x01",
+        "bits_set": [
+          0
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 58
+  },
+  {
+    "step": 65,
+    "type": "action",
+    "verb": 3,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x1A",
+        "old": "0x01",
+        "new": "0x03",
+        "bits_set": [
+          1
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 66,
+    "type": "action",
+    "verb": 3,
+    "target": 2,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 67,
+    "type": "move",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 68,
+    "type": "direct",
+    "verb": 4,
+    "target": null,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 69,
+    "type": "action",
+    "verb": 1,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0xE3",
+        "new": "0xE7",
+        "bits_set": [
+          2
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 60
+  },
+  {
+    "step": 70,
+    "type": "action",
+    "verb": 1,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0xE7",
+        "new": "0xC7",
+        "bits_set": [],
+        "bits_cleared": [
+          5
+        ]
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 71,
+    "type": "action",
+    "verb": 2,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0xC7",
+        "new": "0x47",
+        "bits_set": [],
+        "bits_cleared": [
+          7
+        ]
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 58
+  },
+  {
+    "step": 72,
+    "type": "action",
+    "verb": 2,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0x47",
+        "new": "0x07",
+        "bits_set": [],
+        "bits_cleared": [
+          6
+        ]
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 57
+  },
+  {
+    "step": 73,
+    "type": "action",
+    "verb": 3,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 57
+  },
+  {
+    "step": 74,
+    "type": "action",
+    "verb": 3,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x1A",
+        "old": "0x03",
+        "new": "0x07",
+        "bits_set": [
+          2
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 58
+  },
+  {
+    "step": 75,
+    "type": "action",
+    "verb": 3,
+    "target": 2,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 58
+  },
+  {
+    "step": 76,
+    "type": "move",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 58
+  },
+  {
+    "step": 77,
+    "type": "action",
+    "verb": 1,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0x07",
+        "new": "0x0F",
+        "bits_set": [
+          3
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 78,
+    "type": "action",
+    "verb": 3,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 79,
+    "type": "action",
+    "verb": 3,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x1A",
+        "old": "0x07",
+        "new": "0x03",
+        "bits_set": [],
+        "bits_cleared": [
+          2
+        ]
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 58
+  },
+  {
+    "step": 80,
+    "type": "action",
+    "verb": 1,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0x0F",
+        "new": "0x2F",
+        "bits_set": [
+          5
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 81,
+    "type": "action",
+    "verb": 2,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0x2F",
+        "new": "0xAF",
+        "bits_set": [
+          7
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 60
+  },
+  {
+    "step": 82,
+    "type": "action",
+    "verb": 2,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0xAF",
+        "new": "0xEF",
+        "bits_set": [
+          6
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 61
+  },
+  {
+    "step": 83,
+    "type": "move",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 61
+  },
+  {
+    "step": 84,
+    "type": "action",
+    "verb": 1,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 61
+  },
+  {
+    "step": 85,
+    "type": "action",
+    "verb": 1,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0xEF",
+        "new": "0xCF",
+        "bits_set": [],
+        "bits_cleared": [
+          5
+        ]
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 60
+  },
+  {
+    "step": 86,
+    "type": "action",
+    "verb": 2,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0xCF",
+        "new": "0x4F",
+        "bits_set": [],
+        "bits_cleared": [
+          7
+        ]
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 87,
+    "type": "action",
+    "verb": 2,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0x4F",
+        "new": "0x0F",
+        "bits_set": [],
+        "bits_cleared": [
+          6
+        ]
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 58
+  },
+  {
+    "step": 88,
+    "type": "action",
+    "verb": 3,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 58
+  },
+  {
+    "step": 89,
+    "type": "action",
+    "verb": 3,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x1A",
+        "old": "0x03",
+        "new": "0x07",
+        "bits_set": [
+          2
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 90,
+    "type": "move",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 91,
+    "type": "action",
+    "verb": 1,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 92,
+    "type": "action",
+    "verb": 3,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 93,
+    "type": "action",
+    "verb": 3,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x1A",
+        "old": "0x07",
+        "new": "0x03",
+        "bits_set": [],
+        "bits_cleared": [
+          2
+        ]
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 58
+  },
+  {
+    "step": 94,
+    "type": "action",
+    "verb": 1,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0x0F",
+        "new": "0x2F",
+        "bits_set": [
+          5
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 95,
+    "type": "action",
+    "verb": 2,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0x2F",
+        "new": "0xAF",
+        "bits_set": [
+          7
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 60
+  },
+  {
+    "step": 96,
+    "type": "action",
+    "verb": 2,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0xAF",
+        "new": "0xEF",
+        "bits_set": [
+          6
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 61
+  },
+  {
+    "step": 97,
+    "type": "move",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 61
+  },
+  {
+    "step": 98,
+    "type": "move",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 61
+  },
+  {
+    "step": 99,
+    "type": "move",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 61
+  },
+  {
+    "step": 100,
+    "type": "move",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 61
+  },
+  {
+    "step": 101,
+    "type": "action",
+    "verb": 1,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 61
+  },
+  {
+    "step": 102,
+    "type": "action",
+    "verb": 1,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0xEF",
+        "new": "0xCF",
+        "bits_set": [],
+        "bits_cleared": [
+          5
+        ]
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 60
+  },
+  {
+    "step": 103,
+    "type": "action",
+    "verb": 2,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0xCF",
+        "new": "0x4F",
+        "bits_set": [],
+        "bits_cleared": [
+          7
+        ]
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 104,
+    "type": "action",
+    "verb": 2,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0x4F",
+        "new": "0x0F",
+        "bits_set": [],
+        "bits_cleared": [
+          6
+        ]
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 58
+  },
+  {
+    "step": 105,
+    "type": "action",
+    "verb": 3,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 58
+  },
+  {
+    "step": 106,
+    "type": "action",
+    "verb": 3,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x1A",
+        "old": "0x03",
+        "new": "0x07",
+        "bits_set": [
+          2
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 107,
+    "type": "move",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 108,
+    "type": "action",
+    "verb": 1,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 109,
+    "type": "action",
+    "verb": 1,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0x0F",
+        "new": "0x2F",
+        "bits_set": [
+          5
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 60
+  },
+  {
+    "step": 110,
+    "type": "action",
+    "verb": 2,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0x2F",
+        "new": "0xAF",
+        "bits_set": [
+          7
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 61
+  },
+  {
+    "step": 111,
+    "type": "action",
+    "verb": 2,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0xAF",
+        "new": "0xEF",
+        "bits_set": [
+          6
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 62
+  },
+  {
+    "step": 112,
+    "type": "action",
+    "verb": 3,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 62
+  },
+  {
+    "step": 113,
+    "type": "action",
+    "verb": 3,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x1A",
+        "old": "0x07",
+        "new": "0x03",
+        "bits_set": [],
+        "bits_cleared": [
+          2
+        ]
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 61
+  },
+  {
+    "step": 114,
+    "type": "move",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 61
+  },
+  {
+    "step": 115,
+    "type": "action",
+    "verb": 1,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 61
+  },
+  {
+    "step": 116,
+    "type": "action",
+    "verb": 1,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0xEF",
+        "new": "0xCF",
+        "bits_set": [],
+        "bits_cleared": [
+          5
+        ]
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 60
+  },
+  {
+    "step": 117,
+    "type": "action",
+    "verb": 2,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0xCF",
+        "new": "0x4F",
+        "bits_set": [],
+        "bits_cleared": [
+          7
+        ]
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 118,
+    "type": "action",
+    "verb": 2,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x19",
+        "old": "0x4F",
+        "new": "0x0F",
+        "bits_set": [],
+        "bits_cleared": [
+          6
+        ]
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 58
+  },
+  {
+    "step": 119,
+    "type": "action",
+    "verb": 3,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 58
+  },
+  {
+    "step": 120,
+    "type": "action",
+    "verb": 3,
+    "target": 1,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 1,
+    "flag_diffs": [
+      {
+        "offset": "0x1A",
+        "old": "0x03",
+        "new": "0x07",
+        "bits_set": [
+          2
+        ],
+        "bits_cleared": []
+      }
+    ],
+    "stat_diffs": null,
+    "total_flags": 59
+  },
+  {
+    "step": 121,
+    "type": "move",
+    "verb": 0,
+    "target": 0,
+    "map_before": "0x04",
+    "map_after": "0x04",
+    "scene_changed": false,
+    "flags_changed": 0,
+    "flag_diffs": [],
+    "stat_diffs": null,
+    "total_flags": 59
+  }
+]
